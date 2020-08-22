@@ -11,7 +11,7 @@ def main():
                 displayTonationInfo(key, False)
             elif inp[-3:] == "dur" or inp[-3:] == "DUR":
                 displayTonationInfo(key, True)
-        else:
+        elif inp.upper() in HumanInterface.noteToValMap.keys():
             note = HumanInterface.noteToValMap[inp.upper()]
             DisplayNoteInfo(note)
 

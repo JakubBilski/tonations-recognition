@@ -53,7 +53,9 @@ def GetAllNotesInMaskAsString(mask):
     return result
 
 def TonationToString(tonation):
-    if tonation is Tonation.MajorTonation:
+    if isinstance(tonation, Tonation.MajorTonation):
         return valToNoteMap[tonation.key] + "-dur"
-    else:
+    if isinstance(tonation, Tonation.MinorTonation):
         return valToNoteMap[tonation.key] + "-mol"
+    else:
+        raise Exception("Oj nie nie")

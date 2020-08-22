@@ -31,6 +31,9 @@ def DisplayNoteInfo(note):
     for tonation in tonations:
         if tonation.scale & note:
             print("\t" + HumanInterface.TonationToString(tonation) + " (" + HumanInterface.GetAllNotesInMaskAsString(tonation.scale) + ")")
+            # better:
+            # print(f"\t{HumanInterface.TonationToString(tonation)} ({HumanInterface.GetAllNotesInMaskAsString(tonation.scale)})")
+            # use f-strings everywhere!
     print("W tonikach: ")
     for tonation in tonations:
         if tonation.tonic & note:

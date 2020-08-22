@@ -1,5 +1,6 @@
 import Tonation
 
+# it is constant
 valToNoteMap = {
     1 : "C",
     2 : "C#",
@@ -14,7 +15,12 @@ valToNoteMap = {
     1024 : "A#",
     2048 : "H",
     }
+# easier:
+# notes = ["C", "C#", ..., "H"]
+# valToNoteMap = {1<<i: note for i, note in enumerate(notes)}
+# it is also easier because reader knows why are you using powers of 2
 
+# it is constant
 noteToValMap = {
     "C" : 1,
     "C#" : 2,
@@ -40,19 +46,25 @@ noteToValMap = {
     "FES" : 32,
     "GES" : 64,
     "AS" : 256,
-    "B" : 1024
+    "B" : 1024  
     }
 
 def GetAllNotesInMaskAsString(mask):
     val = 1
     result = ""
     for x in range(12):
+    # for _ in range(12):
+    # use "_" sign if you want to discard result
         if val & mask:
             result += valToNoteMap[val] + " ";
         val = val << 1
     return result
 
 def TonationToString(tonation):
+    # better:
+    # method __str__(self) in class MajorTonation and MinorTonation
+    # then you could just use:
+    # str(tonation)
     if isinstance(tonation, Tonation.MajorTonation):
         return valToNoteMap[tonation.key] + "-dur"
     if isinstance(tonation, Tonation.MinorTonation):

@@ -14,4 +14,5 @@ ror = lambda val, r_bits, max_bits: \
     ((val & (2**max_bits-1)) >> r_bits%max_bits) | \
     (val << (max_bits-(r_bits%max_bits)) & (2**max_bits-1))
  
- 
+# Why lambdas? 
+# functions would be more readable and you wouldn't need to escape line endings

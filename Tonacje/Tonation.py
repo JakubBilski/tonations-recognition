@@ -4,6 +4,7 @@ class MajorTonation():
     def __init__(self, key):
         self.key = key
         self.keyLog2 = valToLog2Map[key]
+        # jej, magic numbers. Should be comment what 2741 means.
         self.scale = rol(2741, self.keyLog2, 12)
         self.tonic = MajorCord(self.keyLog2)
         self.subdominant = MajorCord(self.keyLog2 + 5)
@@ -35,6 +36,7 @@ def MajorCord(root):
 def MinorCord(root):
     return rol(137, root, 12)
 
+# it is constant
 valToLog2Map = {
     1 : 0,
     2 : 1,
@@ -49,5 +51,11 @@ valToLog2Map = {
     1024 : 10,
     2048 : 11,
 }
+# easier:
+# valToLog2Map = {1<<i: i for i in range(12)}
+# much easier:
+# import math
+# res = int(math.log2(val))
 
+# it is constant
 allKeys = valToLog2Map.keys()

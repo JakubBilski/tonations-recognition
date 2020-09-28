@@ -2,7 +2,6 @@ import parselmouth
 
 import argparse
 import pathlib
-import sys
 import math
 import os
 

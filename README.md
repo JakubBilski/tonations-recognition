@@ -11,3 +11,6 @@ https://se.mathworks.com/matlabcentral/fileexchange/73594-piano-guitar-notes-rec
 
 Stronka do nagrywania
 https://online-voice-recorder.com/
+
+Zmiana autora commita:
+ git -c user.name="New Author Name" -c user.email=email@address.com commit --amend --reset-author

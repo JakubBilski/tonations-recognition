@@ -21,8 +21,8 @@ class Sound:
     def __str__(self):
         return f"{round(self.timestamp, 3)}: {self.symbol}\n"
 
-    def __ne__(self, other):
-        return self.note != other.note
+    def __eq__(self, other):
+        return self.note == other.note
 
 def frequency_to_note(frequency):
     '''

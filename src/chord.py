@@ -1,14 +1,11 @@
 from os import O_TRUNC
 import parselmouth
-
-import argparse
-import pathlib
 import math
 
 
 class Sound:
-    def __init__(self, note, timestamp, duration):
-        self.note = note%12
+    def __init__(self, note, timestamp=0, duration=0):
+        self.note = note
         self.timestamp = timestamp
         self.duration = duration
 
@@ -16,16 +13,27 @@ class Sound:
     def symbol(self):
         if self.note == None:
             return 'None'
-        #           0    1     2    3     4    5    6     7    8     9    10    11
+        #           0    1     2    3     4
         symbols = ['C', 'C#', 'D', 'D#', 'E',
+                   # 5   6     7    8     9    10    11
                    'F', 'F#', 'G', 'G#', 'A', 'A#', 'H']
         return symbols[self.note]
 
+    @property
+    def note(self):
+        return self._note
+
+    @note.setter
+    def note(self, note):
+        self._note = note % 12 if note else note
+
     def __str__(self):
-        return f"{round(self.timestamp, 3)}: {self.symbol}"
+        return f"{self.timestamp}: {self.symbol}"
 
     def __eq__(self, other):
         return self.note == other.note
+
+    __repr__ = __str__
 
 
 def frequency_to_note(frequency):
@@ -69,62 +77,25 @@ class Chord(Sound):
 
     def parallel(self):
         if "dur" in self.type:
-            return Chord(self.note+9, self.timestamp, self.duration, self.type.replace("dur","mol"))
+            return Chord(self.note+9, self.timestamp, self.duration, self.type.replace("dur", "mol"))
         else:
-            return Chord(self.note+3, self.timestamp, self.duration, self.type.replace("mol","dur"))
+            return Chord(self.note+3, self.timestamp, self.duration, self.type.replace("mol", "dur"))
 
     def sounds(self):
         if self.type == "dur":
-            return [self.note, (self.note+4)%12, (self.note+7)%12]
+            return [Sound(self.note), Sound(self.note+4), Sound(self.note+7)]
         elif self.type == "mol":
-            return [self.note, (self.note+3)%12, (self.note+7)%12]
+            return [Sound(self.note), Sound(self.note+3), Sound(self.note+7)]
+        elif self.type == "dur7":
+            return [Sound(self.note), Sound(self.note+4), Sound(self.note+7), Sound(self.note+10)]
         else:
             raise Exception("Not supported chord type")
 
     def __str__(self):
-        return f"{round(self.timestamp, 3)}: {self.symbol}-{self.type}\n"
+        sounds = ', '.join(map(str, self.sounds()))
+        return f"{self.symbol}-{self.type} [{sounds}]"
+
+    __repr__ = __str__
 
     def __eq__(self, other):
         return (self.note == other.note) and (self.type == other.type)
-
-
-class Chords:
-    def __init__(self, sounds, tonation, metrum):
-        self.chords = []
-        self.sounds = sounds
-        self.tonation = tonation
-        self.metrum = metrum
-        self._get_chords()
-
-    def __str__(self):
-        return "".join([str(chord) for chord in self.chords])
-
-    def get_sounds_at_metrum(self, sounds: list(Sound)):
-        s = []
-        last_sound = sounds[0]
-        last_metrum = -self.metrum
-        for sound in sounds:
-            while sound.timestamp >= last_metrum+self.metrum:
-                s.append(sound)
-                last_metrum += self.metrum
-            last_sound = sound
-        return s
-
-    def _get_chords(self):
-        sounds_at_metrum = self.get_sounds_at_metrum(self.sounds.sounds)
-
-
-def parse_args():
-    parser = argparse.ArgumentParser(
-        description='Convert auio file to notes with time of occurrence')
-    parser.add_argument('--input', '-I',
-                        required=True,
-                        help='Audio file. Formats: [.mp3, .wav]',
-                        type=pathlib.Path)
-    args = parser.parse_args()
-    return args
-
-
-if __name__ == "__main__":
-    s = Sounds()
-    print(s.sounds)

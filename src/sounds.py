@@ -18,7 +18,7 @@ class Sound:
         return symbols[self.note]  
 
     def __str__(self):
-        return f"{round(self.timestamp, 3)}: {self.symbol}\n"
+        return f"{round(self.timestamp, 3)}: {self.symbol}"
 
     def __eq__(self, other):
         return self.note == other.note
@@ -31,30 +31,22 @@ def frequency_to_note(frequency):
         return None
     return round(12*math.log2(frequency/440.0)+45) % 12
 
-
-class Sounds:
-    def __init__(self, file):
-        self.sounds = []
-        snd = parselmouth.Sound(str(file))
-        pitch = snd.to_pitch()
-        self._get_sounds_from_pitch(pitch)
-
-    def __str__(self):
-        return "".join([str(sound) for sound in self.sounds])
-
-    def _get_sounds_from_pitch(self, pitch):
-        self.sounds = []
-        frequencies = pitch.selected_array['frequency']
-        notes = [frequency_to_note(freq) for freq in frequencies]
-        lastNote = None
-        lastNoteTimestamp = 0.0
-        for note, timestamp in zip(notes, pitch.xs()):
-            if lastNote != note:
-                self.sounds.append(Sound(lastNote, lastNoteTimestamp, timestamp-lastNoteTimestamp))
-                lastNote = note
-                lastNoteTimestamp = timestamp
-        endTime = pitch.xs()[-1]
-        self.sounds.append(Sound(lastNote, lastNoteTimestamp, endTime-lastNoteTimestamp))
+def get_sounds_from_file(file):
+    sounds = []
+    snd = parselmouth.Sound(str(file))
+    pitch = snd.to_pitch()
+    frequencies = pitch.selected_array['frequency']
+    notes = [frequency_to_note(freq) for freq in frequencies]
+    last_note = None
+    last_note_timestamp = 0.0
+    for note, timestamp in zip(notes, pitch.xs()):
+        if last_note != note:
+            sounds.append(Sound(last_note, last_note_timestamp, timestamp-last_note_timestamp))
+            last_note = note
+            last_note_timestamp = timestamp
+    end_time = pitch.xs()[-1]
+    sounds.append(Sound(last_note, last_note_timestamp, end_time-last_note_timestamp))
+    return sounds
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -67,11 +59,10 @@ def parse_args():
     return args
 
 if __name__ == "__main__":
-    dirPath = parse_args().input
-    
+    dir_path = parse_args().input
     files = [
-        fileName for fileName in dirPath.iterdir() if fileName.suffix in [".mp3", ".wav"]]
+        file_name for file_name in dir_path.iterdir() if file_name.suffix in [".mp3", ".wav"]]
     for file in files:
         print(file)
-        sounds = Sounds(file)
-        print(sounds)
+        sounds = get_sounds_from_file(file)
+        print("\n".join([str(sound) for sound in sounds]))

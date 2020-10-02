@@ -3,8 +3,8 @@ import pathlib
 
 from typing import List
 
-from tonation import Tonation
-from chord import Sound, Sounds
+from tonations import Tonation
+from sounds import Sound, get_sounds_from_list
 
 
 def get_sounds_at_metrum(sounds: List[Sound], metrum: int, start: int):
@@ -45,7 +45,10 @@ def get_chords(sounds: List[Sound], tonation: Tonation, metrum: int, start: int)
 
 
 if __name__ == "__main__":
-    s = Sounds()
-    print(f"song: {s.sounds}")
-    chords = get_chords(s.sounds, Tonation(0, 0, 0, "dur"), 3, 1)
+    pitch = [1, 2, 3, 4, 5, 6, 6.5, 7, 9,
+                 10, 11, 12, 13, 14, 15, 15.5, 16, 18]
+    notes = [7, 4, 4, 5, 2, 2, 0, 4, 7, 7, 4, 4, 5, 2, 2, 0, 4, 0]
+    s = get_sounds_from_list(pitch, notes)
+    print(f"song: {s}")
+    chords = get_chords(s, Tonation(0, 0, 0, "dur"), 3, 1)
     print(f"chords: {chords}")

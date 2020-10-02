@@ -1,11 +1,11 @@
-import chord
+import chords
 import copy
 
 
-class Tonation(chord.Chord):
+class Tonation(chords.Chord):
     def __init__(self, note, timestamp, duration, type):
         super().__init__(note, timestamp, duration, type)
-        self.tonic = chord.Chord(note, timestamp, duration, type)
+        self.tonic = chords.Chord(note, timestamp, duration, type)
         self.dominant = copy.deepcopy(self.tonic)
         self.dominant.note += 7
         self.dominant.type = "dur7"

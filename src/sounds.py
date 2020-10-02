@@ -32,6 +32,8 @@ class Sound:
             return self.symbol
         return f"{round(self.timestamp, 3)}: {self.symbol}"
 
+    __repr__ = __str__
+
     def __eq__(self, other):
         return self.note == other.note
 
@@ -62,6 +64,22 @@ def get_sounds_from_file(file):
     end_time = pitch.xs()[-1]
     sounds.append(Sound(last_note, last_note_timestamp,
                         end_time-last_note_timestamp))
+    return sounds
+
+
+def get_sounds_from_list(pitch, notes):
+    sounds = []
+    lastNote = None
+    lastNoteTimestamp = 0.0
+    for note, timestamp in zip(notes, pitch):
+        if lastNote != note:
+            sounds.append(
+                Sound(lastNote, lastNoteTimestamp, timestamp-lastNoteTimestamp))
+            lastNote = note
+            lastNoteTimestamp = timestamp
+    endTime = pitch[-1]
+    sounds.append(
+        Sound(lastNote, lastNoteTimestamp, endTime-lastNoteTimestamp))
     return sounds
 
 

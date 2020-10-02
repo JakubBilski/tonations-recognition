@@ -4,8 +4,9 @@ import argparse
 import pathlib
 import math
 
+
 class Sound:
-    def __init__(self, note, timestamp, duration):
+    def __init__(self, note, timestamp=None, duration=None):
         self.note = note
         self.timestamp = timestamp
         self.duration = duration
@@ -14,14 +15,26 @@ class Sound:
     def symbol(self):
         if self.note == None:
             return 'None'
-        symbols = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'H']
-        return symbols[self.note]  
+        symbols = ['C', 'C#', 'D', 'D#', 'E',
+                   'F', 'F#', 'G', 'G#', 'A', 'A#', 'H']
+        return symbols[self.note]
+
+    @property
+    def note(self):
+        return self._note
+
+    @note.setter
+    def note(self, note):
+        self._note = note % 12 if note else note
 
     def __str__(self):
+        if self.timestamp is None:
+            return self.symbol
         return f"{round(self.timestamp, 3)}: {self.symbol}"
 
     def __eq__(self, other):
         return self.note == other.note
+
 
 def frequency_to_note(frequency):
     '''
@@ -30,6 +43,7 @@ def frequency_to_note(frequency):
     if frequency == 0:
         return None
     return round(12*math.log2(frequency/440.0)+45) % 12
+
 
 def get_sounds_from_file(file):
     sounds = []
@@ -41,12 +55,15 @@ def get_sounds_from_file(file):
     last_note_timestamp = 0.0
     for note, timestamp in zip(notes, pitch.xs()):
         if last_note != note:
-            sounds.append(Sound(last_note, last_note_timestamp, timestamp-last_note_timestamp))
+            sounds.append(Sound(last_note, last_note_timestamp,
+                                timestamp-last_note_timestamp))
             last_note = note
             last_note_timestamp = timestamp
     end_time = pitch.xs()[-1]
-    sounds.append(Sound(last_note, last_note_timestamp, end_time-last_note_timestamp))
+    sounds.append(Sound(last_note, last_note_timestamp,
+                        end_time-last_note_timestamp))
     return sounds
+
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -57,6 +74,7 @@ def parse_args():
                         type=pathlib.Path)
     args = parser.parse_args()
     return args
+
 
 if __name__ == "__main__":
     dir_path = parse_args().input

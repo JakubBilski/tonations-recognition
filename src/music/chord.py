@@ -1,7 +1,7 @@
-from sounds import Sound
+from . import sound
 
 
-class Chord(Sound):
+class Chord(sound.Sound):
     def __init__(self, note, timestamp, duration, type):
         super().__init__(note, timestamp, duration)
         self.type = type
@@ -14,11 +14,11 @@ class Chord(Sound):
 
     def sounds(self):
         if self.type == "dur":
-            return [Sound(self.note), Sound(self.note+4), Sound(self.note+7)]
+            return [sound.Sound(self.note), sound.Sound(self.note+4), sound.Sound(self.note+7)]
         elif self.type == "mol":
-            return [Sound(self.note), Sound(self.note+3), Sound(self.note+7)]
+            return [sound.Sound(self.note), sound.Sound(self.note+3), sound.Sound(self.note+7)]
         elif self.type == "dur7":
-            return [Sound(self.note), Sound(self.note+4), Sound(self.note+7), Sound(self.note+10)]
+            return [sound.Sound(self.note), sound.Sound(self.note+4), sound.Sound(self.note+7), sound.Sound(self.note+10)]
         else:
             raise Exception("Not supported chord type")
 

@@ -15,5 +15,8 @@ https://online-voice-recorder.com/
 Częstotliwości nut
 https://pages.mtu.edu/~suits/notefreqs.html
 
+Praca o wykrywaniu akordów:
+http://www.eecs.qmul.ac.uk/~markp/2009/StarkPlumbley09-icmc.pdf
+
 Zmiana autora commita:
  git -c user.name="New Author Name" -c user.email=email@address.com commit --amend --reset-author

@@ -22,5 +22,8 @@ Praca o wykrywaniu akordów z siecią neuronową (dają kod!):
 https://www.researchgate.net/publication/305590295_A_Fully_Convolutional_Deep_Auditory_Model_for_Musical_Chord_Recognition
 https://github.com/fdlm/chordrec
 
+Lista rozwiązań analizujących pliki audio
+https://github.com/ashishpatel26/Best-Audio-Classification-Resources-with-Deep-learning
+
 Zmiana autora commita:
  git -c user.name="New Author Name" -c user.email=email@address.com commit --amend --reset-author

@@ -13,9 +13,13 @@ def frequency_to_note(frequency):
         return None
     return round(12*math.log2(frequency/440.0)+45) % 12
 
+def note_to_frequency(note):
+    if note is None:
+        return 0
+    return pow(2,(note-9.0)/12.0)*440.0
+
 
 def get_sounds_from_file(file):
-    sounds = []
     snd = parselmouth.Sound(str(file))
     pitch = snd.to_pitch()
     frequencies = pitch.selected_array['frequency']

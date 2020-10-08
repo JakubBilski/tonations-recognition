@@ -14,6 +14,3 @@ class Tonation(chord.Chord):
 
     def __str__(self):
         return f"{self.symbol}-{self.kind}"
-
-    def __eq__(self, other):
-        return self.symbol == other.symbol and self.kind == other.kind

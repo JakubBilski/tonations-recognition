@@ -32,3 +32,5 @@ inne
 * menu poziome z tytułami do których zawsze można przejść 
 * niektóre zakładki podzielone na dwa lewą i prawą stronę
 * przejżystość
+
+https://github.com/electron-react-boilerplate/electron-react-boilerplate

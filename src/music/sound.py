@@ -1,10 +1,3 @@
-import parselmouth
-
-import argparse
-import pathlib
-import math
-
-
 class Sound:
     def __init__(self, note, timestamp=None, duration=None):
         self.note = note
@@ -13,7 +6,7 @@ class Sound:
 
     @property
     def symbol(self):
-        if self.note == None:
+        if self.note is None:
             return 'None'
         symbols = ['C', 'C#', 'D', 'D#', 'E',
                    'F', 'F#', 'G', 'G#', 'A', 'A#', 'H']

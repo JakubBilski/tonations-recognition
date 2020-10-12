@@ -34,7 +34,7 @@
 	})
 
 	$(".Modern-Slider").slick({
-	    autoplay:true,
+	    autoplay:false,
 	    autoplaySpeed:10000,
 	    speed:600,
 	    slidesToShow:1,
@@ -180,7 +180,7 @@
 		}, 600, function(){
 			setTimeout(function(){
 				$("#preloader").css("visibility", "hidden").fadeOut();
-			}, 300);
+			}, 3000);
 		});
 	});
 

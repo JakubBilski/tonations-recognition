@@ -69,16 +69,19 @@ if __name__ == "__main__":
         # # if v0 - v1 >= v1/2:
         # #     v = value.dots(v)
 
-        v = value.eighth
-        for i in range(round(s.duration*8/first)-1):
-            v = value.add(v, value.eighth)
+        # v = 32
+        # for i in range(round(s.duration*8/first)-1):
+        #     v = value.add(v, 32)
 
-        print(v)
-        if s.note is None:
-            print(t.add_notes(None, v))
-        else:
-            print(t.add_notes(s.symbol, v))
-    print(t)
+        for i in range(round(s.duration*8/first)):
+            if s.note is None:
+                print(t.add_notes(None, 32))
+            else:
+                print(t.add_notes(s.symbol, 32))
+
+            
+        
+    # print(t)
     midi_file_out.write_Track("test.mid", t)
     fs = FluidSynth()
     fs.midi_to_audio('test.mid', 'test.wav')

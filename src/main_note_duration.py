@@ -2,6 +2,7 @@ import argparse
 from math import floor
 import pathlib
 import librosa
+from mingus.containers.bar import Bar
 
 import sounds_generation
 
@@ -50,34 +51,39 @@ if __name__ == "__main__":
 
     print("\n".join([f"{sound.duration:.3f}: {sound.symbol}\t{round(sound.duration*8/first)/8}" for sound in sounds]))
 
+    def add_sound(t, sound, duration):
+        v = 32
+        for i in range(duration-1):
+            v = value.add(v, 32)
+        if sound.note is None:
+            print(t.add_notes(None, v))
+        else:
+            print(t.add_notes(s.symbol, v))
+
+    v_sum = sum([round(sound.duration*8/first) for sound in sounds])
+
     t = Track()
+    t.add_bar(Bar(meter=(round(v_sum/32)+1, 1)))
+    v_bar = 32
     for s in sounds:
-        # v0 = round(s.duration*8/first)
-        # if v0 >= 32:
-        #     v = 1
-        # elif v0 >= 16:
-        #     v = 2
-        # elif v0 >=8:
-        #     v = 4
-        # elif v0 >= 4:
-        #     v = 8
-        # elif v0 >=2:
-        #     v = 16
-        # else:
-        #     v = 32
-        # # v1  = floor(32/v)
-        # # if v0 - v1 >= v1/2:
-        # #     v = value.dots(v)
+        v_act = round(s.duration*8/first)
+        
+        # while v_act > v_bar:
+        #     print(f"{v_bar}:{v_act}")
+        #     add_sound(t, s, v_bar)
+        #     v_act -= v_bar
+        #     v_bar = 32
 
-        # v = 32
-        # for i in range(round(s.duration*8/first)-1):
-        #     v = value.add(v, 32)
+        # if v_act == 0:
+        #     continue
 
-        for i in range(round(s.duration*8/first)):
-            if s.note is None:
-                print(t.add_notes(None, 32))
-            else:
-                print(t.add_notes(s.symbol, 32))
+        # print(f"{v_bar}:{v_act}")
+        add_sound(t, s, v_act)
+        # v_bar -= v_act
+
+        # if v_bar == 0:
+        #     v_bar = 32
+
 
             
         
@@ -86,10 +92,3 @@ if __name__ == "__main__":
     fs = FluidSynth()
     fs.midi_to_audio('test.mid', 'test.wav')
 
-
-1 - 32
-2 - 16
-4 - 8
-8 - 4
-16 - 2
-32 - 1

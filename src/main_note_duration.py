@@ -1,4 +1,5 @@
 import argparse
+from math import floor
 import pathlib
 import librosa
 
@@ -6,6 +7,7 @@ import sounds_generation
 
 from mingus.containers import Track
 from mingus.midi import midi_file_out
+from mingus.core import value
 
 from midi2audio import FluidSynth
 
@@ -50,10 +52,41 @@ if __name__ == "__main__":
 
     t = Track()
     for s in sounds:
+        # v0 = round(s.duration*8/first)
+        # if v0 >= 32:
+        #     v = 1
+        # elif v0 >= 16:
+        #     v = 2
+        # elif v0 >=8:
+        #     v = 4
+        # elif v0 >= 4:
+        #     v = 8
+        # elif v0 >=2:
+        #     v = 16
+        # else:
+        #     v = 32
+        # # v1  = floor(32/v)
+        # # if v0 - v1 >= v1/2:
+        # #     v = value.dots(v)
+
+        v = value.eighth
+        for i in range(round(s.duration*8/first)-1):
+            v = value.add(v, value.eighth)
+
+        print(v)
         if s.note is None:
-            t.add_notes(None, 2)
+            print(t.add_notes(None, v))
         else:
-            t.add_notes(s.symbol, 2)
+            print(t.add_notes(s.symbol, v))
+    print(t)
     midi_file_out.write_Track("test.mid", t)
     fs = FluidSynth()
     fs.midi_to_audio('test.mid', 'test.wav')
+
+
+1 - 32
+2 - 16
+4 - 8
+8 - 4
+16 - 2
+32 - 1

@@ -10,5 +10,5 @@ if __name__ == "__main__":
     s = sounds_generation.get_sounds_from_list(pitch, notes)
     print(f"song: {s}")
     chords = chords_generation.get_chords(
-        s, music.Tonation(0, 0, 0, "dur"), 3, 1)
+        s, music.Tonation(0, 0, 0, "major"), 3, 1)
     print(f"chords: {chords}")

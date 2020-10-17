@@ -62,8 +62,9 @@ def match_sounds(sounds_computed, sounds_model):
     return 1-mismatches_duration/duration, mismatches
 
 if __name__ == "__main__":
-    verbose_factor_threshold = parse_args().verbose_factor_threshold
-    verbose_duration_threshold = parse_args().verbose_duration_threshold
+    args = parse_args()
+    verbose_factor_threshold = args.verbose_factor_threshold
+    verbose_duration_threshold = args.verbose_duration_threshold
     if verbose_factor_threshold == None:
         verbose_factor_threshold = 0.5
     if verbose_duration_threshold == None:

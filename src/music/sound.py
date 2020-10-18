@@ -9,7 +9,7 @@ class Sound:
         if self.note is None:
             return 'None'
         symbols = ['C', 'C#', 'D', 'D#', 'E',
-                   'F', 'F#', 'G', 'G#', 'A', 'A#', 'H']
+                   'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
         return symbols[self.note]
 
     @property

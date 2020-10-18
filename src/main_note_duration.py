@@ -1,5 +1,5 @@
 import argparse
-from math import floor
+from math import comb, floor
 import pathlib
 import librosa
 from mingus.containers.bar import Bar
@@ -13,6 +13,8 @@ from mingus.core import value
 from midi2audio import FluidSynth
 
 import music_synthesis
+import tonations_generation
+import chords_generation
 
 
 def parse_args():
@@ -29,6 +31,7 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()
     sounds = sounds_generation.get_sounds_from_file(args.input)
+    # sounds = [s for s in sounds if s.timestamp < 10]
 
     # sounds = [sound for sound in sounds if sound.duration >= 0.1 and sound.note is not None]
 
@@ -53,4 +56,17 @@ if __name__ == "__main__":
 
     print("\n".join([f"{sound.duration:.3f}: {sound.symbol}\t{round(sound.duration*8/first)/8}" for sound in sounds]))
 
-    music_synthesis.wav_from_sounds(sounds, first)
+    music_synthesis.wav_from_sounds1(sounds, first, 'sounds')
+    ton = tonations_generation.get_tonations_from_sounds(sounds)[0].tonation
+    cho = chords_generation.get_chords(sounds, ton, first, sounds[0].timestamp)
+    music_synthesis.wav_from_chords1(cho, first, 'chords')
+
+    from pydub import AudioSegment
+    sound1 = AudioSegment.from_file("sounds.wav")
+    sound2 = AudioSegment.from_file("chords.wav")
+
+    sound2 = sound2 - 5
+
+    combined = sound1.overlay(sound2)
+
+    combined.export("result.wav", format='wav')

@@ -26,4 +26,14 @@ def get_chords(sounds: List[music.Sound], tonation: music.Tonation, metrum: int,
     print(f"Sounds at metrum: {sounds_at_metrum}")
     chords = [get_tonation_chord(tonation, sound)
               for sound in sounds_at_metrum]
-    return chords
+    
+    for i, c in enumerate(chords):
+        c.duration = metrum
+        c.timestamp = i*metrum
+    c1 = []
+    for c in chords:
+        if any(c1) and c1[-1] == c:
+            c1[-1].duration += c.duration
+        else:
+            c1.append(c)
+    return c1

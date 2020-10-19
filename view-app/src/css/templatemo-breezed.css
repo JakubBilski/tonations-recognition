@@ -813,10 +813,71 @@ banner
   float: left /* If RTL Make This Right */ ;
   padding: 0;
 }
+/*===Record Style===*/
+.Record .item .img-fill{
+  height:74vh;
+  background:#000;
+}
+
+.Record .item .info > div{
+  display:inline-block!important;
+  vertical-align:middle;
+}
+
+.Record .text-content {
+  width: 80%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.Record .item h3 {
+  margin-bottom: 25px;
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color:#FFF;
+  animation:fadeOutRight 1s both;
+}
+
+.Record .item h5 {
+  margin-bottom: 50px;
+  font-size: 36px;
+  font-weight: 200;
+  letter-spacing: 2.5px;
+  color:#FFF;
+  overflow:hidden;
+  animation:fadeOutLeft 1s both;
+}
+
+.Record .item a {
+  margin: 0 5px;
+}
+
+.Record .item.slick-active h3{
+  animation:fadeInDown 1s both 1s;
+}
+
+.Record .item.slick-active h5{
+  animation:fadeInLeft 1s both 1.5s;
+}
+
+.Record .item.slick-active{
+  animation:Slick-FastSwipeIn 1s both;
+}
+
+.Record .buttons {
+  position: relative;
+}
+
+.Record {background:#000;}
+
 
 /* ==== Slider Style === */
 .Modern-Slider .item .img-fill{
-  height:55vh;
+  height:65vh;
   background:#000;
 }
 

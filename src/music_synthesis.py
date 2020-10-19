@@ -17,27 +17,27 @@ def add_chord(track, chord):
             track.addNote(0, 0, pitch, chord.timestamp, chord.duration, 100)
 
 
+def save_midifile_as_wav(midifile, filename):
+    with open(filename + ".mid", "wb") as output_file:
+        midifile.writeFile(output_file)
+    fs = FluidSynth()
+    fs.midi_to_audio(filename + '.mid', filename + '.wav')
+    return pathlib.Path(filename + '.wav')
+
+
 def midi_from_sounds(sounds, filename):
-    MyMIDI = MIDIFile(1)
+    midifile = MIDIFile(1)
 
     for s in sounds:
-        add_sound(MyMIDI, s)
+        add_sound(midifile, s)
 
-    with open(filename + ".mid", "wb") as output_file:
-        MyMIDI.writeFile(output_file)
-    fs = FluidSynth()
-    fs.midi_to_audio(filename + '.mid', filename + '.wav')
-    return pathlib.Path(filename + '.wav')
+    return save_midifile_as_wav(midifile, filename)
 
 
-def midi_from_chords(sounds, filename):
-    MyMIDI1 = MIDIFile(1)
+def midi_from_chords(chords, filename):
+    midifile = MIDIFile(1)
 
-    for s in sounds:
-        add_chord(MyMIDI1, s)
+    for c in chords:
+        add_chord(midifile, c)
 
-    with open(filename + ".mid", "wb") as output_file:
-        MyMIDI1.writeFile(output_file)
-    fs = FluidSynth()
-    fs.midi_to_audio(filename + '.mid', filename + '.wav')
-    return pathlib.Path(filename + '.wav')
+    return save_midifile_as_wav(midifile, filename)

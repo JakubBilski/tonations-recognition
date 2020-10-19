@@ -32,7 +32,7 @@ def get_chords(sounds: List[music.Sound], tonation: music.Tonation, metrum: int,
         c1.append(tmp)
     chords = c1
 
-    # merge chords ?
+    # TODO merge chords?
     # c1 = []
     # for c in chords:
     #     if any(c1) and c1[-1] == c:

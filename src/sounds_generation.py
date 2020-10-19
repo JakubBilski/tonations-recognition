@@ -51,5 +51,5 @@ def get_sounds_from_list(timestamps, notes):
             sounds_corrected.append(s)
         elif any(sounds_corrected):
             sounds_corrected[-1].duration += s.duration
-            
+
     return sounds_corrected

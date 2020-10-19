@@ -15,6 +15,10 @@ class Sound:
     @property
     def note(self):
         return self._note
+    
+    @property
+    def end_timestamp(self):
+        return self.timestamp + self.duration
 
     @note.setter
     def note(self, note):

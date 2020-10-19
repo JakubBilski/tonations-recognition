@@ -14,17 +14,13 @@ if __name__ == "__main__":
     expected_result = music.Tonation(0, None, None, 'major')
     # all transpositions
     for i in range(12):
-        tonations_with_points = get_tonations_from_sounds(sounds)
-        tonations_with_points.sort(key=lambda x: x.points, reverse=True)
-        best_tonation = tonations_with_points[0].tonation
+        tonations = get_tonations_from_sounds(sounds)
         print("melody: " + " ".join([str(sound.symbol) for sound in sounds]))
-        if expected_result == best_tonation:
-            print(f"\tSuccess! {best_tonation} = {expected_result}")
+        tonation = tonations[0]
+        if expected_result == tonation:
+            print(f"\tSuccess! {tonation} = {expected_result}")
         else:
-            print(f"\tFail! {best_tonation} != {expected_result}")
-            print("\tBest three: ")
-            for tonation_with_points in tonations_with_points[:3]:
-                print(f"\t\t{tonation_with_points}")
+            print(f"\tFail! {tonation} != {expected_result}")
         for sound in sounds:
             sound.note += 1
         expected_result.note += 1

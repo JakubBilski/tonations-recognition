@@ -74,13 +74,15 @@ def get_tonations_from_sounds(sounds):
             points_from_chord_patterns = get_points_from_chord_patterns_fit(
                 chord_types)
             points_from_tail = get_extra_points_for_tail(chord_types)
-            tonation = Tonation(base_key, 0.0, sounds[-1].timestamp, kind)
+            tonation = Tonation(base_key, 0.0, sounds[-1].end_timestamp, kind)
             tonations_and_points.append(TonationWithPoints(
                 tonation, points_from_scale,
                 points_from_chord_patterns,
                 points_from_tail
             ))
-    return tonations_and_points
+    tonations_and_points.sort(key=lambda x: x.points, reverse=True)
+    # do we want to return best tonations, or chances with tonation candidates?
+    return [tonations_and_points[0].tonation]
 
 
 def get_aligned_chord_types(sounds, tonic, subdominant, dominant):

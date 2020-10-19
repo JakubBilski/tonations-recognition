@@ -11,7 +11,7 @@ import music_synthesis
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description='Convert audio file to notes with time of occurrence')
+        description='Add chords to audio file')
     parser.add_argument('--input', '-I',
                         required=True,
                         help='Input audio file. Formats: [.mp3, .wav]',
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     sound2 = AudioSegment.from_file("chords.wav")
 
     # change volume
-    sound2 = sound2 - 13
+    sound2 = sound2 - 8
 
     # mix sounds and chords
     combined = sound1.overlay(sound2)

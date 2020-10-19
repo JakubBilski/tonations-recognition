@@ -30,7 +30,7 @@ def get_sounds_from_file(file):
 
 def get_sounds_from_list(timestamps, notes):
     # for each timeframe recognise note and
-    # merge same notes together
+    # merge same more notes together
     sounds = []
     last_note = None
     last_note_timestamp = 0.0

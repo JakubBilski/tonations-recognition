@@ -2,3 +2,4 @@ praat-parselmouth
 librosa
 pydub
 midiutil
+midi2audio

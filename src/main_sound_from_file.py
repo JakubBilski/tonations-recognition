@@ -22,4 +22,6 @@ if __name__ == "__main__":
     for file in files:
         print(file)
         sounds = sounds_generation.get_sounds_from_file(file)
-        print("\n".join([str(sound) for sound in sounds]))
+        # temporary, makes it easier to create test cases
+        for sound in sounds:
+            print(f"music.Sound({sound.note}, {round(sound.timestamp,3)}, {round(sound.duration,3)}),")

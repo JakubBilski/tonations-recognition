@@ -4,8 +4,8 @@ from flask_cors import cross_origin
 
 
 def calcOp(text):
-    print(text)
-    return text
+    
+    return "abc"
 
 app = Flask(__name__)
 

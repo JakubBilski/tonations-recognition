@@ -1,12 +1,12 @@
+from pydub import AudioSegment
 import argparse
 import pathlib
 
-import sounds_generation
-
-import music_synthesis
 import tonations_generation
+import sounds_generation
 import chords_generation
 import meter_recognision
+import music_synthesis
 
 
 def parse_args():
@@ -42,7 +42,6 @@ if __name__ == "__main__":
     music_synthesis.midi_from_sounds(sounds, 'sounds')
     music_synthesis.midi_from_chords(chords, 'chords')
 
-    from pydub import AudioSegment
     sound1 = AudioSegment.from_file("sounds.wav")
     sound2 = AudioSegment.from_file("chords.wav")
 

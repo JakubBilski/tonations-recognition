@@ -27,13 +27,22 @@ def get_chords(sounds: List[music.Sound], tonation: music.Tonation, metrum: int,
     chords = [get_tonation_chord(tonation, sound)
               for sound in sounds_at_metrum]
     
-    for i, c in enumerate(chords):
-        c.duration = metrum
-        c.timestamp = i*metrum
+    print(f"Metrum: {metrum}")
     c1 = []
+    for i, c in enumerate(chords):
+        tmp = music.Chord(c.note, i*metrum, metrum, c.kind)
+        c1.append(tmp)
+    chords = c1
+
+    print("AAAAAAAAAAA")
     for c in chords:
-        if any(c1) and c1[-1] == c:
-            c1[-1].duration += c.duration
-        else:
-            c1.append(c)
+        print(f"{c.timestamp}: {c.symbol}\t{c.duration}")
+
+    # c1 = []
+    # for c in chords:
+    #     if any(c1) and c1[-1] == c:
+    #         c1[-1].duration += c.duration
+    #     else:
+    #         c1.append(c)
+
     return c1

@@ -63,6 +63,7 @@ def add_chord1(t, chord, duration):
 def add_chord2(t, chord, duration):
     if chord.note is not None:
         for sound in chord.sounds():
+            print(f"{chord.timestamp}: {sound.symbol}\t{chord.duration}")
             pitch = sound.note + 60
             t.addNote(0, 0, pitch, chord.timestamp, chord.duration, 100)
     

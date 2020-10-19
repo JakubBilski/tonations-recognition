@@ -65,7 +65,7 @@ if __name__ == "__main__":
     sound1 = AudioSegment.from_file("sounds.wav")
     sound2 = AudioSegment.from_file("chords.wav")
 
-    sound2 = sound2 - 5
+    sound2 = sound2 - 13
 
     combined = sound1.overlay(sound2)
 

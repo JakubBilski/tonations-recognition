@@ -1,4 +1,11 @@
 
-document.querySelector('#openDialog').addEventListener('click', function (event){ 
-    console.info("AAAA");
-    window.aaaaa(event);});
+document.querySelector('#openDialog').addEventListener('click', function (event) {
+    window.dialog().showOpenDialog( {
+        properties: ['openFile']
+      }).then(result => {
+        console.log(result.canceled)
+        console.log(result.filePaths)
+      }).catch(err => {
+        console.log(err)
+      })
+});

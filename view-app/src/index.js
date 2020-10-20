@@ -12,8 +12,11 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 1000,
     height: 600,
-    webPreferences: {nodeIntegration: false,
-    preload: "open_dialog.js"}
+    webPreferences: {
+      enableRemoteModule: true,
+      nodeIntegration: false,
+      contextIsolation: false,
+    preload: path.join(__dirname, "open_dialog.js")}
     
   });
 

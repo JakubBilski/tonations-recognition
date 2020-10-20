@@ -1,6 +1,6 @@
 const dialog = require('electron').record;
 
-document.querySelector('#openDialog').addEventListener('click', function (event) {
+window.aaaaa = function (event) {
     dialog.showOpenDialog(mainWindow, {
         properties: ['openFile']
       }).then(result => {
@@ -9,4 +9,4 @@ document.querySelector('#openDialog').addEventListener('click', function (event)
       }).catch(err => {
         console.log(err)
       })
-});
+}

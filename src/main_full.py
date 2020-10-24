@@ -5,7 +5,7 @@ import pathlib
 import tonations_generation
 import sounds_generation
 import chords_generation
-import meter_recognision
+import meter_recognition
 import music_synthesis
 
 
@@ -24,15 +24,15 @@ if __name__ == "__main__":
     args = parse_args()
     sounds = sounds_generation.get_sounds_from_file(args.input)
 
-    meter = meter_recognision.get_meter(args.input, sounds)
-    sounds = meter_recognision.update_sounds(meter, sounds)
+    meter = meter_recognition.get_meter(args.input, sounds)
+    sounds = meter_recognition.update_sounds(meter, sounds)
     print(f"Metrum: {meter}")
 
     print("Sounds:")
     print("\n".join([f"{sound.timestamp:.3f}: {sound.symbol}\t{sound.duration:.3f}" for sound in sounds]))  # noqa
 
     tonation = tonations_generation.get_tonations_from_sounds(sounds)
-    tonation = tonation[0].tonation
+    tonation = tonation[0]
     chords = chords_generation.get_chords(sounds, tonation, meter,
                                           sounds[0].timestamp)
 

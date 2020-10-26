@@ -16,7 +16,7 @@ def get_other_rec_test_models():
     result = []
     file_path = pathlib.Path("data\\other_rec\\ach_spij_C.wav")
     sounds = [
-        music.Sound(None, 0.0, 0.7),
+        music.Sound(None, 0.0, 0.7, 1),
         music.Sound(0, 0.7, 0.53),
         music.Sound(7, 1.23, 1.09),
         music.Sound(None, 2.32, 0.21),

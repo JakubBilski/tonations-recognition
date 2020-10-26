@@ -3,6 +3,7 @@ class Sound:
         self.note = note
         self.timestamp = timestamp
         self.duration = duration
+        self.beat_fraction = None
 
     @property
     def symbol(self):

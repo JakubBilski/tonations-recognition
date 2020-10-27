@@ -1,8 +1,9 @@
 class Sound:
-    def __init__(self, note, timestamp=None, duration=None):
+    def __init__(self, note, timestamp=None, duration=None, beat_fraction=None):
         self.note = note
         self.timestamp = timestamp
         self.duration = duration
+        self.beat_fraction = beat_fraction
 
     @property
     def symbol(self):

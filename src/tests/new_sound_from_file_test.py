@@ -46,7 +46,7 @@ def match_sounds(sounds, test_sounds):
                 d[i-1][j-1] + substitution(test_sounds[j-1], sounds[i-1])
             )
 
-    return d[-1][-1]
+    return 1-d[-1][-1]/len(test_sounds)
 
 
 def main(args):

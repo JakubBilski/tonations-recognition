@@ -1,6 +1,7 @@
 import music
 import pathlib
 
+
 class TestModel:
     def __init__(self, file_path, sounds, tonations, chords):
         self.file_path = file_path
@@ -8,9 +9,11 @@ class TestModel:
         self.tonations = tonations
         self.chords = chords
 
+
 def get_all_test_models():
     models = get_other_rec_test_models()
     return models
+
 
 def get_other_rec_test_models():
     result = []
@@ -60,7 +63,7 @@ def get_other_rec_test_models():
         music.Sound(2, 15.47, 0.55),
         music.Sound(0, 16.02, 0.84),
         music.Sound(None, 16.86, 1.58)
-        ]
+    ]
     tonations = [music.Tonation(0, 0.0, sounds[-1].end_timestamp, "major")]
     result.append(TestModel(file_path, sounds, tonations, None))
 
@@ -121,7 +124,7 @@ def get_other_rec_test_models():
         music.Sound(7, 29.365, 0.98),
         music.Sound(5, 30.345, 0.78),
         music.Sound(None, 31.125, 1.33),
-        ]
+    ]
     tonations = [music.Tonation(5, 0.0, sounds[-1].end_timestamp, "major")]
     result.append(TestModel(file_path, sounds, tonations, None))
 
@@ -164,10 +167,10 @@ def get_other_rec_test_models():
         music.Sound(7, 13.431, 0.42),
         music.Sound(5, 13.851, 0.7),
         music.Sound(None, 14.551, 1.45),
-        ]
+    ]
     tonations = [music.Tonation(5, 0.0, sounds[-1].end_timestamp, "major")]
     result.append(TestModel(file_path, sounds, tonations, None))
-    
+
     file_path = pathlib.Path("data\\other_rec\\lato_lato_C.wav")
     sounds = [
         music.Sound(None, 0.0, 0.554),
@@ -212,10 +215,10 @@ def get_other_rec_test_models():
         music.Sound(None, 14.424, 0.15),
         music.Sound(2, 14.574, 0.96),
         music.Sound(None, 15.534, 1.35),
-        ]
+    ]
     tonations = [music.Tonation(0, 0.0, sounds[-1].end_timestamp, "major")]
     result.append(TestModel(file_path, sounds, tonations, None))
-    
+
     file_path = pathlib.Path("data\\other_rec\\opadły_mgły_C.wav")
     sounds = [
         music.Sound(None, 0.0, 0.581),
@@ -254,10 +257,10 @@ def get_other_rec_test_models():
         music.Sound(11, 15.361, 0.19),
         music.Sound(0, 15.551, 0.83),
         music.Sound(None, 16.381, 1.58),
-        ]
+    ]
     tonations = [music.Tonation(0, 0.0, sounds[-1].end_timestamp, "major")]
     result.append(TestModel(file_path, sounds, tonations, None))
-    
+
     file_path = pathlib.Path("data\\other_rec\\opadły_mgły_D.wav")
     sounds = [
         music.Sound(None, 0.0, 0.491),
@@ -310,10 +313,10 @@ def get_other_rec_test_models():
         music.Sound(1, 14.801, 0.21),
         music.Sound(2, 15.011, 0.75),
         music.Sound(None, 15.761, 1.14),
-        ]
+    ]
     tonations = [music.Tonation(2, 0.0, sounds[-1].end_timestamp, "major")]
     result.append(TestModel(file_path, sounds, tonations, None))
-    
+
     file_path = pathlib.Path("data\\other_rec\\o_moj_rozmarunie_c.wav")
     sounds = [
         music.Sound(None, 0.0, 0.604),
@@ -367,10 +370,10 @@ def get_other_rec_test_models():
         music.Sound(2, 22.574, 0.29),
         music.Sound(0, 22.864, 0.6),
         music.Sound(None, 23.464, 1.46),
-        ]
+    ]
     tonations = [music.Tonation(0, 0.0, sounds[-1].end_timestamp, "minor")]
     result.append(TestModel(file_path, sounds, tonations, None))
-    
+
     file_path = pathlib.Path("data\\other_rec\\o_moj_rozmarunie_e.wav")
     sounds = [
         music.Sound(None, 0.0, 0.633),
@@ -420,10 +423,10 @@ def get_other_rec_test_models():
         music.Sound(6, 19.673, 0.31),
         music.Sound(4, 19.983, 0.67),
         music.Sound(None, 20.653, 1.37),
-        ]
+    ]
     tonations = [music.Tonation(4, 0.0, sounds[-1].end_timestamp, "minor")]
     result.append(TestModel(file_path, sounds, tonations, None))
-    
+
     file_path = pathlib.Path("data\\other_rec\\panie_JanieC.wav")
     sounds = [
         music.Sound(None, 0.0, 0.742),
@@ -465,10 +468,10 @@ def get_other_rec_test_models():
         music.Sound(7, 12.942, 0.37),
         music.Sound(0, 13.312, 0.58),
         music.Sound(None, 13.892, 1.31),
-        ]
+    ]
     tonations = [music.Tonation(0, 0.0, sounds[-1].end_timestamp, "major")]
     result.append(TestModel(file_path, sounds, tonations, None))
-    
+
     file_path = pathlib.Path("data\\other_rec\\przybieżeli.wav")
     sounds = [
         music.Sound(None, 0.0, 0.542),
@@ -526,10 +529,10 @@ def get_other_rec_test_models():
         music.Sound(2, 18.202, 0.61),
         music.Sound(0, 18.812, 1.06),
         music.Sound(None, 19.872, 1.28),
-        ]
+    ]
     tonations = [music.Tonation(0, 0.0, sounds[-1].end_timestamp, "major")]
     result.append(TestModel(file_path, sounds, tonations, None))
-    
+
     file_path = pathlib.Path("data\\other_rec\\płonie_ognisko_c.wav")
     sounds = [
         music.Sound(None, 0.0, 0.74),
@@ -569,10 +572,10 @@ def get_other_rec_test_models():
         music.Sound(11, 20.21, 0.7),
         music.Sound(0, 20.91, 1.6),
         music.Sound(None, 22.51, 0.33),
-        ]
+    ]
     tonations = [music.Tonation(0, 0.0, sounds[-1].end_timestamp, "minor")]
     result.append(TestModel(file_path, sounds, tonations, None))
-    
+
     file_path = pathlib.Path("data\\other_rec\\sto_lat_C.wav")
     sounds = [
         music.Sound(None, 0.0, 0.813),
@@ -622,7 +625,7 @@ def get_other_rec_test_models():
         music.Sound(11, 15.643, 0.47),
         music.Sound(0, 16.113, 0.95),
         music.Sound(None, 17.063, 1.49),
-        ]
+    ]
     tonations = [music.Tonation(0, 0.0, sounds[-1].end_timestamp, "major")]
     result.append(TestModel(file_path, sounds, tonations, None))
     return result

@@ -20,11 +20,12 @@ def parse_args():
     args = parser.parse_args()
     return args
 
+
 class Mismatch(music.Sound):
     def __init__(self, note_computed, note_model, timestamp, duration):
         super().__init__(note_computed, timestamp, duration)
         self.note_model = note_model
-    
+
     @property
     def symbol_model(self):
         if self.note_model is None:
@@ -35,6 +36,7 @@ class Mismatch(music.Sound):
 
     def __str__(self):
         return f"{round(self.timestamp, 3)} - {round(self.end_timestamp, 3)}: Expected {self.symbol_model}, got {self.symbol}"
+
 
 def match_sounds(sounds_computed, sounds_model):
     duration = sounds_computed[-1].end_timestamp
@@ -53,13 +55,15 @@ def match_sounds(sounds_computed, sounds_model):
             next_timestamp = sounds_model[j].end_timestamp
             j = j + 1
         if note_computed != note_model:
-            mismatches.append(Mismatch(note_computed, note_model, timestamp, next_timestamp-timestamp))
+            mismatches.append(Mismatch(note_computed, note_model,
+                                       timestamp, next_timestamp-timestamp))
         timestamp = next_timestamp
 
     mismatches_duration = sum([m.duration for m in mismatches])
     if duration != duration_model:
         mismatches_duration += abs(duration - duration_model)
     return 1-mismatches_duration/duration, mismatches
+
 
 if __name__ == "__main__":
     args = parse_args()
@@ -78,7 +82,8 @@ if __name__ == "__main__":
             color = '\033[92m'
         else:
             color = '\033[91m'
-        print(f"{test.file_path}: {color}{round(match_factor*100, 3)}% \033[0m match")
+        print(
+            f"{test.file_path}: {color}{round(match_factor*100, 3)}% \033[0m match")
         if match_factor < verbose_factor_threshold:
             print("\tMismatches:")
             no_too_short_mismatches = 0
@@ -87,4 +92,5 @@ if __name__ == "__main__":
                     print(f"\t\t{mismatch}\n")
                 else:
                     no_too_short_mismatches += 1
-            print(f"\tRejected {no_too_short_mismatches} mismatches shorter than {verbose_duration_threshold}")
+            print(
+                f"\tRejected {no_too_short_mismatches} mismatches shorter than {verbose_duration_threshold}")

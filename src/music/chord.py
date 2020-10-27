@@ -2,23 +2,29 @@ from . import sound
 
 
 class Chord(sound.Sound):
-    def __init__(self, note, timestamp, duration, kind):
-        super().__init__(note, timestamp, duration)
+    def __init__(self, note=None, timestamp=None, duration=None, symbol=None,
+                 kind=None):
+        super().__init__(note, timestamp, duration, None, symbol)
         self.kind = kind
 
     def parallel(self):
         if "major" in self.kind:
-            return Chord(self.note+9, self.timestamp, self.duration, self.kind.replace("major", "minor"))
+            return Chord(self.note+9, self.timestamp, self.duration,
+                         self.kind.replace("major", "minor"))
         else:
-            return Chord(self.note+3, self.timestamp, self.duration, self.kind.replace("minor", "major"))
+            return Chord(self.note+3, self.timestamp, self.duration,
+                         self.kind.replace("minor", "major"))
 
     def sounds(self):
         if self.kind == "major":
-            return [sound.Sound(self.note), sound.Sound(self.note+4), sound.Sound(self.note+7)]
+            return [sound.Sound(self.note), sound.Sound(self.note+4),
+                    sound.Sound(self.note+7)]
         elif self.kind == "minor":
-            return [sound.Sound(self.note), sound.Sound(self.note+3), sound.Sound(self.note+7)]
+            return [sound.Sound(self.note), sound.Sound(self.note+3),
+                    sound.Sound(self.note+7)]
         elif self.kind == "major7":
-            return [sound.Sound(self.note), sound.Sound(self.note+4), sound.Sound(self.note+7), sound.Sound(self.note+10)]
+            return [sound.Sound(self.note), sound.Sound(self.note+4),
+                    sound.Sound(self.note+7), sound.Sound(self.note+10)]
         else:
             raise Exception("Not supported chord kind")
 

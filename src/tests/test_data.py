@@ -33,12 +33,12 @@ def get_other_rec_test_models():
                 if current_testcase is not None:
                     current_testcase.sounds = currect_sounds
                     result.append(current_testcase)
-                current_testcase = TestModel(pathlib.Path(line))
+                current_testcase = TestModel(pathlib.Path(line.strip()))
                 currect_sounds = []
             elif line.startswith('t'):
                 kind = 'major' if line.split()[1].isupper() else 'minor'
                 current_testcase.tonations = [
-                    Tonation(line.split()[1], 0, 0, kind)
+                    Tonation(symbol=line.split()[1], kind=kind)
                 ]
             elif len(line.split()) == 3:
                 spl = line.split()

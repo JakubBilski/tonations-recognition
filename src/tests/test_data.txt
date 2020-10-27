@@ -1,4 +1,4 @@
-"data\\other_rec\\ach_spij_C.wav" 
+data/other_rec/ach_spij_C.wav
 
 c 4 0.53 
 g 1.23  1.09 
@@ -31,9 +31,10 @@ c 14.34  0.6
 g 14.94  0.52      
 d 15.47  0.55 
 c 16.02  0.84 
+
 t C
 
-"data\\other_rec\\gdy_sliczna_panna_F.wav" 
+data/other_rec/gdy_sliczna_panna_F.wav 
 
 c 4 2 
 d 4 4 
@@ -85,7 +86,7 @@ f 4 2
 t F
 
 
-"data\\other_rec\\jedzie_pocią_z_daleka_F.wav" 
+data/other_rec/jedzie_pocią_z_daleka_F.wav 
 
 c 4 8 
 f 4 8 
@@ -119,7 +120,7 @@ f 4 4
 t F 
 
 
-"data\\other_rec\\lato_lato_C.wav" 
+data/other_rec/lato_lato_C.wav 
 
 g 4 2
 g 4 2 
@@ -155,7 +156,7 @@ d 4 1
 t C  
 
 
-"data\\other_rec\\opadły_mgły_C.wav" 
+data/other_rec/opadły_mgły_C.wav 
 
 c 0.581  0.67 
 d 1.251  0.45 
@@ -191,7 +192,7 @@ c 15.551  0.83
 t C
 
 
-"data\\other_rec\\opadły_mgły_D.wav" 
+data/other_rec/opadły_mgły_D.wav 
 
 
 d 0.491  0.68 
@@ -231,7 +232,7 @@ d 15.011  0.75
 t D
 
 
-"data\\other_rec\\o_moj_rozmarunie_c.wav" 
+data/other_rec/o_moj_rozmarunie_c.wav 
 
 c 0.604  0.86 
 c 1.464  0.35 
@@ -283,7 +284,7 @@ c 22.864  0.6
 t c
 
 
-"data\\other_rec\\o_moj_rozmarunie_e.wav" 
+data/other_rec/o_moj_rozmarunie_e.wav 
 
 e 4 8
 e 4 8
@@ -341,7 +342,7 @@ e 4 2
 t e
 
 
-"data\\other_rec\\panie_JanieC.wav" 
+data/other_rec/panie_JanieC.wav 
 
 c 4 4 
 d 4 4 
@@ -379,7 +380,7 @@ c 4 2
 t C
 
 
-"data\\other_rec\\przybieżeli.wav" 
+data/other_rec/przybieżeli.wav 
 
 c 4 8
 h 3 8 
@@ -430,7 +431,7 @@ c 4 4
 t C 
 
 
-"data\\other_rec\\płonie_ognisko_c.wav" 
+data/other_rec/płonie_ognisko_c.wav 
 
 
 c 0.74  0.38 
@@ -473,7 +474,7 @@ c 20.91  1.6
 t c
 
 
-"data\\other_rec\\sto_lat_C.wav" 
+data/other_rec/sto_lat_C.wav 
 
 
 g 4 4 

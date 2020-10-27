@@ -28,7 +28,7 @@ def get_chords(sounds: List[music.Sound], tonation: music.Tonation, metrum: int,
     
     c1 = []
     for i, c in enumerate(chords):
-        tmp = music.Chord(c.note, i*metrum, metrum, c.kind)
+        tmp = music.Chord(c.note, i*metrum, metrum, kind=c.kind)
         c1.append(tmp)
     chords = c1
 

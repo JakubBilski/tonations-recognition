@@ -74,7 +74,7 @@ def get_tonations_from_sounds(sounds):
             points_from_chord_patterns = get_points_from_chord_patterns_fit(
                 chord_types)
             points_from_tail = get_extra_points_for_tail(chord_types)
-            tonation = Tonation(base_key, 0.0, sounds[-1].end_timestamp, kind)
+            tonation = Tonation(base_key, 0.0, sounds[-1].end_timestamp, kind=kind)
             tonations_and_points.append(TonationWithPoints(
                 tonation, points_from_scale,
                 points_from_chord_patterns,

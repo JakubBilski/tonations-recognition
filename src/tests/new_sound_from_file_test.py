@@ -56,7 +56,7 @@ def main(args):
     for test in tests:
         sounds = sounds_generation.get_sounds_from_file(test.file_path)
         meter, beats = meter_recognition.get_meter(test.file_path, sounds)
-        sounds = meter_recognition.update_sounds(meter, beats, sounds)
+        sounds = meter_recognition.update_sounds1(meter, beats, sounds)
         match_factor = match_sounds(sounds, test.sounds)
 
         print(

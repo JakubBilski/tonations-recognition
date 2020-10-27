@@ -3,10 +3,7 @@ class Sound:
         self.note = note
         self.timestamp = timestamp
         self.duration = duration
-<<<<<<< HEAD
-=======
         self.beat_fraction = beat_fraction
->>>>>>> ff7ba69... Rewrite test data
 
     @property
     def symbol(self):

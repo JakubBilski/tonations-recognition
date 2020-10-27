@@ -41,9 +41,9 @@ def match_sounds(sounds, test_sounds):
     for i in range(1, m):
         for j in range(1, n):
             d[i][j] = min(
-                d[i-1][j] + deletion(test_sounds[i-1]),
-                d[i][j-1] + insertion(sounds[j-1]),
-                d[i-1][j-1] + substitution(sounds[j-1, test_sounds[i-1]])
+                d[i-1][j] + deletion(sounds[i-1]),
+                d[i][j-1] + insertion(test_sounds[j-1]),
+                d[i-1][j-1] + substitution(test_sounds[j-1], sounds[i-1])
             )
 
     return d[-1][-1]

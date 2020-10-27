@@ -3,9 +3,10 @@ import copy
 
 
 class Tonation(chord.Chord):
-    def __init__(self, note, timestamp, duration, kind):
-        super().__init__(note, timestamp, duration, kind)
-        self.tonic = chord.Chord(note, timestamp, duration, kind)
+    def __init__(self, note=None, timestamp=None, duration=None, symbol=None,
+                 kind=None):
+        super().__init__(note, timestamp, duration, symbol, kind)
+        self.tonic = chord.Chord(note, timestamp, duration, symbol, kind)
         self.dominant = copy.deepcopy(self.tonic)
         self.dominant.note += 7
         self.dominant.kind = "major7"

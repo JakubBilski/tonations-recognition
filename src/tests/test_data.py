@@ -38,7 +38,7 @@ def get_other_rec_test_models():
             elif line.startswith('t'):
                 kind = 'major' if line.split()[1].isupper() else 'minor'
                 current_testcase.tonations = [
-                    Tonation(line.split()[1], 0, 0, kind)
+                    Tonation(symbol=line.split()[1], kind=kind)
                 ]
             elif len(line.split()) == 3:
                 spl = line.split()

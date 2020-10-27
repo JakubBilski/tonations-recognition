@@ -3,6 +3,8 @@ from time import time
 import librosa
 from librosa import beat
 
+from music.sound import Sound
+
 
 def get_meter(filename, sounds):
     # TODO use sounds?
@@ -87,17 +89,15 @@ def tim_to_duration(tim):
             result.append(16//num)
             tim -= num
 
-    result1 = []
-    for i in range(len(result)-1):
-        result1.append(str(result[i])+'~')
-    result1.append(result[-1])
-    return result1
-    
+    # result1 = []
+    # for i in range(len(result)-1):
+    #     result1.append(str(result[i])+'~')
+    # result1.append(result[-1])
+    return result
 
 
 # def symbol_to_lilypond(symbol):
 #     s = symbol.lower().replace("#", "is")
-
 
 
 def update_sounds1(tempo, beats, sounds):
@@ -118,43 +118,61 @@ def update_sounds1(tempo, beats, sounds):
         id = f'{s.duration:.3f}'
         dur[id] = dur.get(id, 0) + 1
 
-    print('Sound duration:')
-    for key in sorted(dur):
-        s_d = simple_sound_dur2(tempo, beats, float(key))
-        print(f"\t{key}: {dur[key]}\t{s_d}")
+    # print('Sound duration:')
+    # for key in sorted(dur):
+    #     s_d = simple_sound_dur2(tempo, beats, float(key))
+    #     print(f"\t{key}: {dur[key]}\t{s_d}")
 
     for i in range(len(sounds)):
         sounds[i].beat_id = beat_id_closest_to_timestamp(
             beats, sounds[i].timestamp)
 
+    # print()
+    # print('Sounds with beats:')
+    # for s in sounds:
+    #     print(
+    #         f"\t{s.timestamp:.3f} {s.symbol.ljust(5)}\t{s.duration:.3f} {beats[s.beat_id]:.3f} {beats[s.beat_id+1]:.3f}\t{beats[s.beat_id+1]-beats[s.beat_id]:.3f}")
+
+    sounds1 = []
     print()
     print('Sounds with beats:')
     for s in sounds:
+        duration = tim_to_duration(simple_sound_beat_dur3(beats, s))
+        if (len(duration) >= 3) and \
+            (duration[1] == duration[0]*2) and \
+                (duration[2] == duration[1]*2):
+            sounds1.append(Sound(
+                note=s.note,
+                beat_fraction=str(duration[0]//2)+'.'
+            ))
+        elif (len(duration) >= 2) and (duration[1] == duration[0]*2):
+            sounds1.append(Sound(
+                note=s.note,
+                beat_fraction=str(duration[0])+'.'
+            ))
+        else:
+            sounds1.append(Sound(
+                note=s.note,
+                beat_fraction=str(duration[0])
+            ))
+        
+        
         print(
-            f"\t{s.timestamp:.3f} {s.symbol.ljust(5)}\t{s.duration:.3f} {beats[s.beat_id]:.3f} {beats[s.beat_id+1]:.3f}\t{beats[s.beat_id+1]-beats[s.beat_id]:.3f}")
+            f"\t{s.timestamp:.3f} {s.symbol.ljust(5)}\t{s.duration:.3f} {duration} {sounds1[-1].beat_fraction}")
 
-    print()
-    print('Sounds with beats:')
-    for s in sounds:
-        print(f"\t{s.timestamp:.3f} {s.symbol.ljust(5)}\t{s.duration:.3f} {simple_sound_beat_dur3(beats, s)}")
-
-    
     with open("result.ly", 'w') as f:
         print('\\version "2.12.3"', file=f)
+        print('\\score {', file=f)
         print('\\relative c\' {', file=f)
         print('\\time 4/4', file=f)
-        for s in sounds:
-            tim = simple_sound_beat_dur3(beats, s)
-            durations = tim_to_duration(tim)
-            for dur in durations:
-                if s.note is None:
-                    if '~' in str(dur):
-                        dur = dur[:-1]
-                    f.write(f" r{dur}")
-                else:
-                    f.write(f" {s.symbol.lower().replace('#', 'is')}{dur}")
+        for s in sounds1:
+            if s.note is None:
+                f.write(f" r{s.beat_fraction}")
+            else:
+                f.write(f" {s.symbol.lower().replace('#', 'is')}{s.beat_fraction}")
         print('', file=f)
-        # print('\\midi', file=f)
+        print('}', file=f)
+        print('\\midi{}', file=f)
         print('}', file=f)
 
-    return sounds
+    return sounds1

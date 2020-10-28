@@ -85,6 +85,23 @@ def visualize_d(d, sounds, test_sounds):
         print(f"{color}{r0.ljust(8)}\t{r1.ljust(8)}{bcolors.ENDC}")
 
 
+def move_sounds(sounds, coef):
+    sound1 = []
+    for s in sounds:
+        bf = s.beat_fraction
+        d = False
+        if '.' in bf:
+            d = True
+            bf = bf[:-1]
+        bf = str(int(bf)*coef)
+        if d:
+            bf += '.'
+        sound1.append(
+            music.Sound(note=s.note, beat_fraction=bf)
+        )
+    return sound1
+
+
 def main(args):
     tests = test_data.get_all_test_models()
 
@@ -93,7 +110,14 @@ def main(args):
         sounds = sounds_generation.get_sounds_from_file(test.file_path)
         meter, beats = meter_recognition.get_meter(test.file_path, sounds)
         sounds = meter_recognition.update_sounds(meter, beats, sounds)
-        match_factor, d_list = match_sounds(sounds, test.sounds)
+        match_factor = -1000
+        d_list = None
+        for i in [4, 2, 1, 1/2, 1/4]:
+            test_sounds = move_sounds(test.sounds, i)
+            match_factor_1, d_list_1 = match_sounds(sounds, test_sounds)
+            if match_factor_1 > match_factor:
+                match_factor = match_factor_1
+                d_list = d_list_1
 
         print(
             f"{test.file_path}: {round(match_factor*100, 3)}")

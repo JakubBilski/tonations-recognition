@@ -18,7 +18,7 @@ def parse_args():
 
 
 def substitution(s1: music.Sound, s2: music.Sound):
-    return int((s1.note != s2.note) or (s1.beat_fraction != s2.beat_fraction))
+    return int((s1.note != s2.note) or (s1.duration_signature != s2.duration_signature))
 
 
 def deletion(s: music.Sound):
@@ -72,11 +72,11 @@ def visualize_d(d, sounds, test_sounds):
         if r[0] is None:
             r0 = ""
         else:
-            r0 = f"{str(r[0].symbol).ljust(5)} {r[0].beat_fraction.ljust(3)}"
+            r0 = f"{str(r[0].symbol).ljust(5)} {r[0].duration_signature.ljust(3)}"
         if r[1] is None:
             r1 = ""
         else:
-            r1 = f"{str(r[1].symbol).ljust(5)} {r[1].beat_fraction.ljust(3)}"
+            r1 = f"{str(r[1].symbol).ljust(5)} {r[1].duration_signature.ljust(3)}"
         
         if (r[2] != 0) or substitution(r[0], r[1]) != 0:
             color = bcolors.FAIL
@@ -85,21 +85,30 @@ def visualize_d(d, sounds, test_sounds):
         print(f"{color}{r0.ljust(8)}\t{r1.ljust(8)}{bcolors.ENDC}")
 
 
-def main(args):
+def main(args, visualize=True):
     tests = test_data.get_all_test_models()
 
     print("-----------SOUNDS TEST-----------------")
+    match_factor_sum = 0
     for test in tests:
         sounds = sounds_generation.get_sounds_from_file(test.file_path)
         meter, beats = meter_recognition.get_meter(test.file_path, sounds)
         sounds = meter_recognition.update_sounds1(meter, beats, sounds)
         match_factor, d_list = match_sounds(sounds, test.sounds)
-
-        print(
-            f"{test.file_path}: {round(match_factor*100, 3)}")
-        visualize_d(d_list, sounds, test.sounds)
-
+        match_factor_sum += match_factor*100
+        if visualize:
+            print(
+                f"{test.file_path}(meter {meter}): {round(match_factor*100, 3)}")
+            visualize_d(d_list, sounds, test.sounds)
+    return match_factor_sum/len(tests)
 
 if __name__ == "__main__":
     args = parse_args()
+    for rec_meth in ["compare_absolute", "compare_adjacent"]:
+        meter_recognition.RECOGNITION_METHOD = rec_meth
+        for disc_val in range(0, 10):
+            meter_recognition.DOTTED_NOTES_DISCRIMINATOR = disc_val*0.1
+            print(f"{rec_meth} {disc_val*0.1}: {main(args, visualize=False)}")
+    meter_recognition.RECOGNITION_METHOD = "compare_absolute"
+    meter_recognition.DOTTED_NOTES_DISCRIMINATOR = 0.5
     main(args)

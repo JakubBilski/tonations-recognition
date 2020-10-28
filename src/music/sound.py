@@ -21,13 +21,14 @@ REVERSE_SYMBOLS.update(
 
 class Sound:
     def __init__(self, note=None, timestamp=None, duration=None,
-                 beat_fraction=None, symbol=None):
+                 duration_signature=None, symbol=None):
         self.note = note
         if symbol is not None:
             self.note = REVERSE_SYMBOLS[symbol]
         self.timestamp = timestamp
         self.duration = duration
-        self.beat_fraction = beat_fraction
+        self.duration_signature = duration_signature
+        self.beat_fraction = None
 
     @property
     def symbol(self):

@@ -43,11 +43,15 @@ def get_sounds_from_list(timestamps, notes):
     end_time = timestamps[-1]
     sounds.append(music.Sound(last_note, last_note_timestamp,
                               end_time-last_note_timestamp))
-
+    
+    if sounds[0].note == None:
+        sounds = sounds[1:]
+    if sounds[-1].note == None:
+        sounds = sounds[:-1]
     # remove badly recognised notes (too short)
     sounds_corrected = []
     for s in sounds:
-        if s.duration > 0.1:
+        if s.duration > 0.2 or (s.duration > 0.1 and s.note != None):
             sounds_corrected.append(s)
         elif any(sounds_corrected):
             sounds_corrected[-1].duration += s.duration

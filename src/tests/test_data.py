@@ -22,7 +22,7 @@ def get_all_test_models():
 def get_other_rec_test_models():
     result = []
     test_data_file = pathlib.Path(
-        os.path.realpath(__file__)).parent / "test_data.txt"
+        os.path.realpath(__file__)).parent / "test_data_clear.txt"
 
     current_testcase = None
     currect_sounds = None
@@ -43,9 +43,9 @@ def get_other_rec_test_models():
             elif len(line.split()) == 3:
                 spl = line.split()
                 currect_sounds.append(
-                    Sound(symbol=spl[0], beat_fraction=spl[2]))
+                    Sound(symbol=spl[0], duration_signature=spl[2]))
             elif line.startswith('r'):
                 spl = line.split()
                 currect_sounds.append(
-                    Sound(note=None, beat_fraction=spl[1]))
+                    Sound(note=None, duration_signature=spl[1]))
     return result

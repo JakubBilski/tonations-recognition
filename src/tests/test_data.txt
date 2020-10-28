@@ -86,7 +86,7 @@ f 4 2
 t F
 
 
-data/other_rec/jedzie_pocią_z_daleka_F.wav 
+data/other_rec/jedzie_pociag_z_daleka_F.wav 
 
 c 4 8 
 f 4 8 
@@ -156,7 +156,7 @@ d 4 1
 t C  
 
 
-data/other_rec/opadły_mgły_C.wav 
+data/other_rec/opadly_mgly_C.wav 
 
 c 0.581  0.67 
 d 1.251  0.45 
@@ -192,7 +192,7 @@ c 15.551  0.83
 t C
 
 
-data/other_rec/opadły_mgły_D.wav 
+data/other_rec/opadly_mgly_D.wav 
 
 
 d 0.491  0.68 
@@ -380,7 +380,7 @@ c 4 2
 t C
 
 
-data/other_rec/przybieżeli.wav 
+data/other_rec/przybiezeli.wav 
 
 c 4 8
 b 3 8 
@@ -431,7 +431,7 @@ c 4 4
 t C 
 
 
-data/other_rec/płonie_ognisko_c.wav 
+data/other_rec/plonie_ognisko_c.wav 
 
 
 c 0.74  0.38 

@@ -36,38 +36,38 @@ def match_sounds(sounds, test_sounds):
          for _ in range(m)]
 
     for i in range(m):
-        d[i][0] = i
+        d[i][0] = (i, -1)
     for j in range(n):
-        d[0][j] = j
+        d[0][j] = (j, 1)
 
     for i in range(1, m):
         for j in range(1, n):
             d[i][j] = min(
-                (d[i-1][j] + deletion(sounds[i-1]), -1),
-                (d[i][j-1] + insertion(test_sounds[j-1]), 1),
-                (d[i-1][j-1] + substitution(test_sounds[j-1], sounds[i-1]), 0),
+                (d[i-1][j][0] + deletion(sounds[i-1]), -1),
+                (d[i][j-1][0] + insertion(test_sounds[j-1]), 1),
+                (d[i-1][j-1][0] + substitution(test_sounds[j-1], sounds[i-1]), 0),
                 key=lambda val: val[0]
             )
 
-    return 1-d[-1][-1]/len(test_sounds), d
+    return 1-d[-1][-1][0]/len(test_sounds), d
 
 
 def visualize_d(d, sounds, test_sounds):
     result = []
     m = len(sounds)
     n = len(test_sounds)
-    while (m > 0) and (n > 0):
+    while (m > 0) or (n > 0):
         act_scoring = d[m][n]
         if act_scoring[1] == -1:
-            result.append((sounds[-1], None), act_scoring[1])
             m -= 1
+            result.append((sounds[m], None, act_scoring[1]))
         elif act_scoring[1] == 1:
-            result.append((None, test_sounds[-1]), act_scoring[1])
             n -= 1
+            result.append((None, test_sounds[n], act_scoring[1]))
         else:
-            result.append((sounds[-1], test_sounds[-1]), act_scoring[1])
             m -= 1
             n -= 1
+            result.append((sounds[m], test_sounds[n], act_scoring[1]))
     for r in result:
         if r[0] is None:
             r0 = ""

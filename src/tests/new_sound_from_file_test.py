@@ -90,12 +90,15 @@ def move_sounds(sounds, coef):
     for s in sounds:
         bf = s.beat_fraction
         d = False
-        if '.' in bf:
+        if bf.endswith('.'):
             d = True
             bf = bf[:-1]
-        bf = str(int(bf)*coef)
+        try:
+            bf = str(int(int(bf)*coef))
+        except Exception:
+            bf = ""
         if d:
-            bf += '.'
+            bf = f"{bf}."
         sound1.append(
             music.Sound(note=s.note, beat_fraction=bf)
         )
@@ -112,16 +115,20 @@ def main(args):
         sounds = meter_recognition.update_sounds(meter, beats, sounds)
         match_factor = -1000
         d_list = None
+        test_sounds = None
         for i in [4, 2, 1, 1/2, 1/4]:
-            test_sounds = move_sounds(test.sounds, i)
-            match_factor_1, d_list_1 = match_sounds(sounds, test_sounds)
+            test_sounds_1 = move_sounds(test.sounds, i)
+            match_factor_1, d_list_1 = match_sounds(sounds, test_sounds_1)
             if match_factor_1 > match_factor:
                 match_factor = match_factor_1
                 d_list = d_list_1
+                test_sounds = test_sounds_1
+
+        # match_factor, d_list = match_sounds(sounds, test.sounds)
 
         print(
             f"{test.file_path}: {round(match_factor*100, 3)}")
-        visualize_d(d_list, sounds, test.sounds)
+        visualize_d(d_list, sounds, test_sounds)
 
 
 if __name__ == "__main__":

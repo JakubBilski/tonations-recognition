@@ -44,4 +44,8 @@ def get_other_rec_test_models():
                 spl = line.split()
                 currect_sounds.append(
                     Sound(symbol=spl[0], beat_fraction=spl[2]))
+            elif line.startswith('r'):
+                spl = line.split()
+                currect_sounds.append(
+                    Sound(note=None, beat_fraction=spl[1]))
     return result

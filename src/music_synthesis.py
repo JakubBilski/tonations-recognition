@@ -41,3 +41,20 @@ def midi_from_chords(chords, filename):
         add_chord(midifile, c)
 
     return save_midifile_as_wav(midifile, filename)
+
+
+def ly_from_sounds(sounds, filename):
+    with open(filename, 'w') as f:
+        print('\\version "2.12.3"', file=f)
+        print('\\score {', file=f)
+        print('\\relative c\' {', file=f)
+        print('\\time 4/4', file=f)
+        for s in sounds:
+            if s.note is None:
+                f.write(f" r{s.beat_fraction}")
+            else:
+                f.write(f" {s.symbol.lower().replace('#', 'is')}{s.beat_fraction}")
+        print('', file=f)
+        print('}', file=f)
+        print('\\midi{}', file=f)
+        print('}', file=f)

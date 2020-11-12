@@ -31,7 +31,10 @@ def midi_from_sounds(sounds, filename):
     for s in sounds:
         add_sound(midifile, s)
 
-    return save_midifile_as_wav(midifile, filename)
+    with open(filename + ".mid", "wb") as output_file:
+        midifile.writeFile(output_file)
+
+    return pathlib.Path(filename + '.mid')
 
 
 def midi_from_chords(chords, filename):
@@ -39,5 +42,8 @@ def midi_from_chords(chords, filename):
 
     for c in chords:
         add_chord(midifile, c)
+    
+    with open(filename + ".mid", "wb") as output_file:
+        midifile.writeFile(output_file)
 
-    return save_midifile_as_wav(midifile, filename)
+    return pathlib.Path(filename + '.mid')

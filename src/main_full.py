@@ -72,7 +72,7 @@ if __name__ == "__main__":
     file = args.input
     sounds = sounds_generation.get_sounds_from_file(file)
 
-    beat = meter_recognition.get_beat_from_file(file)
+    beat, accents = meter_recognition.get_meter(file, sounds)
     if BEAT_TO_NOTE_VERSION == "compare_adjacent":
         meter_recognition.update_sounds_with_beat_fractions_compare_adjacent(sounds, beat)
     elif BEAT_TO_NOTE_VERSION == "compare_absolute":
@@ -96,15 +96,17 @@ if __name__ == "__main__":
     music_synthesis.midi_from_sounds(sounds, 'sounds')
     music_synthesis.midi_from_chords(chords, 'chords')
 
-    sound1 = AudioSegment.from_file("sounds.wav")
-    sound2 = AudioSegment.from_file("chords.wav")
+    sound1 = AudioSegment.from_file("sounds.mid")
+    sound2 = AudioSegment.from_file("chords.mid")
+    sound1.export("sounds.wav", format='wav')
+    sound2.export("chords.wav", format='wav')
 
     # change volume
     sound2 = sound2 - 8
 
     # mix sounds and chords
     combined = sound1.overlay(sound2)
-
+    
     combined.export("result.wav", format='wav')
 
     perfect_sounds = []
@@ -114,3 +116,5 @@ if __name__ == "__main__":
         current_end_timestamp += sound.beat_fraction*beat
 
     music_synthesis.midi_from_sounds(perfect_sounds, 'perfect_sounds')
+    perfect_sounds_as = AudioSegment.from_file("perfect_sounds.mid")
+    perfect_sounds_as.export("perfect_sounds.wav", format='wav')

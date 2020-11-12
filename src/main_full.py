@@ -1,4 +1,3 @@
-from music.sound import Sound
 from pydub import AudioSegment
 import argparse
 import pathlib
@@ -15,7 +14,6 @@ import perfect_sounds_creation
 # BEAT_TO_NOTE_VERSION = "compare_adjacent"
 # BEAT_TO_NOTE_VERSION = "compare_absolute"
 BEAT_TO_NOTE_VERSION = "brojaczj_algorithm"
-# BEAT_TO_NOTE_VERSION = "compare_adjacent"
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -31,19 +29,19 @@ if __name__ == "__main__":
     args = parse_args()
     file = args.input
     sounds = sounds_generation.get_sounds_from_file(file)
-    # sounds = sounds_manipulation.change_tonation(sounds, 2)
+    sounds = sounds_manipulation.change_tonation(sounds, 2)
 
-    beat, accents = meter_recognition.get_meter(file, sounds)
+    meter, beats = meter_recognition.get_meter(file, sounds)
     if BEAT_TO_NOTE_VERSION == "compare_adjacent":
-        meter_recognition.update_sounds_with_beat_fractions_compare_adjacent(sounds, beat)
+        meter_recognition.update_sounds_with_beat_fractions_compare_adjacent(sounds, meter)
     elif BEAT_TO_NOTE_VERSION == "compare_absolute":
-        meter_recognition.update_sounds_with_beat_fractions_compare_absolute(sounds, beat)
+        meter_recognition.update_sounds_with_beat_fractions_compare_absolute(sounds, meter)
     elif  BEAT_TO_NOTE_VERSION == "brojaczj_algorithm":
-        meter_recognition.update_sounds_brojaczj_algorithm(beat, accents, sounds)
+        meter_recognition.update_sounds_brojaczj_algorithm(meter, beats, sounds)
     else:
         raise(f"BEAT_TO_NOTE_VERSION '{BEAT_TO_NOTE_VERSION}'' not recognized")
 
-    print(f"Beat: {beat}")
+    print(f"Meter: {meter}")
 
     print("Sounds:")
     print("\n".join([f"{sound.timestamp:.3f}: {sound.symbol}\t{sound.duration:.3f} ({sound.duration_signature})" for sound in sounds]))  # noqa
@@ -51,7 +49,7 @@ if __name__ == "__main__":
     tonation = tonations_generation.get_tonations_from_sounds(sounds)
     tonation = tonation[0]
 
-    chords = chords_generation.get_chords(sounds, tonation, beat, sounds[0].timestamp)
+    chords = chords_generation.get_chords(sounds, tonation, meter, sounds[0].timestamp)
 
     print("Chords:")
     print("\n".join([f"{chord.timestamp:.3f}: {chord}\t{chord.duration:.3f}" for chord in chords]))  # noqa
@@ -71,7 +69,7 @@ if __name__ == "__main__":
     combined = sound1.overlay(sound2)
     
     combined.export("result.wav", format='wav')
-    perfect_sounds = perfect_sounds_creation.get_perfect_sounds(sounds, beat)
+    perfect_sounds = perfect_sounds_creation.get_perfect_sounds(sounds, meter)
 
     music_synthesis.midi_from_sounds(perfect_sounds, 'perfect_sounds')
     perfect_sounds_as = AudioSegment.from_file("perfect_sounds.mid")

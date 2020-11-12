@@ -105,15 +105,21 @@ def move_sounds(sounds, coef):
     return sound1
 
 
-def main(args):
+def main(args, rec_meth):
     tests = test_data.get_all_test_models()
 
     print("-----------SOUNDS TEST-----------------")
+    print(f"Testing beat recognition {rec_meth}")
     match_factor_sum = 0
     for test in tests:
         sounds = sounds_generation.get_sounds_from_file(test.file_path)
         meter, beats = meter_recognition.get_meter(test.file_path, sounds)
-        meter_recognition.update_sounds_brojaczj_algorithm(meter, beats, sounds)
+        if rec_meth == "compare_adjacent":
+            meter_recognition.update_sounds_with_beat_fractions_compare_adjacent(sounds, meter)
+        elif rec_meth == "compare_absolute":
+            meter_recognition.update_sounds_with_beat_fractions_compare_absolute(sounds, meter)
+        elif  rec_meth == "brojaczj_algorithm":
+            meter_recognition.update_sounds_brojaczj_algorithm(meter, beats, sounds)
         match_factor = -1000
         d_list = None
         test_sounds = None
@@ -129,15 +135,11 @@ def main(args):
 
         print(
             f"{test.file_path}: {round(match_factor*100, 3)}")
+        match_factor_sum += match_factor
         visualize_d(d_list, sounds, test_sounds)
+    print(f"Average match factor for beat recognition {rec_meth}: {match_factor_sum/len(tests)}")
 
 if __name__ == "__main__":
     args = parse_args()
-    for rec_meth in ["compare_absolute", "compare_adjacent"]:
-        meter_recognition.RECOGNITION_METHOD = rec_meth
-        for disc_val in range(0, 10):
-            meter_recognition.DOTTED_NOTES_DISCRIMINATOR = disc_val*0.1
-            print(f"{rec_meth} {disc_val*0.1}: {main(args)}")
-    meter_recognition.RECOGNITION_METHOD = "compare_absolute"
-    meter_recognition.DOTTED_NOTES_DISCRIMINATOR = 0.5
-    main(args)
+    for rec_meth in ["compare_absolute", "compare_adjacent", "brojaczj_algorithm"]:
+        main(args, rec_meth)

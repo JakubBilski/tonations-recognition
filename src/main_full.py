@@ -13,8 +13,8 @@ import perfect_sounds_creation
 
 
 # BEAT_TO_NOTE_VERSION = "compare_adjacent"
-BEAT_TO_NOTE_VERSION = "compare_absolute"
-# BEAT_TO_NOTE_VERSION = "brojaczj_algorithm"
+# BEAT_TO_NOTE_VERSION = "compare_absolute"
+BEAT_TO_NOTE_VERSION = "brojaczj_algorithm"
 # BEAT_TO_NOTE_VERSION = "compare_adjacent"
 
 def parse_args():
@@ -27,29 +27,11 @@ def parse_args():
     args = parser.parse_args()
     return args
 
-
-
-def example_beat_to_note_value(sounds, beat):
-    # this function is only for demonstrational purposes, we need to determine if and where we want to do this
-    # finds what note value will be equal to the beat
-    # this is equivalent to setting the lower numeral in a time signature
-    # this is also probably really bad
-    if beat < 0.5:
-        # allegro and faster, we use eighth notes
-        beat_note_value = 0.125
-    elif beat > 0.66:
-        # andante and slower, half notes
-        beat_note_value = 0.5
-    else:
-        # moderato-ish, quarter notes
-        beat_note_value = 0.25
-    return beat_note_value
-
 if __name__ == "__main__":
     args = parse_args()
     file = args.input
     sounds = sounds_generation.get_sounds_from_file(file)
-    sounds = sounds_manipulation.change_tonation(sounds, 2)
+    # sounds = sounds_manipulation.change_tonation(sounds, 2)
 
     beat, accents = meter_recognition.get_meter(file, sounds)
     if BEAT_TO_NOTE_VERSION == "compare_adjacent":

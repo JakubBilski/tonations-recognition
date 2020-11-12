@@ -22,7 +22,6 @@ def get_tonation_chord(tonation: music.Tonation, sound: music.Sound):
 
 def get_chords(sounds: List[music.Sound], tonation: music.Tonation, metrum: int, start: int):
     sounds_at_metrum = get_sounds_at_metrum(sounds, metrum, start)
-    print(f"Sounds at metrum: {sounds_at_metrum}")
     chords = [get_tonation_chord(tonation, sound)
               for sound in sounds_at_metrum]
     

@@ -58,3 +58,28 @@ class Sound:
 
     def __eq__(self, other):
         return self.note == other.note
+
+    def transform_beat_fraction_into_duration_signature(sounds, meter):
+        beat_frac_to_duration_sign = {
+            8.0 : "1.",
+            6.0 : "1.",
+            4.0 : "1",
+            3.0 : "2.",
+            2.0 : "2",
+            1.5 : "4.",
+            1.0 : "4",
+            0.75 : "8.",
+            0.5 : "8",
+            0.375 : "16.",
+            0.25 : "16",
+            0.1875 : "32.",
+            0.125 : "32"
+        } 
+        for sound in sounds:
+            if sound.beat_fraction not in beat_frac_to_duration_sign.keys():
+                if sound.beat_fraction > min(beat_frac_to_duration_sign.keys()):
+                    sound.duration_signature = "1."
+                else:
+                    sound.duration_signature = "64"
+            else:
+                sound.duration_signature = beat_frac_to_duration_sign[sound.beat_fraction]

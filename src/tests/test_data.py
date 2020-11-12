@@ -1,7 +1,6 @@
 import pathlib
 import os
 
-import music
 from music.sound import Sound
 from music.tonation import Tonation
 

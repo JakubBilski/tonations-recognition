@@ -83,16 +83,6 @@ def transform_beat_fractions_into_duration_signatures(sounds, meter):
         else:
             sound.duration_signature = beat_frac_to_duration_sign[multiplier*sound.beat_fraction]
 
-def update_sounds1(meter, beats, sounds):
-    if RECOGNITION_METHOD == "compare_adjacent":
-        update_sounds_with_beat_fractions_compare_adjacent(sounds, meter)
-    elif RECOGNITION_METHOD == "compare_absolute":
-        update_sounds_with_beat_fractions_compare_absolute(sounds, meter)
-    elif  RECOGNITION_METHOD == "brojaczj_algorithm":
-        update_sounds_brojaczj_algorithm(meter, beats, sounds)
-    transform_beat_fractions_into_duration_signatures(sounds, meter)
-    return sounds
-
 
 def beat_id_closest_to_timestamp(beats, timestamp):
     clos = 1000
@@ -148,28 +138,15 @@ def update_sounds_brojaczj_algorithm(tempo, beats, sounds):
     for i in range(len(sounds)):
         sounds[i].beat_id = beat_id_closest_to_timestamp(
             beats, sounds[i].timestamp)
-
-    sounds1 = []
-    print()
-    print('Sounds with beats:')
+            
     for s in sounds:
         duration = tim_to_duration(simple_sound_beat_dur(beats, s))
         if (len(duration) >= 3) and \
             (duration[1] == duration[0]*2) and \
                 (duration[2] == duration[1]*2):
-            sounds1.append(Sound(
-                note=s.note,
-                duration_signature=str(duration[0]//2)+'.'
-            ))
+                    s.duration_signature=str(duration[0]//2)+'.'
+            
         elif (len(duration) >= 2) and (duration[1] == duration[0]*2):
-            sounds1.append(Sound(
-                note=s.note,
-                duration_signature=str(duration[0])+'.'
-            ))
+            s.duration_signature=str(duration[0])+'.'
         else:
-            sounds1.append(Sound(
-                note=s.note,
-                duration_signature=str(duration[0])
-            ))
-
-    return sounds1
+            s.duration_signature=str(duration[0])

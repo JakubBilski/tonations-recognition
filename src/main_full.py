@@ -9,11 +9,12 @@ import chords_generation
 import meter_recognition
 import music_synthesis
 import sounds_manipulation
+import perfect_sounds_creation
 
 
 # BEAT_TO_NOTE_VERSION = "compare_adjacent"
-# BEAT_TO_NOTE_VERSION = "compare_absolute"
-BEAT_TO_NOTE_VERSION = "brojaczj_algorithm"
+BEAT_TO_NOTE_VERSION = "compare_absolute"
+# BEAT_TO_NOTE_VERSION = "brojaczj_algorithm"
 # BEAT_TO_NOTE_VERSION = "compare_adjacent"
 
 def parse_args():
@@ -88,12 +89,7 @@ if __name__ == "__main__":
     combined = sound1.overlay(sound2)
     
     combined.export("result.wav", format='wav')
-
-    perfect_sounds = []
-    current_end_timestamp = 0.0
-    for sound in sounds:
-        perfect_sounds.append(Sound(sound.note, current_end_timestamp, sound.beat_fraction*beat))
-        current_end_timestamp += sound.beat_fraction*beat
+    perfect_sounds = perfect_sounds_creation.get_perfect_sounds(sounds, beat)
 
     music_synthesis.midi_from_sounds(perfect_sounds, 'perfect_sounds')
     perfect_sounds_as = AudioSegment.from_file("perfect_sounds.mid")

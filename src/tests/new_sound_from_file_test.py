@@ -85,31 +85,27 @@ def visualize_d(d, sounds, test_sounds):
         print(f"{color}{r0.ljust(8)}\t{r1.ljust(8)}{bcolors.ENDC}")
 
 
-<<<<<<< HEAD
-def main(args, visualize=True):
-=======
 def move_sounds(sounds, coef):
     sound1 = []
     for s in sounds:
-        bf = s.beat_fraction
+        ds = s.duration_signature
         d = False
-        if bf.endswith('.'):
+        if ds.endswith('.'):
             d = True
-            bf = bf[:-1]
+            ds = ds[:-1]
         try:
-            bf = str(int(int(bf)*coef))
+            ds = str(int(int(ds)*coef))
         except Exception:
-            bf = ""
+            ds = ""
         if d:
-            bf = f"{bf}."
+            ds = f"{ds}."
         sound1.append(
-            music.Sound(note=s.note, beat_fraction=bf)
+            music.Sound(note=s.note, duration_signature=ds)
         )
     return sound1
 
 
 def main(args):
->>>>>>> feature/sound-duration
     tests = test_data.get_all_test_models()
 
     print("-----------SOUNDS TEST-----------------")
@@ -117,17 +113,7 @@ def main(args):
     for test in tests:
         sounds = sounds_generation.get_sounds_from_file(test.file_path)
         meter, beats = meter_recognition.get_meter(test.file_path, sounds)
-<<<<<<< HEAD
-        sounds = meter_recognition.update_sounds1(meter, beats, sounds)
-        match_factor, d_list = match_sounds(sounds, test.sounds)
-        match_factor_sum += match_factor*100
-        if visualize:
-            print(
-                f"{test.file_path}(meter {meter}): {round(match_factor*100, 3)}")
-            visualize_d(d_list, sounds, test.sounds)
-    return match_factor_sum/len(tests)
-=======
-        sounds = meter_recognition.update_sounds(meter, beats, sounds)
+        meter_recognition.update_sounds_brojaczj_algorithm(meter, beats, sounds)
         match_factor = -1000
         d_list = None
         test_sounds = None
@@ -145,15 +131,13 @@ def main(args):
             f"{test.file_path}: {round(match_factor*100, 3)}")
         visualize_d(d_list, sounds, test_sounds)
 
->>>>>>> feature/sound-duration
-
 if __name__ == "__main__":
     args = parse_args()
     for rec_meth in ["compare_absolute", "compare_adjacent"]:
         meter_recognition.RECOGNITION_METHOD = rec_meth
         for disc_val in range(0, 10):
             meter_recognition.DOTTED_NOTES_DISCRIMINATOR = disc_val*0.1
-            print(f"{rec_meth} {disc_val*0.1}: {main(args, visualize=False)}")
+            print(f"{rec_meth} {disc_val*0.1}: {main(args)}")
     meter_recognition.RECOGNITION_METHOD = "compare_absolute"
     meter_recognition.DOTTED_NOTES_DISCRIMINATOR = 0.5
     main(args)

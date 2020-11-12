@@ -8,10 +8,13 @@ import sounds_generation
 import chords_generation
 import meter_recognition
 import music_synthesis
+import sounds_manipulation
 
 
 # BEAT_TO_NOTE_VERSION = "compare_adjacent"
-BEAT_TO_NOTE_VERSION = "compare_absolute"
+# BEAT_TO_NOTE_VERSION = "compare_absolute"
+BEAT_TO_NOTE_VERSION = "brojaczj_algorithm"
+# BEAT_TO_NOTE_VERSION = "compare_adjacent"
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -41,53 +44,30 @@ def example_beat_to_note_value(sounds, beat):
         beat_note_value = 0.25
     return beat_note_value
 
-def example_note_value_to_name(note_value):
-    # only for demonstration
-    if note_value > 1.5:
-        return "Too long, need to divide it"
-    # brace yourselves, a float dictionary is coming
-    note_value_to_name = {
-        1.5: "dotted whole note",
-        1: "whole note",
-        0.75: "dotted half note",
-        0.5: "half note",
-        0.375: "dotted quarternote",
-        0.25: "quarternote",
-        0.1875: "dotted eighth note",
-        0.125: "eighth note",
-        0.09375: "dotted sixteenth note",
-        0.0625: "sixteenth note",
-        0.046875: "dotted thirty-second note",
-        0.03125: "thirty-second note",
-        0.0234375: "dotted sixty-fourth note",
-        0.015625: "sixty-fourth note",
-        0.01171875: "dotted hundred twenty-eighth note",
-        0.0078125: "hundred twenty-eighth note",
-    }
-    # bottom values are just to show that we still get very short sound values
-    return note_value_to_name[note_value]
-
 if __name__ == "__main__":
     args = parse_args()
     file = args.input
     sounds = sounds_generation.get_sounds_from_file(file)
+    sounds = sounds_manipulation.change_tonation(sounds, 2)
 
     beat, accents = meter_recognition.get_meter(file, sounds)
     if BEAT_TO_NOTE_VERSION == "compare_adjacent":
         meter_recognition.update_sounds_with_beat_fractions_compare_adjacent(sounds, beat)
     elif BEAT_TO_NOTE_VERSION == "compare_absolute":
         meter_recognition.update_sounds_with_beat_fractions_compare_absolute(sounds, beat)
+    elif  BEAT_TO_NOTE_VERSION == "brojaczj_algorithm":
+        meter_recognition.update_sounds_brojaczj_algorithm(beat, accents, sounds)
     else:
         raise(f"BEAT_TO_NOTE_VERSION '{BEAT_TO_NOTE_VERSION}'' not recognized")
 
-    beat_as_note = example_beat_to_note_value(sounds, beat)
-    print(f"Beat: {beat}, one beat duration assigned to a {example_note_value_to_name(beat_as_note)}")
+    print(f"Beat: {beat}")
 
     print("Sounds:")
-    print("\n".join([f"{sound.timestamp:.3f}: {sound.symbol}\t{sound.duration:.3f} ({example_note_value_to_name(sound.beat_fraction * beat_as_note)})" for sound in sounds]))  # noqa
+    print("\n".join([f"{sound.timestamp:.3f}: {sound.symbol}\t{sound.duration:.3f} ({sound.duration_signature})" for sound in sounds]))  # noqa
 
     tonation = tonations_generation.get_tonations_from_sounds(sounds)
     tonation = tonation[0]
+
     chords = chords_generation.get_chords(sounds, tonation, beat, sounds[0].timestamp)
 
     print("Chords:")

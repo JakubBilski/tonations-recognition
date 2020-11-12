@@ -1,7 +1,7 @@
 import librosa
 from math import log2
 
-from music import sound
+from music import Sound
 
 DOTTED_NOTES_DISCRIMINATOR = 0.0 #0.0 - no discrimination, 1.0 - no dotted notes (not linear!)
 RECOGNITION_METHOD = "compare_adjacent"
@@ -36,6 +36,7 @@ def update_sounds_with_beat_fractions_compare_adjacent(sounds, meter):
     for i in range(start_index-1, -1, -1):
         best_match_index = find_best_fraction_index(sounds[i], sounds[i+1], allowed_fractions_log)
         sounds[i].beat_fraction = allowed_fractions[best_match_index]
+    return transform_beat_fractions_into_duration_signatures(sounds, meter)
 
 def update_sounds_with_beat_fractions_compare_absolute(sounds, meter):
     allowed_fractions = [16.0, 12.0, 8.0, 6.0, 4.0, 3.0, 2.0, 1.5, 1.0, 0.75, 0.5, 0.375, 0.25, 0.1875, 0.125, 0.09375, 0.0625]
@@ -49,6 +50,7 @@ def update_sounds_with_beat_fractions_compare_absolute(sounds, meter):
         best_match_index =  min(range(len(allowed_fractions_log)),
                                 key=minimized_values.__getitem__)
         sounds[i].beat_fraction = allowed_fractions[best_match_index]
+    return transform_beat_fractions_into_duration_signatures(sounds, meter)
 
 def transform_beat_fractions_into_duration_signatures(sounds, meter):
 
@@ -86,5 +88,88 @@ def update_sounds1(meter, beats, sounds):
         update_sounds_with_beat_fractions_compare_adjacent(sounds, meter)
     elif RECOGNITION_METHOD == "compare_absolute":
         update_sounds_with_beat_fractions_compare_absolute(sounds, meter)
+    elif  RECOGNITION_METHOD == "brojaczj_algorithm":
+        update_sounds_brojaczj_algorithm(meter, beats, sounds)
     transform_beat_fractions_into_duration_signatures(sounds, meter)
     return sounds
+
+
+def beat_id_closest_to_timestamp(beats, timestamp):
+    clos = 1000
+    res = -1
+    for i in range(len(beats)):
+        if abs(beats[i]-timestamp) < clos:
+            clos = abs(beats[i]-timestamp)
+            res = i
+
+    return res
+
+
+def simple_sound_beat_dur(beats, sound):
+    id = sound.beat_id
+    b1 = beats[id]
+    b2 = beats[id+1]
+    sixteenth = (b2-b1)/4
+    return round(sound.duration/sixteenth)
+    # if abs(sound.timestamp-b1) < 0.05:
+    #     # super
+
+
+def tim_to_duration(tim):
+    result = []
+    for num in [32, 16, 8, 4, 2, 1]:
+        if tim >= num:
+            result.append(16//num)
+            tim -= num
+
+    # result1 = []
+    # for i in range(len(result)-1):
+    #     result1.append(str(result[i])+'~')
+    # result1.append(result[-1])
+    return result
+
+
+# def symbol_to_lilypond(symbol):
+#     s = symbol.lower().replace("#", "is")
+
+
+def update_sounds_brojaczj_algorithm(tempo, beats, sounds):
+    beats = list(beats)
+    while beats[0] > 0:
+        beats.insert(0, beats[0]-tempo)
+    while beats[-1] < sounds[-1].timestamp+sounds[-1].duration:
+        beats.append(beats[-1]+tempo)
+
+    dur = {}
+    for s in sounds:
+        id = f'{s.duration:.3f}'
+        dur[id] = dur.get(id, 0) + 1
+
+    for i in range(len(sounds)):
+        sounds[i].beat_id = beat_id_closest_to_timestamp(
+            beats, sounds[i].timestamp)
+
+    sounds1 = []
+    print()
+    print('Sounds with beats:')
+    for s in sounds:
+        duration = tim_to_duration(simple_sound_beat_dur(beats, s))
+        if (len(duration) >= 3) and \
+            (duration[1] == duration[0]*2) and \
+                (duration[2] == duration[1]*2):
+            sounds1.append(Sound(
+                note=s.note,
+                duration_signature=str(duration[0]//2)+'.'
+            ))
+        elif (len(duration) >= 2) and (duration[1] == duration[0]*2):
+            sounds1.append(Sound(
+                note=s.note,
+                duration_signature=str(duration[0])+'.'
+            ))
+        else:
+            sounds1.append(Sound(
+                note=s.note,
+                duration_signature=str(duration[0])
+            ))
+
+    return sounds1

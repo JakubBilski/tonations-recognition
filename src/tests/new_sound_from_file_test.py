@@ -85,7 +85,31 @@ def visualize_d(d, sounds, test_sounds):
         print(f"{color}{r0.ljust(8)}\t{r1.ljust(8)}{bcolors.ENDC}")
 
 
+<<<<<<< HEAD
 def main(args, visualize=True):
+=======
+def move_sounds(sounds, coef):
+    sound1 = []
+    for s in sounds:
+        bf = s.beat_fraction
+        d = False
+        if bf.endswith('.'):
+            d = True
+            bf = bf[:-1]
+        try:
+            bf = str(int(int(bf)*coef))
+        except Exception:
+            bf = ""
+        if d:
+            bf = f"{bf}."
+        sound1.append(
+            music.Sound(note=s.note, beat_fraction=bf)
+        )
+    return sound1
+
+
+def main(args):
+>>>>>>> feature/sound-duration
     tests = test_data.get_all_test_models()
 
     print("-----------SOUNDS TEST-----------------")
@@ -93,6 +117,7 @@ def main(args, visualize=True):
     for test in tests:
         sounds = sounds_generation.get_sounds_from_file(test.file_path)
         meter, beats = meter_recognition.get_meter(test.file_path, sounds)
+<<<<<<< HEAD
         sounds = meter_recognition.update_sounds1(meter, beats, sounds)
         match_factor, d_list = match_sounds(sounds, test.sounds)
         match_factor_sum += match_factor*100
@@ -101,6 +126,26 @@ def main(args, visualize=True):
                 f"{test.file_path}(meter {meter}): {round(match_factor*100, 3)}")
             visualize_d(d_list, sounds, test.sounds)
     return match_factor_sum/len(tests)
+=======
+        sounds = meter_recognition.update_sounds(meter, beats, sounds)
+        match_factor = -1000
+        d_list = None
+        test_sounds = None
+        for i in [4, 2, 1, 1/2, 1/4]:
+            test_sounds_1 = move_sounds(test.sounds, i)
+            match_factor_1, d_list_1 = match_sounds(sounds, test_sounds_1)
+            if match_factor_1 > match_factor:
+                match_factor = match_factor_1
+                d_list = d_list_1
+                test_sounds = test_sounds_1
+
+        # match_factor, d_list = match_sounds(sounds, test.sounds)
+
+        print(
+            f"{test.file_path}: {round(match_factor*100, 3)}")
+        visualize_d(d_list, sounds, test_sounds)
+
+>>>>>>> feature/sound-duration
 
 if __name__ == "__main__":
     args = parse_args()

@@ -28,7 +28,6 @@ class Sound:
         self.timestamp = timestamp
         self.duration_ms = duration_ms
         self.rhytmic_value = rhytmic_value
-        self.beat_fraction = None
 
     @property
     def symbol(self):

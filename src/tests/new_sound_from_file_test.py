@@ -141,5 +141,9 @@ def main(args, rec_meth):
 
 if __name__ == "__main__":
     args = parse_args()
-    for rec_meth in ["compare_absolute", "compare_adjacent", "brojaczj_algorithm"]:
+    rec_meths = []
+    rec_meths.append("compare_absolute")
+    # rec_meths.append("compare_adjacent")
+    rec_meths.append("brojaczj_algorithm")
+    for rec_meth in rec_meths:
         main(args, rec_meth)

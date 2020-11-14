@@ -1,9 +1,11 @@
 import librosa
 from math import log2
 
-from music import Sound
 
-DOTTED_NOTES_DISCRIMINATOR = 0.0 #0.0 - no discrimination, 1.0 - no dotted notes (not linear!)
+# is added to all dotted notes scores in recognition process,
+# so when it is not clear which duration the note should have,
+# the algorithm will weight towards not-dotted notes
+DOTTED_NOTES_DISCRIMINATOR = 0.0 #0.0 - no discrimination, 1.0 - no dotted notes
 
 def get_meter(file_path, sounds):
     y, sr = librosa.load(file_path)
@@ -65,8 +67,6 @@ def simple_sound_beat_dur(beats, sound):
     b2 = beats[id+1]
     sixteenth = (b2-b1)/4
     return round(sound.duration/sixteenth)
-    # if abs(sound.timestamp-b1) < 0.05:
-    #     # super
 
 
 def tim_to_duration(tim):
@@ -75,16 +75,7 @@ def tim_to_duration(tim):
         if tim >= num:
             result.append(16//num)
             tim -= num
-
-    # result1 = []
-    # for i in range(len(result)-1):
-    #     result1.append(str(result[i])+'~')
-    # result1.append(result[-1])
     return result
-
-
-# def symbol_to_lilypond(symbol):
-#     s = symbol.lower().replace("#", "is")
 
 
 def update_sounds_brojaczj_algorithm(tempo, beats, sounds):
@@ -130,6 +121,7 @@ def update_sounds_with_beat_fractions_compare_adjacent(sounds, meter):
         best_match_index = find_best_fraction_index(sounds[i], sounds[i+1], allowed_fractions_log)
         sounds[i].beat_fraction = allowed_fractions[best_match_index]
     return transform_beat_fractions_into_duration_signatures(sounds, meter)
+
 
 def update_sounds_with_beat_fractions_compare_absolute(sounds, meter):
     allowed_fractions = [16.0, 12.0, 8.0, 6.0, 4.0, 3.0, 2.0, 1.5, 1.0, 0.75, 0.5, 0.375, 0.25, 0.1875, 0.125, 0.09375, 0.0625]

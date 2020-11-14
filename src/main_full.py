@@ -29,7 +29,7 @@ if __name__ == "__main__":
     args = parse_args()
     file = args.input
     sounds = sounds_generation.get_sounds_from_file(file)
-    sounds = sounds_manipulation.change_tonation(sounds, 2)
+    # sounds = sounds_manipulation.change_tonation(sounds, 2)
 
     meter, beats = meter_recognition.get_meter(file, sounds)
     if BEAT_TO_NOTE_VERSION == "compare_adjacent":

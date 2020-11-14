@@ -15,6 +15,7 @@ import perfect_sounds_creation
 # BEAT_TO_NOTE_VERSION = "compare_absolute"
 BEAT_TO_NOTE_VERSION = "brojaczj_algorithm"
 
+
 def parse_args():
     parser = argparse.ArgumentParser(
         description='Add chords to audio file')
@@ -25,6 +26,7 @@ def parse_args():
     args = parser.parse_args()
     return args
 
+
 if __name__ == "__main__":
     args = parse_args()
     file = args.input
@@ -33,11 +35,14 @@ if __name__ == "__main__":
 
     meter, beats = meter_recognition.get_meter(file, sounds)
     if BEAT_TO_NOTE_VERSION == "compare_adjacent":
-        meter_recognition.update_sounds_with_rhytmic_values_compare_adjacent(sounds, meter)
+        meter_recognition.update_sounds_with_rhytmic_values_compare_adjacent(
+            sounds, meter)
     elif BEAT_TO_NOTE_VERSION == "compare_absolute":
-        meter_recognition.update_sounds_with_rhytmic_values_compare_absolute(sounds, meter)
-    elif  BEAT_TO_NOTE_VERSION == "brojaczj_algorithm":
-        meter_recognition.update_sounds_with_rhytmic_values_brojaczj_algorithm(meter, beats, sounds)
+        meter_recognition.update_sounds_with_rhytmic_values_compare_absolute(
+            sounds, meter)
+    elif BEAT_TO_NOTE_VERSION == "brojaczj_algorithm":
+        meter_recognition.update_sounds_with_rhytmic_values_brojaczj_algorithm(
+            meter, beats, sounds)
     else:
         raise(f"BEAT_TO_NOTE_VERSION '{BEAT_TO_NOTE_VERSION}'' not recognized")
 
@@ -48,10 +53,10 @@ if __name__ == "__main__":
 
     tonation = tonation_recognition.get_tonation(sounds)
 
-    chords = chords_generation.get_chords(sounds, tonation, meter, sounds[0].timestamp)
+    chords = chords_generation.get_chords(sounds, tonation, (4, 8))
 
     print("Chords:")
-    print("\n".join([f"{chord.timestamp:.3f}: {chord}\t{chord.duration_ms:.3f}" for chord in chords]))  # noqa
+    print("\n".join([f"{chord}\t{chord.duration:.3f}" for chord in chords]))  # noqa
 
     # music_synthesis.midi_from_sounds(sounds, 'sounds')
     # music_synthesis.midi_from_chords(chords, 'chords')
@@ -66,7 +71,7 @@ if __name__ == "__main__":
 
     # # mix sounds and chords
     # combined = sound1.overlay(sound2)
-    
+
     # combined.export("result.wav", format='wav')
     # perfect_sounds = perfect_sounds_creation.get_perfect_sounds(sounds, meter)
 

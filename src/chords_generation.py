@@ -22,13 +22,12 @@ def get_tonation_chord(tonation: music.Tonation, sound: music.Sound):
 
 def get_chords(sounds: List[music.Sound], tonation: music.Tonation, metrum: int, start: int):
     sounds_at_metrum = get_sounds_at_metrum(sounds, metrum, start)
-    print(f"Sounds at metrum: {sounds_at_metrum}")
     chords = [get_tonation_chord(tonation, sound)
               for sound in sounds_at_metrum]
     
     c1 = []
     for i, c in enumerate(chords):
-        tmp = music.Chord(c.note, i*metrum, metrum, c.kind)
+        tmp = music.Chord(c.note, i*metrum, metrum, kind=c.kind)
         c1.append(tmp)
     chords = c1
 

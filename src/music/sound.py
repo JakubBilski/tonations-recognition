@@ -1,24 +1,48 @@
+SYMBOLS = ['C', 'C#', 'D', 'D#', 'E',
+           'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+REVERSE_SYMBOLS = {
+    s: i for i, s in enumerate(SYMBOLS)
+}
+REVERSE_SYMBOLS.update(
+    {
+        s.lower(): i for i, s in enumerate(SYMBOLS)
+    }
+)
+REVERSE_SYMBOLS.update(
+    {
+        'cis': 1,
+        'dis': 3,
+        'fis': 6,
+        'gis': 8,
+        'ais': 10
+    }
+)
+
+
 class Sound:
-    def __init__(self, note, timestamp=None, duration=None):
+    def __init__(self, note=None, timestamp=None, duration_ms=None,
+                 rhytmic_value=None, symbol=None):
         self.note = note
+        if symbol is not None:
+            self.note = REVERSE_SYMBOLS[symbol]
         self.timestamp = timestamp
-        self.duration = duration
+        self.duration_ms = duration_ms
+        self.rhytmic_value = rhytmic_value
 
     @property
     def symbol(self):
         if self.note is None:
             return 'None'
-        symbols = ['C', 'C#', 'D', 'D#', 'E',
-                   'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-        return symbols[self.note]
+
+        return SYMBOLS[self.note]
 
     @property
     def note(self):
         return self._note
-    
+
     @property
     def end_timestamp(self):
-        return self.timestamp + self.duration
+        return self.timestamp + self.duration_ms
 
     @note.setter
     def note(self, note):

@@ -31,6 +31,15 @@ def get_chords(sounds: List[music.Sound],
         meter[0],
         utils.constants.RHYTHMIC_VALUES[str(meter[1])]
     )
+    if meter[0] == 2:
+        # make 2 times more notes with 2 times less time duration each
+        meter = (
+            4,
+            meter[1]/2
+        )
+    if meter[0] != 4:
+        raise Exception("Not supported meter in chord duration")
+    
     sounds_at_metrum = get_sounds_at_metrum(sounds, meter)
     chords = [get_tonation_chord(tonation, sound)
               for sound in sounds_at_metrum]

@@ -2,17 +2,17 @@ from . import sound
 
 
 class Chord(sound.Sound):
-    def __init__(self, note=None, timestamp=None, duration=None, symbol=None,
+    def __init__(self, note=None, timestamp=None, duration_ms=None, symbol=None,
                  kind=None):
-        super().__init__(note, timestamp, duration, None, symbol)
+        super().__init__(note, timestamp, duration_ms, None, symbol)
         self.kind = kind
 
     def parallel(self):
         if "major" in self.kind:
-            return Chord(self.note+9, self.timestamp, self.duration,
+            return Chord(self.note+9, self.timestamp, self.duration_ms,
                          self.kind.replace("major", "minor"))
         else:
-            return Chord(self.note+3, self.timestamp, self.duration,
+            return Chord(self.note+3, self.timestamp, self.duration_ms,
                          self.kind.replace("minor", "major"))
 
     def sounds(self):

@@ -16,12 +16,8 @@ def parse_args():
 
 
 if __name__ == "__main__":
-    dir_path = parse_args().input
-    files = [
-        file_name for file_name in dir_path.iterdir() if file_name.suffix in [".mp3", ".wav"]]
-    for file in files:
-        print(file)
-        sounds = sounds_generation.get_sounds_from_file(file)
-        # temporary, makes it easier to create test cases
-        for sound in sounds:
-            print(f"music.Sound({sound.note}, {round(sound.timestamp,3)}, {round(sound.duration,3)}),")
+    file_path = parse_args().input
+    sounds = sounds_generation.get_sounds_from_file(file_path)
+    # temporary, makes it easier to create test cases
+    for sound in sounds:
+        print(f"music.Sound({sound.note}, {round(sound.timestamp,3)}, {round(sound.duration_ms,3)}),")

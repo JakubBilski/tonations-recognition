@@ -24,8 +24,8 @@ def parse_args():
 
 
 class Mismatch(music.Tonation):
-    def __init__(self, note_computed, note_model, kind_computed, kind_model, timestamp, duration):
-        super().__init__(note_computed, timestamp, duration, kind_computed)
+    def __init__(self, note_computed, note_model, kind_computed, kind_model, timestamp, duration_ms):
+        super().__init__(note_computed, timestamp, duration_ms, kind_computed)
         self.note_model = note_model
         self.kind_model = kind_model
 

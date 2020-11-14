@@ -18,7 +18,7 @@ def parse_args():
 
 
 def substitution(s1: music.Sound, s2: music.Sound):
-    return int((s1.note != s2.note) or (s1.duration_signature != s2.duration_signature))
+    return int((s1.note != s2.note) or (s1.rhytmic_value != s2.rhytmic_value))
 
 
 def deletion(s: music.Sound):
@@ -72,11 +72,11 @@ def visualize_d(d, sounds, test_sounds):
         if r[0] is None:
             r0 = ""
         else:
-            r0 = f"{str(r[0].symbol).ljust(5)} {r[0].duration_signature.ljust(3)}"
+            r0 = f"{str(r[0].symbol).ljust(5)} {r[0].rhytmic_value.ljust(3)}"
         if r[1] is None:
             r1 = ""
         else:
-            r1 = f"{str(r[1].symbol).ljust(5)} {r[1].duration_signature.ljust(3)}"
+            r1 = f"{str(r[1].symbol).ljust(5)} {r[1].rhytmic_value.ljust(3)}"
         
         if (r[2] != 0) or substitution(r[0], r[1]) != 0:
             color = bcolors.FAIL
@@ -88,7 +88,7 @@ def visualize_d(d, sounds, test_sounds):
 def move_sounds(sounds, coef):
     sound1 = []
     for s in sounds:
-        ds = s.duration_signature
+        ds = s.rhytmic_value
         d = False
         if ds.endswith('.'):
             d = True
@@ -100,7 +100,7 @@ def move_sounds(sounds, coef):
         if d:
             ds = f"{ds}."
         sound1.append(
-            music.Sound(note=s.note, duration_signature=ds)
+            music.Sound(note=s.note, rhytmic_value=ds)
         )
     return sound1
 
@@ -115,11 +115,11 @@ def main(args, rec_meth):
         sounds = sounds_generation.get_sounds_from_file(test.file_path)
         meter, beats = meter_recognition.get_meter(test.file_path, sounds)
         if rec_meth == "compare_adjacent":
-            meter_recognition.update_sounds_with_beat_fractions_compare_adjacent(sounds, meter)
+            meter_recognition.update_sounds_with_rhytmic_values_compare_adjacent(sounds, meter)
         elif rec_meth == "compare_absolute":
-            meter_recognition.update_sounds_with_beat_fractions_compare_absolute(sounds, meter)
+            meter_recognition.update_sounds_with_rhytmic_values_compare_absolute(sounds, meter)
         elif  rec_meth == "brojaczj_algorithm":
-            meter_recognition.update_sounds_brojaczj_algorithm(meter, beats, sounds)
+            meter_recognition.update_sounds_with_rhytmic_values_brojaczj_algorithm(meter, beats, sounds)
         match_factor = -1000
         d_list = None
         test_sounds = None

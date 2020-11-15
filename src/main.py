@@ -51,7 +51,7 @@ def frontend_communication():
     if not filename.is_file():
         logger.error(f"File {filename} does not exist.")
         return jsonify({
-            "error": "File {filename} does not exist."
+            "error": f"File {filename} does not exist."
         })
     notes, chords, tonation, preview_file = process_file(filename)
     result = {

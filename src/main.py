@@ -1,54 +1,123 @@
+from pydub import AudioSegment
+from flask import Flask, request, jsonify
 import argparse
 import pathlib
+import logging
 
-from typing import List
+import tonation_recognition
+import sounds_generation
+import chords_generation
+import meter_recognition
+import music_synthesis
+import sounds_manipulation
+import perfect_sounds_creation
 
-from tonations import Tonation
-from sounds import Sound, get_sounds_from_list
+
+# BEAT_TO_NOTE_VERSION = "compare_adjacent"
+# BEAT_TO_NOTE_VERSION = "compare_absolute"
+BEAT_TO_NOTE_VERSION = "brojaczj_algorithm"
+
+logging.basicConfig(format='%(levelname)s:%(message)s')
+logger = logging.getLogger('tonation_recognition')
+logger.setLevel(logging.DEBUG)
+
+app = Flask(__name__)
 
 
-def get_sounds_at_metrum(sounds: List[Sound], metrum: int, start: int):
-    s = []
-    last_metrum = start
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description='Add chords to audio file')
+    parser.add_argument('--http', '-H',
+                        action="store_true",
+                        help='Run program as http server')
+    parser.add_argument('--input', '-I',
+                        default="data/other_rec/ach_spij_C.wav",
+                        help='Input audio file. Formats: [.mp3, .wav]',
+                        type=pathlib.Path)
+    args = parser.parse_args()
+    return args
+
+
+@app.route('/music', methods=['GET', 'POST'])
+def frontend_communication():
+    try:
+        filename = request.json["input_file"]
+    except Exception as e:
+        logger.error(f"Bad request: {request}\n Exception: {e}")
+        return jsonify({
+            "error": "Expected json with input_file key"
+        })
+    filename = pathlib.Path(filename)
+    if not filename.is_file():
+        logger.error(f"File {filename} does not exist.")
+        return jsonify({
+            "error": f"File {filename} does not exist."
+        })
+    notes, chords, tonation, preview_file = process_file(filename)
+    result = {
+        "notes": [
+            {
+                "symbol": note.symbol,
+                "rhythmic_value": note.rhythmic_value
+            }
+            for note in notes
+        ],
+        "chords": [
+            {
+                "symbol": chord.symbol,
+                "kind": chord.kind,
+                "duration": chord.duration
+            }
+            for chord in chords
+        ],
+        "tonation": {
+            "symbol": tonation.symbol,
+            "kind": tonation.kind
+        },
+        "preview_file": preview_file
+    }
+    return jsonify(result)
+
+
+def process_file(filename):
+    logger.debug(f"Procesing {filename}")
+    sounds = sounds_generation.get_sounds_from_file(filename)
+    # sounds = sounds_manipulation.change_tonation(sounds, 2)
+
+    meter, beats = meter_recognition.get_meter(filename, sounds)
+    if BEAT_TO_NOTE_VERSION == "compare_adjacent":
+        meter_recognition.update_sounds_with_rhythmic_values_compare_adjacent(
+            sounds, meter)
+    elif BEAT_TO_NOTE_VERSION == "compare_absolute":
+        meter_recognition.update_sounds_with_rhythmic_values_compare_absolute(
+            sounds, meter)
+    elif BEAT_TO_NOTE_VERSION == "brojaczj_algorithm":
+        meter_recognition.update_sounds_with_rhythmic_values_brojaczj_algorithm(
+            meter, beats, sounds)
+    else:
+        raise(f"BEAT_TO_NOTE_VERSION '{BEAT_TO_NOTE_VERSION}'' not recognized")
+
+    logger.debug(f"Meter: {meter}")
+
+    logger.debug("Sounds:")
     for sound in sounds:
-        while sound.timestamp >= last_metrum:
-            s.append(sound)
-            last_metrum += metrum
-    return s
+        logger.debug(f"{sound.timestamp:.3f}: {sound.symbol}\t{sound.duration_ms:.3f} ({sound.rhythmic_value})")  # noqa
 
+    tonation = tonation_recognition.get_tonation(sounds)
 
-def get_tonation_chord(tonation: Tonation, sound: Sound):
-    for chord in [tonation.tonic, tonation.dominant, tonation.subdominant]:
-        if sound in chord.sounds():
-            return chord
-    return tonation.tonic
+    chords = chords_generation.get_chords(sounds, tonation, (4, 8))
 
+    logger.debug("Chords:")
+    for chord in chords:
+        logger.debug(f"{str(chord).ljust(20)}\t{chord.duration:.3f}")  # noqa
 
-def get_chords(sounds: List[Sound], tonation: Tonation, metrum: int, start: int):
-    print(tonation)
-    sounds_at_metrum = get_sounds_at_metrum(sounds, metrum, start)
-    print(f"Sounds at metrum: {sounds_at_metrum}")
-    chords = [get_tonation_chord(tonation, sound)
-              for sound in sounds_at_metrum]
-    return chords
-
-
-# def parse_args():
-#     parser = argparse.ArgumentParser(
-#         description='Convert auio file to notes with time of occurrence')
-#     parser.add_argument('--input', '-I',
-#                         required=True,
-#                         help='Audio file. Formats: [.mp3, .wav]',
-#                         type=pathlib.Path)
-#     args = parser.parse_args()
-#     return args
+    return sounds, chords, tonation, "NOT SUPPORTED YET"
 
 
 if __name__ == "__main__":
-    pitch = [1, 2, 3, 4, 5, 6, 6.5, 7, 9,
-                 10, 11, 12, 13, 14, 15, 15.5, 16, 18]
-    notes = [7, 4, 4, 5, 2, 2, 0, 4, 7, 7, 4, 4, 5, 2, 2, 0, 4, 0]
-    s = get_sounds_from_list(pitch, notes)
-    print(f"song: {s}")
-    chords = get_chords(s, Tonation(0, 0, 0, "dur"), 3, 1)
-    print(f"chords: {chords}")
+    args = parse_args()
+    if args.http:
+        app.run()
+    else:
+        process_file(args.input)
+

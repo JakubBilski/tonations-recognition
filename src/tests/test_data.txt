@@ -1,0 +1,543 @@
+data/other_rec/ach_spij_C.wav
+
+c 4 4
+g 4 2. 
+e 4 4 
+d 4 4     
+g 3 2    
+e 4 8
+f 4 8 
+g 4 8
+a 4 8 
+g 4 8
+a 4 8
+g 4 4
+e 4 4
+d 4 4     
+g 3 2   
+c 4 8
+d 4 8 
+e 4 8  
+e 4 8 
+e 4 8 
+e 4 8 
+e 4 4     
+c 4 8
+d 4 8 
+e 4 8  
+e 4 8 
+e 4 8 
+e 4 8 
+e 4 4     
+c 4 8
+d 4 8 
+e 4 2
+c 4 4
+g 3 4    
+d 4 4 
+c 4 2
+
+t C
+
+data/other_rec/gdy_sliczna_panna_F.wav 
+
+c 4 2 
+d 4 4 
+e 4 4 
+f 4 2 
+f 4 2 
+g 4 4
+ais 4 4 
+a 4 4 
+g 4 4 
+g 4 2 
+f 4 2 
+c 4 2 
+d 4 4 
+e 4 4
+f 4 2
+f 4 2
+g 4 4
+ais 4 4 
+a 4 4 
+g 4 4 
+g 4 2 
+f 4 2 
+a 4 4 
+g 4 4 
+a 4 4 
+f 4 4 
+g 4 1 
+e 4 4 
+g 4 4 
+f 4 4 
+e 4 4 
+d 4 2 
+c 4 2 
+a 4 4 
+g 4 4 
+a 4 4 
+f 4 4 
+ais 4 1 
+a 4 4 
+c 5 4 
+ais 4 8 
+a 4 8 
+g 4 8 
+f 4 8 
+g 4 2 
+f 4 2 
+
+t F
+
+
+data/other_rec/jedzie_pociag_z_daleka_F.wav 
+
+c 4 8 
+f 4 8 
+a 4 8 
+g 4 8 
+f 4 8 
+e 4 8 
+f 4 4 
+c 4 8
+f 4 8
+a 4 8
+g 4 8
+f 4 8
+e 4 8
+f 4 4
+f 4 8
+f 4 8
+a 4 8
+c 5 8
+ais 4 8
+a 4 8
+ais 4 4 
+c 4 8 
+c 4 8 
+g 4 8 
+ais 4 8 
+a 4 8 
+g 4 8 
+f 4 4
+
+t F 
+
+
+data/other_rec/lato_lato_C.wav 
+
+g 4 4
+g 4 4 
+e 4 8 
+g 4 4. 
+a 4 4 
+g 4 4 
+f 4 8 
+d 4 4. 
+f 4 4 
+f 4 4 
+d 4 8 
+f 4 4. 
+g 4 4 
+f 4 4 
+e 4 8 
+c 4 4. 
+g 4 4  
+g 4 4 
+e 4 8 
+g 4 4. 
+c 5 4 
+a 4 4 
+g 4 2 
+f 4 8 
+g 4 8 
+a 4 8 
+f 4 8 
+e 4 4 
+c 4 4 
+d 4 2 
+
+t C  
+
+
+data/other_rec/opadly_mgly_C.wav 
+
+r 4.
+c 4 8
+c 4 4
+d 4 4
+e 4 4
+e 4 8
+e 4 4
+e 4 4.
+f 4 4
+f 4 8
+f 4 4 
+f 4 4.
+e 4 4 
+e 4 4
+e 4 8
+d 4 8 
+c 4 8
+d 4 4.
+c 4 8
+c 4 4
+d 4 4
+e 4 4
+e 4 8
+e 4 4
+e 4 4.
+f 4 4
+f 4 8
+f 4 4 
+f 4 4.
+e 4 4 
+e 4 4
+e 4 8
+d 4 8 
+c 4 8
+d 4 4.
+r 4
+d 4 4
+d 4 4
+c 4 4 
+b 3 4
+c 4 8
+c 4 8
+
+t C
+
+
+data/other_rec/opadly_mgly_D.wav 
+
+r 4.
+d 4 8
+d 4 4
+e 4 4
+fis 4 4
+fis 4 8
+fis 4 4
+fis 4 4.
+g 4 4
+g 4 8
+g 4 4 
+g 4 4.
+fis 4 4 
+fis 4 4
+fis 4 8
+e 4 8 
+d 4 8
+e 4 4.
+d 4 8
+d 4 4
+e 4 4
+fis 4 4
+fis 4 8
+fis 4 4
+fis 4 4.
+g 4 4
+g 4 8
+g 4 4 
+g 4 4.
+fis 4 4 
+fis 4 4
+fis 4 8
+e 4 8 
+d 4 8
+e 4 4.
+r 4
+e 4 4
+e 4 4
+d 4 4 
+c 4 4
+d 4 8
+d 4 8
+
+t D
+
+
+data/other_rec/o_moj_rozmarunie_c.wav 
+c 4 8
+c 4 8
+c 4 8
+c 4 8
+f 4 4
+dis 4 4
+d 4 4
+dis 4 8
+d 4 8
+c 4 2
+g 4 8
+g 4 8
+g 4 8
+g 4 8
+c 5 4
+b 4 4
+gis 4 4
+b 4 8
+gis 4 8
+g 4 2
+g 4 8
+g 4 8
+g 4 8
+g 4 8
+gis 4 4
+g 4 4
+f 4 8
+dis 4 8
+d 4 8
+dis 4 8
+f 4 4
+dis 4 4
+d 4 4
+dis 4 8
+f 4 8
+g 4 2
+g 4 8
+g 4 8
+g 4 8
+g 4 8
+gis 5 4
+g 4 4
+f 4 8
+dis 4 8
+d 4 8
+dis 4 8
+f 4 4
+dis 4 4
+d 4 4
+dis 4 8
+d 4 8
+c 4 2
+t c
+
+
+data/other_rec/o_moj_rozmarunie_e.wav 
+
+e 4 8
+e 4 8
+e 4 8
+e 4 8
+a 4 4
+g 4 4
+fis 4 4
+g 4 8
+fis 4 8
+e 4 2
+b 4 8
+b 4 8
+b 4 8
+b 4 8
+e 5 4
+d 5 4
+c 5 4
+d 5 8
+c 5 8
+b 4 2
+b 4 8
+b 4 8
+b 4 8
+b 4 8
+c 5 4
+b 4 4
+a 4 8
+g 4 8
+fis 4 8
+g 4 8
+a 4 4
+g 4 4
+fis 4 4
+g 4 8
+a 4 8
+b 4 2
+b 4 8
+b 4 8
+b 4 8
+b 4 8
+c 5 4
+b 4 4
+a 4 8
+g 4 8
+fis 4 8
+g 4 8
+a 4 4
+g 4 4
+fis 4 4
+g 4 8
+fis 4 8
+e 4 2
+
+t e
+
+
+data/other_rec/panie_JanieC.wav 
+
+c 4 4 
+d 4 4 
+e 4 4 
+c 4 4 
+c 4 4 
+d 4 4 
+e 4 4 
+c 4 4 
+e 4 4 
+f 4 4 
+g 4 2 
+e 4 4 
+f 4 4 
+g 4 2 
+g 4 8 
+a 4 8 
+g 4 8 
+f 4 8 
+e 4 4 
+c 4 4 
+g 4 8 
+a 4 8 
+g 4 8 
+f 4 8 
+e 4 4 
+c 4 4 
+c 4 4 
+g 3 4 
+c 4 2 
+c 4 4 
+g 3 4 
+c 4 2 
+
+t C
+
+
+data/other_rec/przybiezeli.wav 
+
+c 4 8
+b 3 8 
+c 4 8
+d 4 8 
+e 4 8 
+d 4 8
+e 4 8 
+f 4 8 
+g 4 4 
+a 4 4 
+g 4 2 
+c 4 8 
+b 3 8 
+c 4 8 
+d 4 8 
+e 4 8 
+d 4 8 
+e 4 8 
+f 4 8 
+g 4 4 
+a 4 4 
+g 4 2
+c 5 4 
+g 4 8 
+g 4 8 
+a 4 8 
+g 4 8 
+f 4 8 
+e 4 8 
+f 4 4 
+f 4 8 
+a 4 8 
+g 4 8 
+f 4 8 
+e 4 8 
+d 4 8 
+e 4 4 
+f 4 4 
+g 4 2
+e 4 4 
+d 4 4 
+c 4 2 
+
+t C 
+
+
+data/other_rec/plonie_ognisko_c.wav 
+
+
+c 4 8 
+d 4 8
+dis 4 4 
+f 4 8 
+dis 4 8 
+d 4 4
+dis 4 8
+d 4 8
+c 4 4
+g 3 2
+c 4 8
+c 4 8 
+d 4 4
+g 4 4
+dis 4 4 
+d 4 4
+c 4 2
+c 4 8
+c 4 8 
+d 4 8
+dis 4 4 
+f 4 8 
+dis 4 8 
+d 4 4
+dis 4 8
+d 4 8
+c 4 4
+g 3 2
+c 4 8
+c 4 8
+d 4 4
+gis 4 4
+g 4 4
+b 4 4
+c 4 2
+
+
+t c
+
+
+data/other_rec/sto_lat_C.wav 
+
+
+g 4 4 
+e 4 4
+g 4 4 
+e 4 4 
+g 4 4 
+a 4 8 
+g 4 8 
+f 4 8 
+e 4 8 
+f 4 4 
+f 4 4 
+d 4 4 
+f 4 4
+d 4 4 
+f 4 4 
+g 4 8 
+f 4 8 
+e 4 8 
+d 4 8 
+e 4 4 
+g 4 8 
+g 4 8 
+e 4 4 
+g 4 8 
+e 4 8 
+g 4 4 
+c 5 8 
+b 4 8 
+a 4 8 
+g 4 8 
+a 4 4 
+b 4 4 
+b 4 8 
+b 4 8 
+c 5 2 
+
+
+t C

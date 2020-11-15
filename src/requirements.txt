@@ -1,0 +1,8 @@
+praat-parselmouth
+librosa
+pydub
+midiutil
+midi2audio
+numpy
+matplotlib
+seaborn

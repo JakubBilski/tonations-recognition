@@ -17,7 +17,7 @@ REVERSE_SYMBOLS.update(
         'ais': 10
     }
 )
-REVERSE_RHYTHMIC_VALUES = {
+TIME_TO_RHYTHMIC_VALUE = {
     8.0: "0",
     6.0: "1.",
     4.0: "1",
@@ -32,6 +32,6 @@ REVERSE_RHYTHMIC_VALUES = {
     0.1875: "32.",
     0.125: "32"
 }
-RHYTHMIC_VALUES = {
-    REVERSE_RHYTHMIC_VALUES[key]: key for key in REVERSE_RHYTHMIC_VALUES
+RHYTHMIC_VALUE_TO_TIME = {
+    TIME_TO_RHYTHMIC_VALUE[key]: key for key in TIME_TO_RHYTHMIC_VALUE
 }

@@ -1,6 +1,7 @@
 
 # Historia zmian
 Historia zmian (co zostało zmienione w dokumentacji) jako tabela
+"Wersja zaakceptowana przez promotora" w historii zmian
 
 # Słowniczek
 Słowniczek zamienić na wstęp teoretyczny (podstawowe terminy)
@@ -33,3 +34,10 @@ wymagania niefunkcjonalne (a nie pozafunkcjonalne)
 osoba rzeczywista zamienić na osoba
 "Prawdopodobieństwo ryzyka" zamiast "ryzyko" na odreślenie prawdopodobieństwa ryzyka
 "plan przeciwdziałania" zamienić na "przeciwdziałanie"
+
+# Dokumentacja techniczna
+Nie ma być opisu kodu
+
+# inne
+usunąć WSZYSTKIE wolne przestrzenie (na końcowym dokumencie)
+wyróżnić nazwy modułów kursywą / pogrubieniem

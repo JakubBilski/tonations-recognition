@@ -16,7 +16,7 @@ class Sound(base_sound.BaseSound):
 
     @property
     def rhytmic_value_time(self):
-        return constants.RHYTHMIC_VALUES[self.rhytmic_value]
+        return constants.RHYTHMIC_VALUE_TO_TIME[self.rhytmic_value]
 
     def __str__(self):
         if self.timestamp is None:

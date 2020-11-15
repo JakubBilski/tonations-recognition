@@ -29,7 +29,7 @@ def get_chords(sounds: List[music.Sound],
                meter: Tuple[int, int]):
     meter = (
         meter[0],
-        utils.constants.RHYTHMIC_VALUES[str(meter[1])]
+        utils.constants.RHYTHMIC_VALUE_TO_TIME[str(meter[1])]
     )
     if meter[0] == 2:
         # make 2 times more notes with 2 times less time duration each

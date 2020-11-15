@@ -40,7 +40,19 @@ def parse_args():
 
 @app.route('/music', methods=['GET', 'POST'])
 def frontend_communication():
-    filename = request.json["input_file"]
+    try:
+        filename = request.json["input_file"]
+    except Exception as e:
+        logger.error(f"Bad request: {request}\n Exception: {e}")
+        return jsonify({
+            "error": "Expected json with input_file key"
+        })
+    filename = pathlib.Path(filename)
+    if not filename.is_file():
+        logger.error(f"File {filename} does not exist.")
+        return jsonify({
+            "error": "File {filename} does not exist."
+        })
     notes, chords, tonation, preview_file = process_file(filename)
     result = {
         "notes": [

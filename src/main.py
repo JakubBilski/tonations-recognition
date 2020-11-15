@@ -18,7 +18,7 @@ import perfect_sounds_creation
 BEAT_TO_NOTE_VERSION = "brojaczj_algorithm"
 
 logging.basicConfig(format='%(levelname)s:%(message)s')
-logger = logging.getLogger('tonation_recognision')
+logger = logging.getLogger('tonation_recognition')
 logger.setLevel(logging.DEBUG)
 
 app = Flask(__name__)

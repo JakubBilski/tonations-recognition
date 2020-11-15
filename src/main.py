@@ -1,5 +1,5 @@
 from pydub import AudioSegment
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import argparse
 import pathlib
 import logging
@@ -38,7 +38,35 @@ def parse_args():
     return args
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/music', methods=['GET', 'POST'])
+def frontend_communication():
+    filename = request.json["input_file"]
+    notes, chords, tonation, preview_file = process_file(filename)
+    result = {
+        "notes": [
+            {
+                "symbol": note.symbol,
+                "rhythmic_value": note.rhythmic_value
+            }
+            for note in notes
+        ],
+        "chords": [
+            {
+                "symbol": chord.symbol,
+                "kind": chord.kind,
+                "duration": chord.duration
+            }
+            for chord in chords
+        ],
+        "tonation": {
+            "symbol": tonation.symbol,
+            "kind": tonation.kind
+        },
+        "preview_file": preview_file
+    }
+    return jsonify(result)
+
+
 def process_file(filename):
     logger.debug(f"Procesing {filename}")
     sounds = sounds_generation.get_sounds_from_file(filename)
@@ -46,13 +74,13 @@ def process_file(filename):
 
     meter, beats = meter_recognition.get_meter(filename, sounds)
     if BEAT_TO_NOTE_VERSION == "compare_adjacent":
-        meter_recognition.update_sounds_with_rhytmic_values_compare_adjacent(
+        meter_recognition.update_sounds_with_rhythmic_values_compare_adjacent(
             sounds, meter)
     elif BEAT_TO_NOTE_VERSION == "compare_absolute":
-        meter_recognition.update_sounds_with_rhytmic_values_compare_absolute(
+        meter_recognition.update_sounds_with_rhythmic_values_compare_absolute(
             sounds, meter)
     elif BEAT_TO_NOTE_VERSION == "brojaczj_algorithm":
-        meter_recognition.update_sounds_with_rhytmic_values_brojaczj_algorithm(
+        meter_recognition.update_sounds_with_rhythmic_values_brojaczj_algorithm(
             meter, beats, sounds)
     else:
         raise(f"BEAT_TO_NOTE_VERSION '{BEAT_TO_NOTE_VERSION}'' not recognized")
@@ -61,7 +89,7 @@ def process_file(filename):
 
     logger.debug("Sounds:")
     for sound in sounds:
-        logger.debug(f"{sound.timestamp:.3f}: {sound.symbol}\t{sound.duration_ms:.3f} ({sound.rhytmic_value})")  # noqa
+        logger.debug(f"{sound.timestamp:.3f}: {sound.symbol}\t{sound.duration_ms:.3f} ({sound.rhythmic_value})")  # noqa
 
     tonation = tonation_recognition.get_tonation(sounds)
 
@@ -71,26 +99,7 @@ def process_file(filename):
     for chord in chords:
         logger.debug(f"{str(chord).ljust(20)}\t{chord.duration:.3f}")  # noqa
 
-    # music_synthesis.midi_from_sounds(sounds, 'sounds')
-    # music_synthesis.midi_from_chords(chords, 'chords')
-
-    # sound1 = AudioSegment.from_file("sounds.mid")
-    # sound2 = AudioSegment.from_file("chords.mid")
-    # sound1.export("sounds.wav", format='wav')
-    # sound2.export("chords.wav", format='wav')
-
-    # # change volume
-    # sound2 = sound2 - 8
-
-    # # mix sounds and chords
-    # combined = sound1.overlay(sound2)
-
-    # combined.export("result.wav", format='wav')
-    # perfect_sounds = perfect_sounds_creation.get_perfect_sounds(sounds, meter)
-
-    # music_synthesis.midi_from_sounds(perfect_sounds, 'perfect_sounds')
-    # perfect_sounds_as = AudioSegment.from_file("perfect_sounds.mid")
-    # perfect_sounds_as.export("perfect_sounds.wav", format='wav')
+    return sounds, chords, tonation, "NOT SUPPORTED YET"
 
 
 if __name__ == "__main__":

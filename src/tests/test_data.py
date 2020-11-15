@@ -39,9 +39,9 @@ def get_other_rec_test_models():
             elif len(line.split()) == 3:
                 spl = line.split()
                 currect_sounds.append(
-                    Sound(symbol=spl[0], rhytmic_value=spl[2]))
+                    Sound(symbol=spl[0], rhythmic_value=spl[2]))
             elif line.startswith('r'):
                 spl = line.split()
                 currect_sounds.append(
-                    Sound(note=None, rhytmic_value=spl[1]))
+                    Sound(note=None, rhythmic_value=spl[1]))
     return result

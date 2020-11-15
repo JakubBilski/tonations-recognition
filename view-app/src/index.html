@@ -28,6 +28,7 @@ https://templatemo.com/tm-543-breezed
     <link rel="stylesheet" href="css/owl-carousel.css">
 
     <link rel="stylesheet" href="css/lightbox.css">
+    <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
 
     </head>
     
@@ -58,7 +59,9 @@ https://templatemo.com/tm-543-breezed
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
                           <li class="scroll-to-section"><a href="record.html">Record</a></li>
+                          <li class="scroll-to-section"><a href="#play">Play</a></li>
                           <li class="scroll-to-section"><a href="#about">About Us</a></li> 
+                          
                       </ul>        
                         <a class='menu-trigger'>
                             <span>Menu</span>
@@ -81,10 +84,10 @@ https://templatemo.com/tm-543-breezed
             <div class="img-fill">
                 <img src="images/slide-01.jpg" alt="">
                 <div class="text-content">
-                  <h3 id="result">Welcome To Breezed</h3>
-                  <h5>New Bootstrap Template</h5>
-                  <a id="Python_btn" class="main-stroked-button" value="send_to">Python</a>
-                  <a href="#" class="main-filled-button">Get It Now</a>
+                  <h3 id="result">Let's play</h3>
+                  <h5>Guitar</h5>
+                  <a id="Python_btn" class="main-stroked-button" value="send_to">Show chords</a>
+                  <a href="#" class="main-filled-button">Transpose to eysier tonation</a>
                 </div>
             </div>
           </div>
@@ -119,12 +122,72 @@ https://templatemo.com/tm-543-breezed
     </div>
     <div class="scroll-down scroll-to-section"><a href="#about"><i class="fa fa-arrow-down"></i></a></div>
     <!-- ***** Main Banner Area End ***** -->
+    <!--- ***** Notes Area Starts *****-->
+    <section class="section" id="music">
+        <div class="container">
+            
+                <div id="boo"></div>
+                <div id="error"></div>
+            
+        </div>  
+    </section>
+    <!--- ***** Notes Area End *****-->
+       <!--- ***** Chords Area Starts *****-->
+       <section class="section" id="chords">
+        <div class="container">
+            <h6>Chords</h6>
+            <div id="container-chords"></div>
+        </div>
+    </section>
+    <!--- ***** Chords Area End *****-->
+<!-- ***** Play Area Starts ***** -->
 
+    <!-- ***** About Area Starts ***** -->
+    <section class="section" id="Play">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                    <div class="left-text-content">
+                        <div class="section-heading">
+                            <h6>Play</h6>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="#" class="main-button-icon"  >
+                                    Play <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="#" class="main-button-icon" >
+                                    Download <i class="fa fa-arrow-down"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                    <div class="right-text-content">
+                        <p>
+                            You can hear your melody with generated chords.
+                        </br>
+                            You can also download this melody with chords, and save it on your computer.
+                            </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** About Area Ends ***** -->
+<!-- ***** About Area Ends ***** -->
+   
     <!-- ***** About Area Starts ***** -->
     <section class="section" id="about">
         <div class="container">
             <div class="row">
-              <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
+              <div class="col-lg-6 col-md-6 col-xs-12">
                 <div class="features-item">
                     <div class="features-icon">
                         <img src="images/features-icon-1.png" alt="">
@@ -138,7 +201,7 @@ https://templatemo.com/tm-543-breezed
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" data-scroll-reveal="enter bottom move 30px over 0.6s after 0.4s">
+            <div class="col-lg-6 col-md-6 col-xs-12">
                 <div class="features-item">
                     <div class="features-icon">
                         <img src="images/logo_wydzialu.png" alt="">
@@ -195,8 +258,15 @@ https://templatemo.com/tm-543-breezed
     <!-- Global Init -->
     <script src="js/custom.js"></script>
  
-    <script src="render.js"></script> 
-   
-
+    <script src="render.js"></script>
+    <script type="text/coffeescript" src="js/Vex/vextab/artist.coffee"></script>
+    <script src="js/Vex/vexflow/vexflow-debug.js"></script>
+    <script src="js/Vex/vextab/main.js"></script> 
+    
+    <script src="js/Vex/vextab/notes.js"></script> 
+    <script src="js/Vex/vexchords/chordbox.js"></script> 
+    <script src="js/Vex/vexchords/builder.js"></script> 
+    <script src="js/Vex/chords.js"></script> 
+    
   </body>
 </html>

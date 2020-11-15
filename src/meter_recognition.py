@@ -24,8 +24,8 @@ def find_best_fraction_index(sound1, sound2, prev_beat_fraction, allowed_fractio
                             key=minimized_values.__getitem__)
 
 
-def transform_beat_fractions_into_rhytmic_values(beat_fractions, meter):
-    beat_frac_to_rhytmic_value = {
+def transform_beat_fractions_into_rhythmic_values(beat_fractions, meter):
+    beat_frac_to_rhythmic_value = {
         8.0 : "1.",
         6.0 : "1.",
         4.0 : "1",
@@ -42,13 +42,13 @@ def transform_beat_fractions_into_rhytmic_values(beat_fractions, meter):
     } 
     result = []
     for beat_fraction in beat_fractions:
-        if beat_fraction not in beat_frac_to_rhytmic_value.keys():
-            if beat_fraction > min(beat_frac_to_rhytmic_value.keys()):
+        if beat_fraction not in beat_frac_to_rhythmic_value.keys():
+            if beat_fraction > min(beat_frac_to_rhythmic_value.keys()):
                 result.append("1.")
             else:
                 result.append("64")
         else:
-            result.append(beat_frac_to_rhytmic_value[beat_fraction])
+            result.append(beat_frac_to_rhythmic_value[beat_fraction])
     return result
 
 
@@ -80,7 +80,7 @@ def tim_to_duration(tim):
     return result
 
 
-def update_sounds_with_rhytmic_values_brojaczj_algorithm(tempo, beats, sounds):
+def update_sounds_with_rhythmic_values_brojaczj_algorithm(tempo, beats, sounds):
     beats = list(beats)
     while beats[0] > 0:
         beats.insert(0, beats[0]-tempo)
@@ -101,15 +101,15 @@ def update_sounds_with_rhytmic_values_brojaczj_algorithm(tempo, beats, sounds):
         if (len(duration) >= 3) and \
             (duration[1] == duration[0]*2) and \
                 (duration[2] == duration[1]*2):
-                    s.rhytmic_value=str(duration[0]//2)+'.'
+                    s.rhythmic_value=str(duration[0]//2)+'.'
             
         elif (len(duration) >= 2) and (duration[1] == duration[0]*2):
-            s.rhytmic_value=str(duration[0])+'.'
+            s.rhythmic_value=str(duration[0])+'.'
         else:
-            s.rhytmic_value=str(duration[0])
+            s.rhythmic_value=str(duration[0])
 
 
-def update_sounds_with_rhytmic_values_compare_adjacent(sounds, meter):
+def update_sounds_with_rhythmic_values_compare_adjacent(sounds, meter):
     start_index = min(range(len(sounds)), key=[abs(s.duration_ms-meter) for s in sounds].__getitem__)
     if sounds[start_index].duration_ms/meter > 1.5 or sounds[start_index].duration_ms/meter < 0.75:
         raise("There was no note with duration similar to the beat and the algorithm failed")
@@ -123,12 +123,12 @@ def update_sounds_with_rhytmic_values_compare_adjacent(sounds, meter):
     for i in range(start_index-1, -1, -1):
         best_match_index = find_best_fraction_index(sounds[i], sounds[i+1], allowed_fractions_log)
         beat_fractions[i] = allowed_fractions[best_match_index]
-    rhytmic_values = transform_beat_fractions_into_rhytmic_values(beat_fractions, meter)
-    for sound, rhytmic_value in zip(sounds, rhytmic_values):
-        sound.rhytmic_value = rhytmic_value
+    rhythmic_values = transform_beat_fractions_into_rhythmic_values(beat_fractions, meter)
+    for sound, rhythmic_value in zip(sounds, rhythmic_values):
+        sound.rhythmic_value = rhythmic_value
 
 
-def update_sounds_with_rhytmic_values_compare_absolute(sounds, meter):
+def update_sounds_with_rhythmic_values_compare_absolute(sounds, meter):
     allowed_fractions = [16.0, 12.0, 8.0, 6.0, 4.0, 3.0, 2.0, 1.5, 1.0, 0.75, 0.5, 0.375, 0.25, 0.1875, 0.125, 0.09375, 0.0625]
     allowed_fractions_log = [log2(ar) for ar in allowed_fractions]
     beat_fractions = []
@@ -141,6 +141,6 @@ def update_sounds_with_rhytmic_values_compare_absolute(sounds, meter):
         best_match_index =  min(range(len(allowed_fractions_log)),
                                 key=minimized_values.__getitem__)
         beat_fractions.append(allowed_fractions[best_match_index])
-    rhytmic_values = transform_beat_fractions_into_rhytmic_values(beat_fractions, meter)
-    for sound, rhytmic_value in zip(sounds, rhytmic_values):
-        sound.rhytmic_value = rhytmic_value
+    rhythmic_values = transform_beat_fractions_into_rhythmic_values(beat_fractions, meter)
+    for sound, rhythmic_value in zip(sounds, rhythmic_values):
+        sound.rhythmic_value = rhythmic_value

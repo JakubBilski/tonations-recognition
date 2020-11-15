@@ -10,7 +10,7 @@ def get_sounds_at_metrum(sounds: List[music.Sound], meter: Tuple[int, int]):
     accent_duration = meter[0] * meter[1] / 2
     current_timestamp = 0
     for sound in sounds:
-        current_timestamp += sound.rhytmic_value_time
+        current_timestamp += sound.rhythmic_value_time
         while sound.timestamp >= next_accent:
             s.append(sound)
             next_accent += accent_duration

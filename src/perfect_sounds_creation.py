@@ -1,7 +1,7 @@
 from music import Sound
 
 def get_perfect_sounds(sounds, beat):
-    update_beat_fractions_from_rhytmic_values(sounds)
+    update_beat_fractions_from_rhythmic_values(sounds)
     perfect_sounds = []
     current_end_timestamp = 0.0
     for sound in sounds:
@@ -9,8 +9,8 @@ def get_perfect_sounds(sounds, beat):
         current_end_timestamp += sound.beat_fraction*beat
     return perfect_sounds
 
-def update_beat_fractions_from_rhytmic_values(sounds):
-    beat_frac_to_rhytmic_value = {
+def update_beat_fractions_from_rhythmic_values(sounds):
+    beat_frac_to_rhythmic_value = {
         8.0 : "1.",
         6.0 : "1.",
         4.0 : "1",
@@ -26,7 +26,7 @@ def update_beat_fractions_from_rhytmic_values(sounds):
         0.125 : "32"
     }
     reverse_dict = {}
-    for key in beat_frac_to_rhytmic_value.keys():
-        reverse_dict[beat_frac_to_rhytmic_value[key]] = key
+    for key in beat_frac_to_rhythmic_value.keys():
+        reverse_dict[beat_frac_to_rhythmic_value[key]] = key
     for sound in sounds:
-        sound.beat_fraction = reverse_dict[sound.rhytmic_value]
+        sound.beat_fraction = reverse_dict[sound.rhythmic_value]

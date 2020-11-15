@@ -27,3 +27,16 @@ https://github.com/ashishpatel26/Best-Audio-Classification-Resources-with-Deep-l
 
 Zmiana autora commita:
  git -c user.name="New Author Name" -c user.email=email@address.com commit --amend --reset-author
+
+
+Testowanie serwera:
+``` bash
+python3 src/main.py --http
+```
+i w innym terminalu
+```bash
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"input_file":"data/other_rec/ach_spij_C.wav"}' \
+  http://localhost:5000/music
+```

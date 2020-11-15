@@ -1,30 +1,35 @@
-from . import sound
+from . import base_sound
 
 
-class Chord(sound.Sound):
-    def __init__(self, note=None, timestamp=None, duration_ms=None, symbol=None,
+class Chord(base_sound.BaseSound):
+    def __init__(self, note=None, symbol=None, duration=None,
                  kind=None):
-        super().__init__(note, timestamp, duration_ms, None, symbol)
+        super().__init__(note, symbol)
         self.kind = kind
+        self.duration = duration
 
     def parallel(self):
         if "major" in self.kind:
-            return Chord(self.note+9, self.timestamp, self.duration_ms,
-                         self.kind.replace("major", "minor"))
+            return Chord(self.note+9, duration=self.duration,
+                         kind=self.kind.replace("major", "minor"))
         else:
-            return Chord(self.note+3, self.timestamp, self.duration_ms,
-                         self.kind.replace("minor", "major"))
+            return Chord(self.note+3, duration=self.duration,
+                         kind=self.kind.replace("minor", "major"))
 
     def sounds(self):
         if self.kind == "major":
-            return [sound.Sound(self.note), sound.Sound(self.note+4),
-                    sound.Sound(self.note+7)]
+            return [base_sound.BaseSound(self.note),
+                    base_sound.BaseSound(self.note+4),
+                    base_sound.BaseSound(self.note+7)]
         elif self.kind == "minor":
-            return [sound.Sound(self.note), sound.Sound(self.note+3),
-                    sound.Sound(self.note+7)]
+            return [base_sound.BaseSound(self.note),
+                    base_sound.BaseSound(self.note+3),
+                    base_sound.BaseSound(self.note+7)]
         elif self.kind == "major7":
-            return [sound.Sound(self.note), sound.Sound(self.note+4),
-                    sound.Sound(self.note+7), sound.Sound(self.note+10)]
+            return [base_sound.BaseSound(self.note),
+                    base_sound.BaseSound(self.note+4),
+                    base_sound.BaseSound(self.note+7),
+                    base_sound.BaseSound(self.note+10)]
         else:
             raise Exception("Not supported chord kind")
 

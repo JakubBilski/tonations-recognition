@@ -3,50 +3,43 @@ import pathlib
 from midiutil.MidiFile import MIDIFile
 from midi2audio import FluidSynth
 
+from utils import constants
 
-def add_sound(track, sound):
+
+def add_sound(track, sound, start_time):
+    duration = sound.rhythmic_value_time
     if sound.note is not None:
         pitch = sound.note + 60
-        track.addNote(0, 0, pitch, sound.timestamp, sound.duration_ms, 100)
+        track.addNote(0, 0, pitch, start_time, duration, 100)
+    return duration
 
 
-def add_chord(track, chord):
+def add_chord(track, chord, start_time):
+    chord_duration = constants.RHYTHMIC_VALUE_TO_TIME["8"]*chord.duration
     if chord.note is not None:
         for sound in chord.sounds():
             pitch = sound.note + 60
-            track.addNote(0, 0, pitch, chord.timestamp, chord.duration_ms, 100)
+            track.addNote(0, 1, pitch, start_time,
+                          chord_duration,
+                          50)
+    return chord_duration
 
 
-def save_midifile_as_wav(midifile, filename):
-    with open(filename + ".mid", "wb") as output_file:
-        midifile.writeFile(output_file)
-    fs = FluidSynth()
-    fs.midi_to_audio(filename + '.mid', filename + '.wav')
-    return pathlib.Path(filename + '.wav')
-
-
-def midi_from_sounds(sounds, filename):
+def create_midi(filename, sounds, chords):
     midifile = MIDIFile(1)
 
+    start_time = 0
     for s in sounds:
-        add_sound(midifile, s)
+        start_time += add_sound(midifile, s, start_time)
 
-    with open(filename + ".mid", "wb") as output_file:
-        midifile.writeFile(output_file)
-
-    return pathlib.Path(filename + '.mid')
-
-
-def midi_from_chords(chords, filename):
-    midifile = MIDIFile(1)
-
+    start_time = 0
     for c in chords:
-        add_chord(midifile, c)
-    
-    with open(filename + ".mid", "wb") as output_file:
+        start_time += add_chord(midifile, c, start_time)
+
+    with open(filename, "wb") as output_file:
         midifile.writeFile(output_file)
 
-    return pathlib.Path(filename + '.mid')
+    return pathlib.Path(filename).absolute()
 
 
 def ly_from_sounds(sounds, filename):
@@ -59,7 +52,8 @@ def ly_from_sounds(sounds, filename):
             if s.note is None:
                 f.write(f" r{s.beat_fraction}")
             else:
-                f.write(f" {s.symbol.lower().replace('#', 'is')}{s.beat_fraction}")
+                f.write(
+                    f" {s.symbol.lower().replace('#', 'is')}{s.beat_fraction}")
         print('', file=f)
         print('}', file=f)
         print('\\midi{}', file=f)

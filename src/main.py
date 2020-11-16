@@ -111,7 +111,11 @@ def process_file(filename):
     for chord in chords:
         logger.debug(f"{str(chord).ljust(20)}\t{chord.duration:.3f}")  # noqa
 
-    return sounds, chords, tonation, "NOT SUPPORTED YET"
+    result_file = music_synthesis.create_midi("output.midi", sounds, chords)
+    
+    logger.debug(f"Result file: {result_file}")
+
+    return sounds, chords, tonation, str(result_file)
 
 
 if __name__ == "__main__":

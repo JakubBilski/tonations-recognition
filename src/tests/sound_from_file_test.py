@@ -59,6 +59,8 @@ def visualize_d(d, sounds, test_sounds):
     result = []
     m = len(sounds)
     n = len(test_sounds)
+    sounds = sounds
+    test_sounds = test_sounds
     while (m > 0) or (n > 0):
         act_scoring = d[m][n]
         if act_scoring[1] == -1:
@@ -126,6 +128,12 @@ def main(args, rec_meth):
         elif rec_meth == "brojaczj_algorithm":
             meter_recognition.update_sounds_with_rhythmic_values_brojaczj_algorithm(
                 meter, beats, sounds)
+        elif rec_meth == "fit_to_bar":
+            meter_recognition.update_sounds_with_rhythmic_values_fit_to_bar(
+                meter, beats, sounds  
+            )
+        sounds = list(reversed(sounds))
+        test.sounds = list(reversed(test.sounds))
         match_factor = -1000
         d_list = None
         test_sounds = None
@@ -152,5 +160,6 @@ if __name__ == "__main__":
     rec_meths.append("compare_absolute")
     # rec_meths.append("compare_adjacent")
     rec_meths.append("brojaczj_algorithm")
+    rec_meths.append("fit_to_bar")
     for rec_meth in rec_meths:
         main(args, rec_meth)

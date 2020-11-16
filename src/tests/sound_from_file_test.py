@@ -119,10 +119,7 @@ def main(args, rec_meth):
     for test in tests:
         sounds = sounds_generation.get_sounds_from_file(test.file_path)
         meter, beats = meter_recognition.get_meter(test.file_path, sounds)
-        if rec_meth == "compare_adjacent":
-            meter_recognition.update_sounds_with_rhythmic_values_compare_adjacent(
-                sounds, meter)
-        elif rec_meth == "compare_absolute":
+        if rec_meth == "compare_absolute":
             meter_recognition.update_sounds_with_rhythmic_values_compare_absolute(
                 sounds, meter)
         elif rec_meth == "brojaczj_algorithm":

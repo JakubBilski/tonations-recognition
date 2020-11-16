@@ -13,7 +13,6 @@ import sounds_manipulation
 import perfect_sounds_creation
 
 
-# BEAT_TO_NOTE_VERSION = "compare_adjacent"
 # BEAT_TO_NOTE_VERSION = "compare_absolute"
 BEAT_TO_NOTE_VERSION = "brojaczj_algorithm"
 
@@ -85,10 +84,7 @@ def process_file(filename):
     # sounds = sounds_manipulation.change_tonation(sounds, 2)
 
     meter, beats = meter_recognition.get_meter(filename, sounds)
-    if BEAT_TO_NOTE_VERSION == "compare_adjacent":
-        meter_recognition.update_sounds_with_rhythmic_values_compare_adjacent(
-            sounds, meter)
-    elif BEAT_TO_NOTE_VERSION == "compare_absolute":
+    if BEAT_TO_NOTE_VERSION == "compare_absolute":
         meter_recognition.update_sounds_with_rhythmic_values_compare_absolute(
             sounds, meter)
     elif BEAT_TO_NOTE_VERSION == "brojaczj_algorithm":

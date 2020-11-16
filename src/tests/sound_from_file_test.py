@@ -13,6 +13,9 @@ import meter_recognition
 def parse_args():
     parser = argparse.ArgumentParser(
         description='Test convering audio files to notes with time of occurrence')
+    parser.add_argument('--verbose', '-V',
+                        action="store_true",
+                        help='Print detailed info about tests')
     args = parser.parse_args()
     return args
 
@@ -77,7 +80,7 @@ def visualize_d(d, sounds, test_sounds):
             r1 = ""
         else:
             r1 = f"{str(r[1].symbol).ljust(5)} {r[1].rhythmic_value.ljust(3)}"
-        
+
         if (r[2] != 0) or substitution(r[0], r[1]) != 0:
             color = bcolors.FAIL
         else:
@@ -115,11 +118,14 @@ def main(args, rec_meth):
         sounds = sounds_generation.get_sounds_from_file(test.file_path)
         meter, beats = meter_recognition.get_meter(test.file_path, sounds)
         if rec_meth == "compare_adjacent":
-            meter_recognition.update_sounds_with_rhythmic_values_compare_adjacent(sounds, meter)
+            meter_recognition.update_sounds_with_rhythmic_values_compare_adjacent(
+                sounds, meter)
         elif rec_meth == "compare_absolute":
-            meter_recognition.update_sounds_with_rhythmic_values_compare_absolute(sounds, meter)
-        elif  rec_meth == "brojaczj_algorithm":
-            meter_recognition.update_sounds_with_rhythmic_values_brojaczj_algorithm(meter, beats, sounds)
+            meter_recognition.update_sounds_with_rhythmic_values_compare_absolute(
+                sounds, meter)
+        elif rec_meth == "brojaczj_algorithm":
+            meter_recognition.update_sounds_with_rhythmic_values_brojaczj_algorithm(
+                meter, beats, sounds)
         match_factor = -1000
         d_list = None
         test_sounds = None
@@ -131,13 +137,14 @@ def main(args, rec_meth):
                 d_list = d_list_1
                 test_sounds = test_sounds_1
 
-        # match_factor, d_list = match_sounds(sounds, test.sounds)
-
         print(
             f"{test.file_path}: {round(match_factor*100, 3)}")
         match_factor_sum += match_factor
-        visualize_d(d_list, sounds, test_sounds)
-    print(f"Average match factor for beat recognition {rec_meth}: {match_factor_sum/len(tests)}")
+        if args.verbose:
+            visualize_d(d_list, sounds, test_sounds)
+    print(
+        f"Average match factor for beat recognition {rec_meth}: {match_factor_sum/len(tests)}")
+
 
 if __name__ == "__main__":
     args = parse_args()

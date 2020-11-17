@@ -101,7 +101,7 @@ def process_file(filename):
 
     tonation = tonation_recognition.get_tonation(sounds)
 
-    chords = chords_generation.get_chords(sounds, tonation, (4, 8))
+    chords = chords_generation.get_chords_hausner(sounds, tonation, (4, 8))
 
     logger.debug("Chords:")
     for chord in chords:

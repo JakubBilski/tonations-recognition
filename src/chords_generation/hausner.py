@@ -3,6 +3,13 @@ from typing import List, Tuple
 import music
 import utils.constants
 
+# https://www.fim.uni-passau.de/fileadmin/dokumente/fakultaeten/fim/lehrstuhl/sauer/geyer/BA_MA_Arbeiten/BA-HausnerChristoph-201409.pdf
+'''
+Split notes into timeline
+Split timeline into windows (bars)
+    Extend some bars to prevent changing chord in the middle of sound
+For each bar get best chord using scoring lists
+'''
 
 MINOR_COEF = 0.99
 
@@ -56,7 +63,6 @@ def get_chords_hausner(sounds: List[music.Sound],
         utils.constants.RHYTHMIC_VALUE_TO_TIME[str(meter[1])]
     )
     if meter[0] == 2:
-        # make 2 times more notes with 2 times less time duration each
         meter = (
             4,
             meter[1]/2
@@ -84,17 +90,20 @@ def get_chords_hausner(sounds: List[music.Sound],
             if score > max_score:
                 max_score = score
                 max_chord = c
-        t_c.append(music.Chord(max_chord.note, duration=half_meter_len/4, kind=max_chord.kind))
+        t_c.append(music.Chord(max_chord.note,
+                               duration=half_meter_len/4,
+                               kind=max_chord.kind))
         i += half_meter_len
         while i < len(t_s) and t_s[i] == t_s[i-1]:
             i += 1
             t_c[-1].duration += 1/4
-        
+
     chords = []
     for c in t_c:
         if any(chords) and chords[-1].symbol == c.symbol:
             chords[-1].duration += c.duration
         else:
-            chords.append(music.Chord(c.note, duration=c.duration, kind=c.kind))
+            chords.append(music.Chord(
+                c.note, duration=c.duration, kind=c.kind))
 
     return chords

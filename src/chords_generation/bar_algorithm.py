@@ -52,12 +52,4 @@ def get_chords_bar_algorithm(sounds: List[music.Sound],
         c1.append(tmp)
     chords = c1
 
-    # TODO merge chords?
-    # c1 = []
-    # for c in chords:
-    #     if any(c1) and c1[-1] == c:
-    #         c1[-1].duration += c.duration
-    #     else:
-    #         c1.append(c)
-
     return c1

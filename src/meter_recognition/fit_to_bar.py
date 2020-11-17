@@ -17,20 +17,21 @@ def simple_sound_beat_dur(beats, sound):
     id = sound.beat_id
     b1 = beats[id]
     b2 = beats[id+1]
-    sixteenth = (b2-b1)/4
-    return round(sound.duration_ms/sixteenth)
+    local_duration_of_16s = (b2-b1)/4
+    # TODO check changing to 32 in some situations?
+    no_16s_in_note = round(sound.duration_ms/local_duration_of_16s)
 
-
-def tim_to_duration(tim):
-    result = []
+    # Build result note from higher level notes (max one of each type)
+    result_note = []
     for num in [32, 16, 8, 4, 2, 1]:
-        if tim >= num:
-            result.append(16//num)
-            tim -= num
-    return result
+        if no_16s_in_note >= num:
+            result_note.append(16//num)
+            no_16s_in_note -= num
+    return result_note
 
 
-def stime(sound):
+def no_32nd(sound):
+    # number of equivalent 32nd notes
     return int(sound.rhythmic_value_time /
                constants.RHYTHMIC_VALUE_TO_TIME["32"])
 
@@ -42,24 +43,19 @@ def update_sounds_with_rhythmic_values_fit_to_bar(tempo, beats, sounds):
     beats = list(beats)
     while beats[0] > 0:
         beats.insert(0, beats[0]-tempo)
-    while beats[-1] < sounds[-1].timestamp+sounds[-1].duration_ms:
+    while beats[-1] < sounds[-1].end_timestamp:
         beats.append(beats[-1]+tempo)
-
-    dur = {}
-    for s in sounds:
-        id = f'{s.duration_ms:.3f}'
-        dur[id] = dur.get(id, 0) + 1
 
     for i in range(len(sounds)):
         sounds[i].beat_id = beat_id_closest_to_timestamp(
             beats, sounds[i].timestamp)
 
     for s in sounds:
-        duration = tim_to_duration(simple_sound_beat_dur(beats, s))
+        duration = simple_sound_beat_dur(beats, s)
         if (len(duration) >= 3) and \
             (duration[1] == duration[0]*2) and \
                 (duration[2] == duration[1]*2):
-            s.rhythmic_value = str(duration[0]//2)+'.'
+            s.rhythmic_value = str(duration[0]//2)
 
         elif (len(duration) >= 2) and (duration[1] == duration[0]*2):
             s.rhythmic_value = str(duration[0])+'.'
@@ -73,7 +69,7 @@ def update_sounds_with_rhythmic_values_fit_to_bar(tempo, beats, sounds):
     while i < len(sounds) - 1:
         i += 1
         s = sounds[i]
-        act_bar += stime(s)
+        act_bar += no_32nd(s)
         if act_bar == bar:
             # super
             bar_start = i+1
@@ -93,16 +89,16 @@ def update_sounds_with_rhythmic_values_fit_to_bar(tempo, beats, sounds):
         while j < i:
             j += 1
             s = sounds[j]
-            if s.note == None and stime(s) <= diff:
-                diff -= stime(s)
+            if s.note is None and no_32nd(s) <= diff:
+                diff -= no_32nd(s)
                 sounds.pop(j)
                 i -= 1
                 j -= 1
-            if s.rhythmic_value.endswith('.') and stime(s) / 3 <= diff:
-                diff -= int(stime(s) / 3)
+            if s.rhythmic_value.endswith('.') and no_32nd(s) / 3 <= diff:
+                diff -= int(no_32nd(s) / 3)
                 s.rhythmic_value = s.rhythmic_value[:-1]
 
-    # fix when half of note is silent sometimes
+    # fix when part of note is silent sometimes
     i = -1
     while i < len(sounds) - 2:
         i += 1
@@ -110,7 +106,7 @@ def update_sounds_with_rhythmic_values_fit_to_bar(tempo, beats, sounds):
         s1 = sounds[i+1]
         if (s1.note is None) and \
             s0.rhythmic_value.endswith('.') and \
-           (stime(s1)*3 <= stime(s0)):
+           (no_32nd(s1)*3 <= no_32nd(s0)):
             s0.rhythmic_value = str(int(s0.rhythmic_value[:-1])//2)
             sounds.pop(i+1)
             i -= 1

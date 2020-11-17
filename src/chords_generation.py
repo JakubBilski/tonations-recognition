@@ -11,9 +11,10 @@ def get_sounds_at_metrum(sounds: List[music.Sound], meter: Tuple[int, int]):
     current_timestamp = 0
     for sound in sounds:
         current_timestamp += sound.rhythmic_value_time
-        while sound.timestamp >= next_accent:
+        while current_timestamp >= next_accent:
             s.append(sound)
             next_accent += accent_duration
+
     return s
 
 
@@ -47,17 +48,8 @@ def get_chords(sounds: List[music.Sound],
     c1 = []
     # chord_duration = half of meter * how many eigth fits in one meter note
     chord_duration = (meter[0]/2) * (meter[1]/0.5)
-    for i, c in enumerate(chords):
+    for c in chords:
         tmp = music.Chord(c.note, duration=chord_duration, kind=c.kind)
         c1.append(tmp)
-    chords = c1
-
-    # TODO merge chords?
-    # c1 = []
-    # for c in chords:
-    #     if any(c1) and c1[-1] == c:
-    #         c1[-1].duration += c.duration
-    #     else:
-    #         c1.append(c)
 
     return c1

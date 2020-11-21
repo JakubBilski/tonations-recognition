@@ -78,6 +78,28 @@ def frontend_communication():
     return jsonify(result)
 
 
+def print_debug_info(sounds, chords):
+    sounds_i = 0
+    sounds_time = 0
+    chords_i = 0
+    chords_time = 0
+    while sounds_i < len(sounds) or chords_i < len(chords):
+        if chords_i >= len(chords) or sounds_time < chords_time:
+            logger.debug(sounds[sounds_i])
+            sounds_time += sounds[sounds_i].rhythmic_value_to_chord_duration
+            sounds_i += 1
+        elif sounds_i >= len(sounds) or sounds_time > chords_time:
+            logger.debug(f"\t\t\t{chords[chords_i]}")
+            chords_time += chords[chords_i].duration
+            chords_i += 1
+        else:
+            logger.debug(f"{sounds[sounds_i]}\t{chords[chords_i]}")
+            sounds_time += sounds[sounds_i].rhythmic_value_to_chord_duration
+            sounds_i += 1
+            chords_time += chords[chords_i].duration
+            chords_i += 1
+
+
 def process_file(filename):
     logger.debug(f"Procesing {filename}")
     sounds = sounds_generation.get_sounds_from_file(filename)
@@ -110,8 +132,10 @@ def process_file(filename):
         logger.debug(f"{str(chord).ljust(20)}\t{chord.duration:.3f}")  # noqa
 
     result_file = music_synthesis.create_midi("output.midi", sounds, chords)
-    
+
     logger.debug(f"Result file: {result_file}")
+
+    print_debug_info(sounds, chords)
 
     return sounds, chords, tonation, str(result_file)
 
@@ -122,4 +146,3 @@ if __name__ == "__main__":
         app.run()
     else:
         process_file(args.input)
-    

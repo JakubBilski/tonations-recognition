@@ -18,9 +18,16 @@ class Sound(base_sound.BaseSound):
     def rhythmic_value_time(self):
         return constants.RHYTHMIC_VALUE_TO_TIME[self.rhythmic_value]
 
+    @property
+    def rhythmic_value_to_chord_duration(self):
+        return constants.RHYTHMIC_VALUE_TO_TIME[self.rhythmic_value] /\
+            constants.RHYTHMIC_VALUE_TO_TIME["8"]
+
     def __str__(self):
-        if self.timestamp is None:
-            return super().__str__()
-        return f"{round(self.timestamp, 3)}: {self.symbol}"
+        if self.rhythmic_value is not None:
+            return f"{self.symbol}\t({self.rhythmic_value})"
+        if self.timestamp is not None:
+            return f"{round(self.timestamp, 3)}: {self.symbol}"
+        return super().__str__()
 
     __repr__ = __str__

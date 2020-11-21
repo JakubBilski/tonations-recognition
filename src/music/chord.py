@@ -30,6 +30,10 @@ class Chord(base_sound.BaseSound):
                     base_sound.BaseSound(self.note+4),
                     base_sound.BaseSound(self.note+7),
                     base_sound.BaseSound(self.note+10)]
+        elif self.kind == "diminished":
+            return [base_sound.BaseSound(self.note),
+                    base_sound.BaseSound(self.note+3),
+                    base_sound.BaseSound(self.note+6)]
         else:
             raise Exception("Not supported chord kind")
 

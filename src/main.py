@@ -4,12 +4,13 @@ import argparse
 import pathlib
 import logging
 
-import tonation_recognition
+import music
+import music_synthesis
 import sounds_generation
 import chords_generation
 import meter_recognition
-import music_synthesis
 import sounds_manipulation
+import tonation_recognition
 import perfect_sounds_creation
 
 
@@ -33,6 +34,9 @@ def parse_args():
                         default="data/other_rec/ach_spij_C.wav",
                         help='Input audio file. Formats: [.mp3, .wav]',
                         type=pathlib.Path)
+    parser.add_argument('--tonation', '-T',
+                        help='Use correct tonation instead of detected',
+                        type=str)
     args = parser.parse_args()
     return args
 
@@ -79,21 +83,22 @@ def frontend_communication():
 
 
 def print_debug_info(sounds, chords):
+    logger.debug("Melody with chords:")
     sounds_i = 0
     sounds_time = 0
     chords_i = 0
     chords_time = 0
     while sounds_i < len(sounds) or chords_i < len(chords):
         if chords_i >= len(chords) or sounds_time < chords_time:
-            logger.debug(sounds[sounds_i])
+            logger.debug(f"\t\t{sounds[sounds_i]}")
             sounds_time += sounds[sounds_i].rhythmic_value_to_chord_duration
             sounds_i += 1
         elif sounds_i >= len(sounds) or sounds_time > chords_time:
-            logger.debug(f"\t\t\t{chords[chords_i]}")
+            logger.debug(f"\t\t\t\t\t{chords[chords_i]}")
             chords_time += chords[chords_i].duration
             chords_i += 1
         else:
-            logger.debug(f"{sounds[sounds_i]}\t{chords[chords_i]}")
+            logger.debug(f"\t\t{sounds[sounds_i]}\t{chords[chords_i]}")
             sounds_time += sounds[sounds_i].rhythmic_value_to_chord_duration
             sounds_i += 1
             chords_time += chords[chords_i].duration
@@ -115,27 +120,24 @@ def process_file(filename):
     else:
         raise(f"BEAT_TO_NOTE_VERSION '{BEAT_TO_NOTE_VERSION}'' not recognized")
 
-    logger.debug(f"Meter: {meter}")
-
-    logger.debug("Sounds:")
-    for sound in sounds:
-        logger.debug(f"{sound.timestamp:.3f}: {sound.symbol}\t{sound.duration_ms:.3f} ({sound.rhythmic_value})")  # noqa
-
-    tonation = tonation_recognition.get_tonation(sounds)
-
-    logger.debug(f"Tonation: {tonation}")
+    if args.tonation:
+        if args.tonation.islower():
+            kind = "minor"
+        else:
+            kind = "major"
+        tonation = music.Tonation(symbol=args.tonation.lower(), kind=kind)
+    else:
+        tonation = tonation_recognition.get_tonation(sounds)
 
     chords = chords_generation.get_chords_daria(sounds, tonation, (4, 4))
 
-    logger.debug("Chords:")
-    for chord in chords:
-        logger.debug(f"{str(chord).ljust(20)}\t{chord.duration:.3f}")  # noqa
-
     result_file = music_synthesis.create_midi("output.midi", sounds, chords)
+    result_file = music_synthesis.save_midifile_as_wav("output.midi", "output.wav")
 
-    logger.debug(f"Result file: {result_file}")
-
+    logger.debug(f"Meter:\t\t{meter}")
+    logger.debug(f"Tonation:\t\t{tonation}")
     print_debug_info(sounds, chords)
+    logger.debug(f"Result file:\t\t{result_file}")
 
     return sounds, chords, tonation, str(result_file)
 

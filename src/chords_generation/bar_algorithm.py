@@ -47,7 +47,7 @@ def get_chords_bar_algorithm(sounds: List[music.Sound],
     c1 = []
     # chord_duration = half of meter * how many eigth fits in one meter note
     chord_duration = (meter[0]/2) * (meter[1]/0.5)
-    for i, c in enumerate(chords):
+    for c in chords:
         tmp = music.Chord(c.note, duration=chord_duration, kind=c.kind)
         c1.append(tmp)
     chords = c1

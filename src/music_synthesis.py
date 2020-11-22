@@ -43,6 +43,7 @@ def create_midi(filename, sounds, chords):
 
 
 def save_midifile_as_wav(midi, wav):
+    # experimental, only works on linux
     fs = FluidSynth()
     fs.midi_to_audio(midi, wav)
     return pathlib.Path(wav)

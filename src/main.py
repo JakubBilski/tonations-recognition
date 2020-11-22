@@ -132,7 +132,7 @@ def process_file(filename):
     chords = chords_generation.get_chords_daria(sounds, tonation, (4, 4))
 
     result_file = music_synthesis.create_midi("output.midi", sounds, chords)
-    result_file = music_synthesis.save_midifile_as_wav("output.midi", "output.wav")
+    # result_file = music_synthesis.save_midifile_as_wav("output.midi", "output.wav")
 
     logger.debug(f"Meter:\t\t{meter}")
     logger.debug(f"Tonation:\t\t{tonation}")

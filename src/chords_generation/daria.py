@@ -51,7 +51,7 @@ def point_coef(chord: music.Chord, first_sound: music.Sound, last_chord_level: i
     else:
         first_sound_coef = 1
     return params.COEFS[chord.kind] * \
-        params.NEXT_CHORD[last_chord_level].get(chord.level, 1) * \
+        params.NEXT_CHORD[last_chord_level][chord.level] * \
         first_sound_coef
 
 

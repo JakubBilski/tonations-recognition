@@ -42,6 +42,13 @@ def create_midi(filename, sounds, chords):
     return pathlib.Path(filename).absolute()
 
 
+def save_midifile_as_wav(midi, wav):
+    # experimental, only works on linux
+    fs = FluidSynth()
+    fs.midi_to_audio(midi, wav)
+    return pathlib.Path(wav)
+
+
 def ly_from_sounds(sounds, filename):
     with open(filename, 'w') as f:
         print('\\version "2.12.3"', file=f)

@@ -65,7 +65,7 @@ def get_chords_daria(sounds: List[music.Sound],
         )
 
     # allow changing chords every half bar
-    half_bar_len = 2*meter[1]
+    half_bar_len = meter[0]*meter[1]//2
 
     # create timeline of sounds
     t_s = []

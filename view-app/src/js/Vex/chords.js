@@ -216,7 +216,7 @@ function createChordElement(chordStruct) {
 }
 
 function createSectionElement(sectionStruct) {
-  const section = $('<div>').addClass('section');
+  const section = $('<div>').addClass('section_chord');
   const sectionTitle = $('<div>').addClass('title');
   const sectionDesc = $('<div>').addClass('description');
 

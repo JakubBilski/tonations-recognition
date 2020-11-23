@@ -165,6 +165,26 @@ a.main-stroked-button:hover {
   background-color: #fff;
   color: #5fb759;
 }
+a.main-record-button {
+  font-size: 13px;
+  border-radius: 25px;
+  padding: 11px 25px;
+  background-color: #5fb759;
+  border: 2px solid #fff;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 1px;
+  -webkit-transition: all 0.3s ease 0s;
+  -moz-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+}
+
+a.main-record-button:hover {
+  background-color: #fff;
+  color: #5fb759;
+}
 
 a.main-filled-button {
   font-size: 13px;

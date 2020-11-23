@@ -1,0 +1,16 @@
+
+.chord { float: left; padding-top: 0px;}
+.chordname {
+  width: 80%;
+  margin: auto;
+  font-family: "Marvel", cursive;
+  font-size: 20px;
+}
+.section_chord {
+  padding-top: 30px;
+  clear: left;
+}
+#music
+{
+  padding-top: 40px;
+}

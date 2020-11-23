@@ -6,16 +6,16 @@ from midi2audio import FluidSynth
 from utils import constants
 
 
-def add_sound(track, sound, start_time):
-    duration = sound.rhythmic_value_time
+def add_sound(track, sound, start_time, duration_ms_of_32):
+    duration = sound.duration * duration_ms_of_32
     if sound.note is not None:
         pitch = sound.note + 60
         track.addNote(0, 0, pitch, start_time, duration, 100)
     return duration
 
 
-def add_chord(track, chord, start_time):
-    chord_duration = constants.RHYTHMIC_VALUE_TO_TIME["8"]*chord.duration
+def add_chord(track, chord, start_time, duration_ms_of_32):
+    chord_duration = chord.duration * duration_ms_of_32
     if chord.note is not None:
         for sound in chord.sounds():
             pitch = sound.note + 60
@@ -25,16 +25,16 @@ def add_chord(track, chord, start_time):
     return chord_duration
 
 
-def create_midi(filename, sounds, chords):
+def create_midi(filename, sounds, chords, duration_ms_of_32):
     midifile = MIDIFile(1)
 
     start_time = 0
     for s in sounds:
-        start_time += add_sound(midifile, s, start_time)
+        start_time += add_sound(midifile, s, start_time, duration_ms_of_32)
 
     start_time = 0
     for c in chords:
-        start_time += add_chord(midifile, c, start_time)
+        start_time += add_chord(midifile, c, start_time, duration_ms_of_32)
 
     with open(filename, "wb") as output_file:
         midifile.writeFile(output_file)

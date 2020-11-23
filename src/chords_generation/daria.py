@@ -1,7 +1,7 @@
 from typing import List, Tuple
 
 import music
-import utils.constants
+from utils import constants
 from . import daria_params as params
 
 # https://www.fim.uni-passau.de/fileadmin/dokumente/fakultaeten/fim/lehrstuhl/sauer/geyer/BA_MA_Arbeiten/BA-HausnerChristoph-201409.pdf
@@ -58,26 +58,19 @@ def point_coef(chord: music.Chord, first_sound: music.Sound, last_chord_level: i
 def get_chords_daria(sounds: List[music.Sound],
                      tonation: music.Tonation,
                      meter: Tuple[int, int]):
-    # set meter
-    meter = (
-        meter[0],
-        utils.constants.RHYTHMIC_VALUE_TO_TIME[str(meter[1])]
-    )
     if meter[0] == 2:
         meter = (
             4,
-            meter[1]/2
+            meter[1]//2
         )
-    if meter[0] != 4:
-        raise Exception("Not supported meter in chord duration")
 
     # allow changing chords every half bar
-    half_bar_len = 2*int(meter[1]/0.125)
+    half_bar_len = meter[0]*meter[1]//2
 
     # create timeline of sounds
     t_s = []
     for s in sounds:
-        for _ in range(int(s.rhythmic_value_time*8)):
+        for _ in range(s.duration):
             t_s.append(s)
 
     # generate chords
@@ -105,14 +98,14 @@ def get_chords_daria(sounds: List[music.Sound],
                 max_chord = c
 
         t_c.append(music.Chord(max_chord.note,
-                               duration=half_bar_len/4,
+                               duration=half_bar_len,
                                kind=max_chord.kind))
         last_chord_level = max_chord.level
         i += half_bar_len
         # prevent adding new chord between notes
         while i < len(t_s) and t_s[i] == t_s[i-1]:
             i += 1
-            t_c[-1].duration += 1/4
+            t_c[-1].duration += 1
 
     # merge chords with the same note 
     chords = []

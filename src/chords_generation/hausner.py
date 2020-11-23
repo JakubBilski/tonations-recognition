@@ -1,7 +1,7 @@
 from typing import List, Tuple
 
 import music
-import utils.constants
+from utils import constants
 
 # https://www.fim.uni-passau.de/fileadmin/dokumente/fakultaeten/fim/lehrstuhl/sauer/geyer/BA_MA_Arbeiten/BA-HausnerChristoph-201409.pdf
 '''
@@ -58,23 +58,17 @@ def points(chord: music.Chord, sound: music.Sound):
 def get_chords_hausner(sounds: List[music.Sound],
                        tonation: music.Tonation,
                        meter: Tuple[int, int]):
-    meter = (
-        meter[0],
-        utils.constants.RHYTHMIC_VALUE_TO_TIME[str(meter[1])]
-    )
     if meter[0] == 2:
         meter = (
             4,
-            meter[1]/2
+            meter[1]//2
         )
-    if meter[0] != 4:
-        raise Exception("Not supported meter in chord duration")
 
-    half_meter_len = 2*int(meter[1]/0.125)
+    half_meter_len = meter[0]*meter[1]//2
 
     t_s = []
     for s in sounds:
-        for _ in range(int(s.rhythmic_value_time*8)):
+        for _ in range(s.duration):
             t_s.append(s)
 
     t_c = []
@@ -91,12 +85,12 @@ def get_chords_hausner(sounds: List[music.Sound],
                 max_score = score
                 max_chord = c
         t_c.append(music.Chord(max_chord.note,
-                               duration=half_meter_len/4,
+                               duration=half_meter_len,
                                kind=max_chord.kind))
         i += half_meter_len
         while i < len(t_s) and t_s[i] == t_s[i-1]:
             i += 1
-            t_c[-1].duration += 1/4
+            t_c[-1].duration += 1
 
     chords = []
     for c in t_c:

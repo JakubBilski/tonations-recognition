@@ -1,12 +1,14 @@
 from . import base_sound
-
+from utils import constants
 
 class Chord(base_sound.BaseSound):
     def __init__(self, note=None, symbol=None, duration=None,
                  kind=None):
         super().__init__(note, symbol)
-        self.kind = kind
-        self.duration = duration
+        if kind is not None:
+            self.kind = kind
+        if duration is not None:
+            self.duration = duration
 
     def parallel(self):
         if "major" in self.kind:
@@ -45,3 +47,9 @@ class Chord(base_sound.BaseSound):
 
     def __eq__(self, other):
         return (self.note == other.note) and (self.kind == other.kind)
+
+    @base_sound.BaseSound.duration.setter
+    def duration(self, duration):
+        if isinstance(duration, float):
+            raise Exception(f"Tried to set duration to float")
+        self._duration = duration

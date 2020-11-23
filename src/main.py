@@ -11,7 +11,6 @@ import chords_generation
 import meter_recognition
 import sounds_manipulation
 import tonation_recognition
-import perfect_sounds_creation
 
 
 # BEAT_TO_NOTE_VERSION = "compare_absolute"

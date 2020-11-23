@@ -98,10 +98,10 @@ def get_chords_daria(sounds: List[music.Sound],
                 max_chord = c
 
         t_c.append(music.Chord(max_chord.note,
-                               duration=constants.MIN_CHORD_DURATION,
+                               duration=half_bar_len,
                                kind=max_chord.kind))
         last_chord_level = max_chord.level
-        i += constants.MIN_CHORD_DURATION
+        i += half_bar_len
         # prevent adding new chord between notes
         while i < len(t_s) and t_s[i] == t_s[i-1]:
             i += 1

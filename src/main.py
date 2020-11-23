@@ -15,7 +15,6 @@ from utils import constants
 from utils.constants import DURATION_TO_RHYTMIC_VALUE
 
 
-# BEAT_TO_NOTE_VERSION = "compare_absolute"
 BEAT_TO_NOTE_VERSION = "fit_to_bar"
 
 logging.basicConfig(format='%(levelname)s:%(message)s')
@@ -113,10 +112,7 @@ def process_file(filename):
     # sounds = sounds_manipulation.change_tonation(sounds, 2)
 
     meter, beats = meter_recognition.get_meter(filename, sounds)
-    if BEAT_TO_NOTE_VERSION == "compare_absolute":
-        meter_recognition.update_sounds_with_rhythmic_values_compare_absolute(
-            sounds, meter)
-    elif BEAT_TO_NOTE_VERSION == "fit_to_bar":
+    if BEAT_TO_NOTE_VERSION == "fit_to_bar":
         meter_recognition.update_sounds_with_rhythmic_values_fit_to_bar(
             meter, beats, sounds)
     else:

@@ -111,10 +111,7 @@ def main(args, rec_meth):
     for test in tests:
         sounds = sounds_generation.get_sounds_from_file(test.file_path)
         meter, beats = meter_recognition.get_meter(test.file_path, sounds)
-        if rec_meth == "compare_absolute":
-            meter_recognition.update_sounds_with_rhythmic_values_compare_absolute(
-                sounds, meter)
-        elif rec_meth == "fit_to_bar":
+        if rec_meth == "fit_to_bar":
             meter_recognition.update_sounds_with_rhythmic_values_fit_to_bar(
                 meter, beats, sounds  
             )
@@ -145,7 +142,6 @@ def main(args, rec_meth):
 if __name__ == "__main__":
     args = parse_args()
     rec_meths = []
-    rec_meths.append("compare_absolute")
     rec_meths.append("fit_to_bar")
     for rec_meth in rec_meths:
         main(args, rec_meth)

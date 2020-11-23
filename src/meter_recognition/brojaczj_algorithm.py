@@ -31,11 +31,6 @@ def update_sounds_with_rhythmic_values_brojaczj_algorithm(tempo, beats, sounds):
     while beats[-1] < sounds[-1].timestamp+sounds[-1].duration_ms:
         beats.append(beats[-1]+tempo)
 
-    dur = {}
-    for s in sounds:
-        id = f'{s.duration_ms:.3f}'
-        dur[id] = dur.get(id, 0) + 1
-
     for i in range(len(sounds)):
         sounds[i].beat_id = beat_id_closest_to_timestamp(
             beats, sounds[i].timestamp)
@@ -43,10 +38,10 @@ def update_sounds_with_rhythmic_values_brojaczj_algorithm(tempo, beats, sounds):
     for s in sounds:
         duration_components = simple_sound_beat_dur(beats, s)
         if (len(duration_components) >= 3) and \
-            (duration_components[1] == duration_components[0]*2) and \
-                (duration_components[2] == duration_components[1]*2):
-            s.duration = duration_components[0]*3
-        elif (len(duration_components) >= 2) and (duration_components[1] == duration_components[0]*2):
+            (duration_components[0] == duration_components[1]*2) and \
+                (duration_components[1] == duration_components[2]*2):
+            s.duration = duration_components[0]*2
+        elif (len(duration_components) >= 2) and (duration_components[0] == duration_components[1]*2):
             s.duration = duration_components[0]+duration_components[0]//2
         else:
             s.duration = duration_components[0]

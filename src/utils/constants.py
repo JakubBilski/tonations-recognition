@@ -26,3 +26,20 @@ LEGAL_NOT_DOTTED_DURATION_VALUES = [
 LEGAL_DOTTED_DURATION_VALUES = [
     3, 6, 12, 24
 ]
+
+RHYTMIC_VALUE_TO_DURATION = {
+    "32" : 1,
+    "16" : 2,
+    "16." : 3,
+    "8" : 4,
+    "8." : 6,
+    "4" : 8,
+    "4." : 12,
+    "2" : 16,
+    "2." : 24,
+    "1" : 32
+}
+
+DURATION_TO_RHYTMIC_VALUE = {}
+for (key, val) in RHYTMIC_VALUE_TO_DURATION.items():
+    DURATION_TO_RHYTMIC_VALUE[val] = key

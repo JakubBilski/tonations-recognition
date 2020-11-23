@@ -11,6 +11,8 @@ import chords_generation
 import meter_recognition
 import sounds_manipulation
 import tonation_recognition
+from utils import constants
+from utils.constants import DURATION_TO_RHYTMIC_VALUE
 
 
 # BEAT_TO_NOTE_VERSION = "compare_absolute"
@@ -40,6 +42,7 @@ def parse_args():
     return args
 
 
+
 @app.route('/music', methods=['GET', 'POST'])
 def frontend_communication():
     try:
@@ -60,7 +63,7 @@ def frontend_communication():
         "notes": [
             {
                 "symbol": note.symbol,
-                "duration": note.duration
+                "rhythmic_value": constants.DURATION_TO_RHYTMIC_VALUE[note.duration]
             }
             for note in notes
         ],
@@ -68,7 +71,7 @@ def frontend_communication():
             {
                 "symbol": chord.symbol,
                 "kind": chord.kind,
-                "duration": chord.duration
+                "duration": chord.duration*4
             }
             for chord in chords
         ],

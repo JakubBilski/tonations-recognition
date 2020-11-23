@@ -94,15 +94,10 @@ def visualize_d(d, sounds, test_sounds):
 def try_to_move_sounds(sounds, coef):
     sound1 = []
     for s in sounds:
-        ds = s.duration
-        d = False
-        if ds not in constants.LEGAL_NOT_DOTTED_DURATION_VALUES:
-            ds = (ds//3)*2
-        ds = int(ds*coef)
-        if ds not in constants.LEGAL_DURATION_VALUES:
+        if int(s.duration*coef) not in constants.LEGAL_DURATION_VALUES:
             return None
         sound1.append(
-            music.Sound(note=s.note, duration=ds)
+            music.Sound(note=s.note, duration=int(s.duration*coef))
         )
     return sound1
 

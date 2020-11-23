@@ -37,9 +37,11 @@ def parse_args():
     parser.add_argument('--tonation', '-T',
                         help='Use correct tonation instead of detected',
                         type=str)
+    parser.add_argument('--wav',
+                        action="store_true",
+                        help='Save file as WAVE; works only on linux')
     args = parser.parse_args()
     return args
-
 
 
 @app.route('/music', methods=['GET', 'POST'])
@@ -127,11 +129,14 @@ def process_file(filename):
     else:
         tonation = tonation_recognition.get_tonation(sounds)
 
-    chords = chords_generation.get_chords_hausner(sounds, tonation, (4, 8))
+    chords = chords_generation.get_chords_daria(sounds, tonation, (4, 8))
 
     duration_ms_of_32 = meter / 4
-    result_file = music_synthesis.create_midi("output.midi", sounds, chords, duration_ms_of_32)
-    # result_file = music_synthesis.save_midifile_as_wav("output.midi", "output.wav")
+    result_file = music_synthesis.create_midi("output.midi", sounds,
+                                              chords, duration_ms_of_32)
+    if args.wav:
+        result_file = music_synthesis.save_midifile_as_wav("output.midi",
+                                                           "output.wav")
 
     logger.debug(f"Meter:\t\t{meter}")
     logger.debug(f"Tonation:\t\t{tonation}")

@@ -15,7 +15,7 @@ import perfect_sounds_creation
 
 
 # BEAT_TO_NOTE_VERSION = "compare_absolute"
-BEAT_TO_NOTE_VERSION = "brojaczj_algorithm"
+BEAT_TO_NOTE_VERSION = "fit_to_bar"
 
 logging.basicConfig(format='%(levelname)s:%(message)s')
 logger = logging.getLogger('tonation_recognition')
@@ -114,8 +114,8 @@ def process_file(filename):
     if BEAT_TO_NOTE_VERSION == "compare_absolute":
         meter_recognition.update_sounds_with_rhythmic_values_compare_absolute(
             sounds, meter)
-    elif BEAT_TO_NOTE_VERSION == "brojaczj_algorithm":
-        meter_recognition.update_sounds_with_rhythmic_values_brojaczj_algorithm(
+    elif BEAT_TO_NOTE_VERSION == "fit_to_bar":
+        meter_recognition.update_sounds_with_rhythmic_values_fit_to_bar(
             meter, beats, sounds)
     else:
         raise(f"BEAT_TO_NOTE_VERSION '{BEAT_TO_NOTE_VERSION}'' not recognized")

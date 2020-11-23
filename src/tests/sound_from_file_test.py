@@ -119,9 +119,6 @@ def main(args, rec_meth):
         if rec_meth == "compare_absolute":
             meter_recognition.update_sounds_with_rhythmic_values_compare_absolute(
                 sounds, meter)
-        elif rec_meth == "brojaczj_algorithm":
-            meter_recognition.update_sounds_with_rhythmic_values_brojaczj_algorithm(
-                meter, beats, sounds)
         elif rec_meth == "fit_to_bar":
             meter_recognition.update_sounds_with_rhythmic_values_fit_to_bar(
                 meter, beats, sounds  
@@ -154,8 +151,6 @@ if __name__ == "__main__":
     args = parse_args()
     rec_meths = []
     rec_meths.append("compare_absolute")
-    # rec_meths.append("compare_adjacent")
-    rec_meths.append("brojaczj_algorithm")
     rec_meths.append("fit_to_bar")
     for rec_meth in rec_meths:
         main(args, rec_meth)

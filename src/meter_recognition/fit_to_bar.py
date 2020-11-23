@@ -17,15 +17,15 @@ def simple_sound_beat_dur(beats, sound):
     id = sound.beat_id
     b1 = beats[id]
     b2 = beats[id+1]
-    local_duration_of_32s = (b2-b1)/8
-    no_32s_in_sound = round(sound.duration_ms/local_duration_of_32s)
+    local_duration_of_16s = (b2-b1)/4
+    no_16s_in_sound = round(sound.duration_ms/local_duration_of_16s)
 
     # Build result note from higher level notes (max one of each type)
     duration_components = []
-    for num in reversed(constants.LEGAL_NOT_DOTTED_DURATION_VALUES):
-        if no_32s_in_sound >= num:
-            duration_components.append(num)
-            no_32s_in_sound -= num
+    for num in [32, 16, 8, 4, 2, 1]:
+        if no_16s_in_sound >= num:
+            duration_components.append(num*2)
+            no_16s_in_sound -= num
     return duration_components
 
 
@@ -49,7 +49,8 @@ def update_sounds_with_rhythmic_values_fit_to_bar(tempo, beats, sounds):
             (duration_components[0] == duration_components[1]*2) and \
                 (duration_components[1] == duration_components[2]*2):
             s.duration = duration_components[0]*2
-        elif (len(duration_components) >= 2) and (duration_components[0] == duration_components[1]*2):
+        elif (len(duration_components) >= 2) and \
+                (duration_components[0] == duration_components[1]*2):
             s.duration = duration_components[0] + duration_components[0]//2
         else:
             s.duration = duration_components[0]
@@ -86,7 +87,7 @@ def update_sounds_with_rhythmic_values_fit_to_bar(tempo, beats, sounds):
                 sounds.pop(j)
                 i -= 1
                 j -= 1
-            if s.duration not in constants.LEGAL_NOT_DOTTED_DURATION_VALUES and s.duration // 3 <= diff:
+            if s.duration in constants.LEGAL_DOTTED_DURATION_VALUES and s.duration // 3 <= diff:
                 diff -= s.duration // 3
                 s.duration = (s.duration // 3) * 2
 
@@ -97,9 +98,8 @@ def update_sounds_with_rhythmic_values_fit_to_bar(tempo, beats, sounds):
         s0 = sounds[i]
         s1 = sounds[i+1]
         if (s1.note is None) and \
-            s0.duration not in constants.LEGAL_NOT_DOTTED_DURATION_VALUES and \
+            s0.duration in constants.LEGAL_DOTTED_DURATION_VALUES and \
            (s1.duration*3 <= s0.duration):
             s0.duration = (s0.duration//3)*4
             sounds.pop(i+1)
             i -= 1
-

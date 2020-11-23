@@ -1,7 +1,7 @@
 from typing import List, Tuple
 
 import music
-import utils.constants
+from utils import constants
 from . import daria_params as params
 
 # https://www.fim.uni-passau.de/fileadmin/dokumente/fakultaeten/fim/lehrstuhl/sauer/geyer/BA_MA_Arbeiten/BA-HausnerChristoph-201409.pdf
@@ -63,8 +63,6 @@ def get_chords_daria(sounds: List[music.Sound],
             4,
             meter[1]//2
         )
-    if meter[0] != 4:
-        raise Exception("Not supported meter in chord duration")
 
     # allow changing chords every half bar
     half_bar_len = 2*meter[1]
@@ -100,14 +98,14 @@ def get_chords_daria(sounds: List[music.Sound],
                 max_chord = c
 
         t_c.append(music.Chord(max_chord.note,
-                               duration=half_bar_len//4,
+                               duration=constants.MIN_CHORD_DURATION,
                                kind=max_chord.kind))
         last_chord_level = max_chord.level
-        i += half_bar_len
+        i += constants.MIN_CHORD_DURATION
         # prevent adding new chord between notes
         while i < len(t_s) and t_s[i] == t_s[i-1]:
             i += 1
-            t_c[-1].duration += half_bar_len//4
+            t_c[-1].duration += 1
 
     # merge chords with the same note 
     chords = []

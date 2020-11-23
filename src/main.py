@@ -129,7 +129,7 @@ def process_file(filename):
     else:
         tonation = tonation_recognition.get_tonation(sounds)
 
-    chords = chords_generation.get_chords_daria(sounds, tonation, (4, 4))
+    chords = chords_generation.get_chords_daria(sounds, tonation, (8, 8))
 
     duration_ms_of_32 = meter / 4
     result_file = music_synthesis.create_midi("output.midi", sounds, chords, duration_ms_of_32)

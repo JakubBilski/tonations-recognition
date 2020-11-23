@@ -61,7 +61,7 @@ def frontend_communication():
         "notes": [
             {
                 "symbol": note.symbol,
-                "rhythmic_value": note.rhythmic_value
+                "duration": note.duration
             }
             for note in notes
         ],
@@ -91,7 +91,7 @@ def print_debug_info(sounds, chords):
     while sounds_i < len(sounds) or chords_i < len(chords):
         if chords_i >= len(chords) or sounds_time < chords_time:
             logger.debug(f"\t\t{sounds[sounds_i]}")
-            sounds_time += sounds[sounds_i].rhythmic_value_to_chord_duration
+            sounds_time += sounds[sounds_i].duration
             sounds_i += 1
         elif sounds_i >= len(sounds) or sounds_time > chords_time:
             logger.debug(f"\t\t\t\t\t{chords[chords_i]}")
@@ -99,7 +99,7 @@ def print_debug_info(sounds, chords):
             chords_i += 1
         else:
             logger.debug(f"\t\t{sounds[sounds_i]}\t{chords[chords_i]}")
-            sounds_time += sounds[sounds_i].rhythmic_value_to_chord_duration
+            sounds_time += sounds[sounds_i].duration
             sounds_i += 1
             chords_time += chords[chords_i].duration
             chords_i += 1

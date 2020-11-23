@@ -22,6 +22,19 @@ class BaseSound:
     def note(self, note):
         self._note = note % 12 if note else note
 
+    
+    @property
+    def duration(self):
+        return self._duration
+
+    @duration.setter
+    def duration(self, duration):
+        if duration not in constants.LEGAL_DURATION_VALUES:
+            raise Exception(f"Tried to set duration to an illegal value: {duration}")
+        if isinstance(duration, float):
+            raise Exception(f"Tried to set duration to float")
+        self._duration = duration
+
     def __str__(self):
         return self.symbol
 

@@ -8,6 +8,7 @@ import bcolors
 import music
 import sounds_generation
 import meter_recognition
+from utils import constants
 
 
 def parse_args():
@@ -21,7 +22,7 @@ def parse_args():
 
 
 def substitution(s1: music.Sound, s2: music.Sound):
-    return int((s1.note != s2.note) or (s1.rhythmic_value != s2.rhythmic_value))
+    return int((s1.note != s2.note) or (s1.duration != s2.duration))
 
 
 def deletion(s: music.Sound):
@@ -77,11 +78,11 @@ def visualize_d(d, sounds, test_sounds):
         if r[0] is None:
             r0 = ""
         else:
-            r0 = f"{str(r[0].symbol).ljust(5)} {r[0].rhythmic_value.ljust(3)}"
+            r0 = f"{str(r[0].symbol).ljust(5)} {r[0].duration.ljust(3)}"
         if r[1] is None:
             r1 = ""
         else:
-            r1 = f"{str(r[1].symbol).ljust(5)} {r[1].rhythmic_value.ljust(3)}"
+            r1 = f"{str(r[1].symbol).ljust(5)} {r[1].duration.ljust(3)}"
 
         if (r[2] != 0) or substitution(r[0], r[1]) != 0:
             color = bcolors.FAIL
@@ -90,22 +91,18 @@ def visualize_d(d, sounds, test_sounds):
         print(f"{color}{r0.ljust(8)}\t{r1.ljust(8)}{bcolors.ENDC}")
 
 
-def move_sounds(sounds, coef):
+def try_to_move_sounds(sounds, coef):
     sound1 = []
     for s in sounds:
-        ds = s.rhythmic_value
+        ds = s.duration
         d = False
-        if ds.endswith('.'):
-            d = True
-            ds = ds[:-1]
-        try:
-            ds = str(int(int(ds)*coef))
-        except Exception:
-            ds = ""
-        if d:
-            ds = f"{ds}."
+        if ds not in constants.LEGAL_NOT_DOTTED_DURATION_VALUES:
+            ds = (ds//3)*2
+        ds = int(ds*coef)
+        if ds not in constants.LEGAL_DURATION_VALUES:
+            return None
         sound1.append(
-            music.Sound(note=s.note, rhythmic_value=ds)
+            music.Sound(note=s.note, duration=ds)
         )
     return sound1
 
@@ -135,7 +132,9 @@ def main(args, rec_meth):
         d_list = None
         test_sounds = None
         for i in [4, 2, 1, 1/2, 1/4]:
-            test_sounds_1 = move_sounds(test.sounds, i)
+            test_sounds_1 = try_to_move_sounds(test.sounds, i)
+            if test_sounds_1 is None:
+                continue
             match_factor_1, d_list_1 = match_sounds(sounds, test_sounds_1)
             if match_factor_1 > match_factor:
                 match_factor = match_factor_1

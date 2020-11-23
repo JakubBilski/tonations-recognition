@@ -17,23 +17,16 @@ def simple_sound_beat_dur(beats, sound):
     id = sound.beat_id
     b1 = beats[id]
     b2 = beats[id+1]
-    local_duration_of_16s = (b2-b1)/4
-    # TODO check changing to 32 in some situations?
-    no_16s_in_note = round(sound.duration_ms/local_duration_of_16s)
+    local_duration_of_32s = (b2-b1)/8
+    no_32s_in_sound = round(sound.duration_ms/local_duration_of_32s)
 
     # Build result note from higher level notes (max one of each type)
-    result_note = []
-    for num in [32, 16, 8, 4, 2, 1]:
-        if no_16s_in_note >= num:
-            result_note.append(16//num)
-            no_16s_in_note -= num
-    return result_note
-
-
-def no_32nd(sound):
-    # number of equivalent 32nd notes
-    return int(sound.rhythmic_value_time /
-               constants.RHYTHMIC_VALUE_TO_TIME["32"])
+    duration_components = []
+    for num in reversed(constants.LEGAL_NOT_DOTTED_DURATION_VALUES):
+        if no_32s_in_sound >= num:
+            duration_components.append(num)
+            no_32s_in_sound -= num
+    return duration_components
 
 
 def update_sounds_with_rhythmic_values_fit_to_bar(tempo, beats, sounds):
@@ -51,16 +44,15 @@ def update_sounds_with_rhythmic_values_fit_to_bar(tempo, beats, sounds):
             beats, sounds[i].timestamp)
 
     for s in sounds:
-        duration = simple_sound_beat_dur(beats, s)
-        if (len(duration) >= 3) and \
-            (duration[1] == duration[0]*2) and \
-                (duration[2] == duration[1]*2):
-            s.rhythmic_value = str(duration[0]//2)
-
-        elif (len(duration) >= 2) and (duration[1] == duration[0]*2):
-            s.rhythmic_value = str(duration[0])+'.'
+        duration_components = simple_sound_beat_dur(beats, s)
+        if (len(duration_components) >= 3) and \
+            (duration_components[0] == duration_components[1]*2) and \
+                (duration_components[1] == duration_components[2]*2):
+            s.duration = duration_components[0]*2
+        elif (len(duration_components) >= 2) and (duration_components[0] == duration_components[1]*2):
+            s.duration = duration_components[0] + duration_components[0]//2
         else:
-            s.rhythmic_value = str(duration[0])
+            s.duration = duration_components[0]
 
     bar = 4*8  # number of 32s in bar
     act_bar = 0
@@ -69,7 +61,7 @@ def update_sounds_with_rhythmic_values_fit_to_bar(tempo, beats, sounds):
     while i < len(sounds) - 1:
         i += 1
         s = sounds[i]
-        act_bar += no_32nd(s)
+        act_bar += s.duration
         if act_bar == bar:
             # super
             bar_start = i+1
@@ -89,14 +81,14 @@ def update_sounds_with_rhythmic_values_fit_to_bar(tempo, beats, sounds):
         while j < i:
             j += 1
             s = sounds[j]
-            if s.note is None and no_32nd(s) <= diff:
-                diff -= no_32nd(s)
+            if s.note is None and s.duration <= diff:
+                diff -= s.duration
                 sounds.pop(j)
                 i -= 1
                 j -= 1
-            if s.rhythmic_value.endswith('.') and no_32nd(s) / 3 <= diff:
-                diff -= int(no_32nd(s) / 3)
-                s.rhythmic_value = s.rhythmic_value[:-1]
+            if s.duration not in constants.LEGAL_NOT_DOTTED_DURATION_VALUES and s.duration // 3 <= diff:
+                diff -= s.duration // 3
+                s.duration = (s.duration // 3) * 2
 
     # fix when part of note is silent sometimes
     i = -1
@@ -105,9 +97,9 @@ def update_sounds_with_rhythmic_values_fit_to_bar(tempo, beats, sounds):
         s0 = sounds[i]
         s1 = sounds[i+1]
         if (s1.note is None) and \
-            s0.rhythmic_value.endswith('.') and \
-           (no_32nd(s1)*3 <= no_32nd(s0)):
-            s0.rhythmic_value = str(int(s0.rhythmic_value[:-1])//2)
+            s0.duration not in constants.LEGAL_NOT_DOTTED_DURATION_VALUES and \
+           (s1.duration*3 <= s0.duration):
+            s0.duration = (s0.duration//3)*4
             sounds.pop(i+1)
             i -= 1
 

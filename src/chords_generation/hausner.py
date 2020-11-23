@@ -58,10 +58,6 @@ def points(chord: music.Chord, sound: music.Sound):
 def get_chords_hausner(sounds: List[music.Sound],
                        tonation: music.Tonation,
                        meter: Tuple[int, int]):
-    meter = (
-        meter[0],
-        utils.constants.RHYTHMIC_VALUE_TO_TIME[str(meter[1])]
-    )
     if meter[0] == 2:
         meter = (
             4,
@@ -70,11 +66,11 @@ def get_chords_hausner(sounds: List[music.Sound],
     if meter[0] != 4:
         raise Exception("Not supported meter in chord duration")
 
-    half_meter_len = 2*int(meter[1]/0.125)
+    half_meter_len = 2*int(meter[1]/0.125)  # TODO: CHECK THIS
 
     t_s = []
     for s in sounds:
-        for _ in range(int(s.rhythmic_value_time*8)):
+        for _ in range(int(s.duration)): # TODO: CHECK THIS
             t_s.append(s)
 
     t_c = []

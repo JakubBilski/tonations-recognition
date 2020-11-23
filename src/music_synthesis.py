@@ -7,7 +7,7 @@ from utils import constants
 
 
 def add_sound(track, sound, start_time):
-    duration = sound.rhythmic_value_time
+    duration = sound.duration
     if sound.note is not None:
         pitch = sound.note + 60
         track.addNote(0, 0, pitch, start_time, duration, 100)
@@ -15,7 +15,7 @@ def add_sound(track, sound, start_time):
 
 
 def add_chord(track, chord, start_time):
-    chord_duration = constants.RHYTHMIC_VALUE_TO_TIME["8"]*chord.duration
+    chord_duration = chord.duration
     if chord.note is not None:
         for sound in chord.sounds():
             pitch = sound.note + 60

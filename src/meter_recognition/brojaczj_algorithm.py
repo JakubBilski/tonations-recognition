@@ -1,3 +1,5 @@
+from utils import constants
+
 def beat_id_closest_to_timestamp(beats, timestamp):
     clos = 1000
     res = -1
@@ -10,20 +12,16 @@ def beat_id_closest_to_timestamp(beats, timestamp):
 
 
 def simple_sound_beat_dur(beats, sound):
-    id = sound.beat_id
-    b1 = beats[id]
-    b2 = beats[id+1]
-    sixteenth = (b2-b1)/4
-    return round(sound.duration_ms/sixteenth)
-
-
-def tim_to_duration(tim):
-    result = []
-    for num in [32, 16, 8, 4, 2, 1]:
-        if tim >= num:
-            result.append(16//num)
-            tim -= num
-    return result
+    b1 = beats[sound.beat_id]
+    b2 = beats[sound.beat_id+1] 
+    local_duration_of_32s = (b2-b1)/8
+    no_32s_in_sound = round(sound.duration_ms/local_duration_of_32s)
+    duration_components = []
+    for num in reversed(constants.LEGAL_NOT_DOTTED_DURATION_VALUES):
+        if no_32s_in_sound >= num:
+            duration_components.append(num)
+            no_32s_in_sound -= num
+    return duration_components
 
 
 def update_sounds_with_rhythmic_values_brojaczj_algorithm(tempo, beats, sounds):
@@ -43,13 +41,12 @@ def update_sounds_with_rhythmic_values_brojaczj_algorithm(tempo, beats, sounds):
             beats, sounds[i].timestamp)
 
     for s in sounds:
-        duration = tim_to_duration(simple_sound_beat_dur(beats, s))
-        if (len(duration) >= 3) and \
-            (duration[1] == duration[0]*2) and \
-                (duration[2] == duration[1]*2):
-            s.rhythmic_value = str(duration[0]//2)+'.'
-
-        elif (len(duration) >= 2) and (duration[1] == duration[0]*2):
-            s.rhythmic_value = str(duration[0])+'.'
+        duration_components = simple_sound_beat_dur(beats, s)
+        if (len(duration_components) >= 3) and \
+            (duration_components[1] == duration_components[0]*2) and \
+                (duration_components[2] == duration_components[1]*2):
+            s.duration = duration_components[0]*3
+        elif (len(duration_components) >= 2) and (duration_components[1] == duration_components[0]*2):
+            s.duration = duration_components[0]+duration_components[0]//2
         else:
-            s.rhythmic_value = str(duration[0])
+            s.duration = duration_components[0]

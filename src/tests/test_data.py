@@ -3,6 +3,7 @@ import os
 
 from music.sound import Sound
 from music.tonation import Tonation
+from utils import constants
 
 
 class TestModel:
@@ -39,9 +40,9 @@ def get_other_rec_test_models():
             elif len(line.split()) == 3:
                 spl = line.split()
                 currect_sounds.append(
-                    Sound(symbol=spl[0], rhythmic_value=spl[2]))
+                    Sound(symbol=spl[0], duration=constants.RHYTMIC_VALUE_TO_DURATION[spl[2]]))
             elif line.startswith('r'):
                 spl = line.split()
                 currect_sounds.append(
-                    Sound(note=None, rhythmic_value=spl[1]))
+                    Sound(note=None, duration=constants.RHYTMIC_VALUE_TO_DURATION[spl[1]]))
     return result

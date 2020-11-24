@@ -4,23 +4,25 @@ from . import base_sound
 
 class Sound(base_sound.BaseSound):
     def __init__(self, note=None, timestamp=None, duration_ms=None,
-                 rhythmic_value=None, symbol=None):
+                 duration=None, symbol=None):
         super().__init__(note, symbol)
-        self.timestamp = timestamp
-        self.duration_ms = duration_ms
-        self.rhythmic_value = rhythmic_value
+        if timestamp is not None:
+            self.timestamp = timestamp
+        if duration_ms is not None:
+            self.duration_ms = duration_ms
+        if duration is not None:
+            self.duration = duration
+        
 
     @property
     def end_timestamp(self):
         return self.timestamp + self.duration_ms
 
-    @property
-    def rhythmic_value_time(self):
-        return constants.RHYTHMIC_VALUE_TO_TIME[self.rhythmic_value]
-
     def __str__(self):
-        if self.timestamp is None:
-            return super().__str__()
-        return f"{round(self.timestamp, 3)}: {self.symbol}"
+        if self.duration is not None:
+            return f"{self.symbol}\t({self.duration})"
+        if self.timestamp is not None:
+            return f"{round(self.timestamp, 3)}: {self.symbol}"
+        return super().__str__()
 
     __repr__ = __str__

@@ -17,21 +17,29 @@ REVERSE_SYMBOLS.update(
         'ais': 10
     }
 )
-TIME_TO_RHYTHMIC_VALUE = {
-    8.0: "0",
-    6.0: "1.",
-    4.0: "1",
-    3.0: "2.",
-    2.0: "2",
-    1.5: "4.",
-    1.0: "4",
-    0.75: "8.",
-    0.5: "8",
-    0.375: "16.",
-    0.25: "16",
-    0.1875: "32.",
-    0.125: "32"
+LEGAL_DURATION_VALUES = [
+    1, 2, 3, 4, 6, 8, 12, 16, 24, 32
+]
+LEGAL_NOT_DOTTED_DURATION_VALUES = [
+    1, 2, 4, 8, 16, 32
+]
+LEGAL_DOTTED_DURATION_VALUES = [
+    3, 6, 12, 24
+]
+
+RHYTMIC_VALUE_TO_DURATION = {
+    "32" : 1,
+    "16" : 2,
+    "16." : 3,
+    "8" : 4,
+    "8." : 6,
+    "4" : 8,
+    "4." : 12,
+    "2" : 16,
+    "2." : 24,
+    "1" : 32
 }
-RHYTHMIC_VALUE_TO_TIME = {
-    TIME_TO_RHYTHMIC_VALUE[key]: key for key in TIME_TO_RHYTHMIC_VALUE
-}
+
+DURATION_TO_RHYTMIC_VALUE = {}
+for (key, val) in RHYTMIC_VALUE_TO_DURATION.items():
+    DURATION_TO_RHYTMIC_VALUE[val] = key

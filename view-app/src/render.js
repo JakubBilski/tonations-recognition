@@ -38,6 +38,9 @@ function onclick(){
   }).then((text)=>{
     console.log("data: ", text);
     result.textContent = text;
+    const tab = new vextab.VexTab(artist);
+    tab.parse(text.notes);
+    artist.render(new VF.Renderer($('#boo')[0], VF.Renderer.Backends.SVG));
   }).catch(e=>{
     console.log(e);
   })

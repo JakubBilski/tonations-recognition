@@ -38,9 +38,18 @@ function onclick(){
   }).then((text)=>{
     console.log("data: ", text);
     result.textContent = text;
-    const tab = new vextab.VexTab(artist);
-    tab.parse(text.notes);
-    artist.render(new VF.Renderer($('#boo')[0], VF.Renderer.Backends.SVG));
+    tab.reset();
+    artist.reset();
+    
+    for (let i = 0; i < text.notes.length; i++) {
+      if(i==0) {
+        tab.parse(`tabstave notation=true key=${text.key} time=${text.metrum}\nnotes ${text.notes[i]}`);
+      }
+      else {
+        tab.parse(`tabstave notation=true key=${text.key} \nnotes ${text.notes[i]}`);
+      }
+    }
+    artist.render(renderer);
   }).catch(e=>{
     console.log(e);
   })

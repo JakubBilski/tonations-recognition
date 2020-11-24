@@ -39,7 +39,3 @@ RHYTMIC_VALUE_TO_DURATION = {
     "2." : 24,
     "1" : 32
 }
-
-DURATION_TO_RHYTMIC_VALUE = {}
-for (key, val) in RHYTMIC_VALUE_TO_DURATION.items():
-    DURATION_TO_RHYTMIC_VALUE[val] = key

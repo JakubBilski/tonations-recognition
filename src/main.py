@@ -5,6 +5,7 @@ import pathlib
 import logging
 
 import music
+import vextab_parsing
 import music_synthesis
 import sounds_generation
 import chords_generation
@@ -12,7 +13,6 @@ import meter_recognition
 import sounds_manipulation
 import tonation_recognition
 from utils import constants
-from utils.constants import DURATION_TO_RHYTMIC_VALUE
 
 
 BEAT_TO_NOTE_VERSION = "fit_to_bar"
@@ -60,11 +60,11 @@ def frontend_communication():
             "error": f"File {filename} does not exist."
         })
     notes, chords, tonation, preview_file = process_file(filename)
+
     result = {
-        "notes": """tabstave notation=true key=A time=4/4
-            notes :q =|: (5/2.5/3.7/4) :8 7-5h6/3 ^3^ 5h6-7/5 ^3^ :q 7V/4 |
-            notes :8 t12p7/4 s5s3/4 :8 3s:16:5-7/5 :q p5/4
-            text :w, |#segno, ,|, :hd, , #tr""",
+        "notes": vextab_parsing.generate_vextab_notes(notes, tonation, (4,8)),
+        "key": vextab_parsing.generate_vextab_key(tonation),
+        "metrum": vextab_parsing.generate_vextab_metrum((4, 8)),
         "chords": [
             {
                 "symbol": chord.symbol,

@@ -246,7 +246,34 @@ function createSectionElement(sectionStruct) {
 //   //   container.append(section);
 //   // }
 // }
+function init_some(chordNames) {
+  var container = $('#container-chords');
+  container.empty();
 
+
+  // Display preset chords (open chords)
+  for (var i = 0; i < chordChart.length; ++i) {
+      var section_struct = chordChart[i];
+      var section = createSectionElement(section_struct);
+  
+      for (var j = 0; j < section_struct.chords.length; ++j) {
+        if(chordNames.includes(section_struct.chords[j].name)) {
+        section.append(createChordElement(section_struct.chords[j]));
+        }
+      }
+  
+      container.append(section);
+
+  }
+
+  chords.forEach(chord => {
+    new ChordBox(chord.el, {
+      width: 130,
+      height: 150,
+      defaultColor: '#444'
+    }).draw(chord.struct);
+  });
+}
 
 function init() {
   var container = $('#container-chords');

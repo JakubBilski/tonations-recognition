@@ -44,6 +44,8 @@ function fetchChords(){
     document.getElementById('music').style.display = "initial";
     document.getElementById('chords').style.display = "initial";
     document.getElementById('play').style.display = "initial";
+    console.log(text.chord_types);
+    init_some(text.chord_types);
   }).catch(e=>{
     console.log(e);
   });

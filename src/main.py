@@ -60,11 +60,18 @@ def frontend_communication():
             "error": f"File {filename} does not exist."
         })
     notes, chords, tonation, preview_file = process_file(filename)
+    chord_types = []
+    for chord in chords:
+        if chord.kind == "major":
+            chord_types.append(f"{chord.symbol} Major")
+        else:
+            chord_types.append(f"{chord.symbol} Minor")
 
     result = {
         "notes": vextab_parsing.generate_vextab_notes(notes, tonation, (4,8)),
         "key": vextab_parsing.generate_vextab_key(tonation),
         "metrum": vextab_parsing.generate_vextab_metrum((4, 8)),
+        "chord_types": chord_types,
         "chords": [
             {
                 "symbol": chord.symbol,

@@ -11,6 +11,7 @@ import chords_generation
 import meter_recognition
 import sounds_manipulation
 import tonation_recognition
+import chords_simplification
 from utils import constants
 from utils.constants import DURATION_TO_RHYTMIC_VALUE
 
@@ -60,6 +61,48 @@ def frontend_communication():
             "error": f"File {filename} does not exist."
         })
     notes, chords, tonation, preview_file = process_file(filename)
+    result = {
+        "notes": [
+            {
+                "symbol": note.symbol,
+                "rhythmic_value": constants.DURATION_TO_RHYTMIC_VALUE[note.duration]
+            }
+            for note in notes
+        ],
+        "chords": [
+            {
+                "symbol": chord.symbol,
+                "kind": chord.kind,
+                "duration": chord.duration*4
+            }
+            for chord in chords
+        ],
+        "tonation": {
+            "symbol": tonation.symbol,
+            "kind": tonation.kind
+        },
+        "preview_file": preview_file
+    }
+    return jsonify(result)
+
+
+@app.route('/music_simple', methods=['GET', 'POST'])
+def frontend_communication_simple():
+    try:
+        filename = request.json["input_file"]
+    except Exception as e:
+        logger.error(f"Bad request: {request}\n Exception: {e}")
+        return jsonify({
+            "error": "Expected json with input_file key"
+        })
+    filename = pathlib.Path(filename)
+    if not filename.is_file():
+        logger.error(f"File {filename} does not exist.")
+        return jsonify({
+            "error": f"File {filename} does not exist."
+        })
+    notes, chords, tonation, preview_file = \
+        chords_simplification.simplify(*process_file(filename))
     result = {
         "notes": [
             {

@@ -10,6 +10,7 @@ document.querySelector('#openDialog').addEventListener('click', function (event)
           filePathInfo.textContent = result.filePaths;
           localStorage.setItem("filePath", result.filePaths);
         }
+        fetchChords();
       }).catch(err => {
         console.log(err)
       })

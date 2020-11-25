@@ -1,6 +1,7 @@
 //let input = document.querySelector('#Python_btn')
 let result = document.querySelector('#result')
 let btn = document.querySelector('#Python_btn')
+
 // let { PythonShell } = require('python-shell');
 
 function sendToPython() {

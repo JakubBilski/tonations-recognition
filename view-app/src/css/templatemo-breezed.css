@@ -845,15 +845,13 @@ banner
 }
 
 .Record .text-content {
-  width: 80%;
+  width: 100%;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 80px;
 }
 
 .Record .item h3 {
-  margin-bottom: 25px;
+  margin-top: 50px;
   font-size: 16px;
   text-transform: uppercase;
   font-weight: 600;
@@ -863,6 +861,7 @@ banner
 }
 
 .Record .item h5 {
+  margin-top: 25px;
   margin-bottom: 50px;
   font-size: 36px;
   font-weight: 200;

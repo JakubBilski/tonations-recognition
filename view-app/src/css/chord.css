@@ -1,10 +1,9 @@
 
-.chord { float: left; padding-top: 0px;}
+.chord { padding-top: 0px;}
 .chordname {
   width: 80%;
   margin: auto;
-  font-family: "Marvel", cursive;
-  font-size: 20px;
+  font-size: 15px;
 }
 .section_chord {
   padding-top: 30px;

@@ -9,8 +9,8 @@ document.querySelector('#openDialog').addEventListener('click', function (event)
         if(!result.canceled) {
           filePathInfo.textContent = result.filePaths;
           localStorage.setItem("filePath", result.filePaths);
+          fetchAndDisplayGuitar(isShowingTransposed, isShowingNotes);
         }
-        fetchChords();
       }).catch(err => {
         console.log(err)
       })

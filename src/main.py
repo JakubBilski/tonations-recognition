@@ -61,33 +61,7 @@ def frontend_communication():
             "error": f"File {filename} does not exist."
         })
     notes, chords, tonation, preview_file = process_file(filename)
-    chord_types = []
-    for chord in chords:
-        if chord.kind == "major":
-            chord_types.append(f"{chord.symbol} Major")
-        else:
-            chord_types.append(f"{chord.symbol} Minor")
-
-    result = {
-        "notes": vextab_parsing.generate_vextab_notes(notes, tonation, (4,8)),
-        "key": vextab_parsing.generate_vextab_key(tonation),
-        "metrum": vextab_parsing.generate_vextab_metrum((4, 8)),
-        "chord_types": chord_types,
-        "chords": [
-            {
-                "symbol": chord.symbol,
-                "kind": chord.kind,
-                "duration": chord.duration*4
-            }
-            for chord in chords
-        ],
-        "tonation": {
-            "symbol": tonation.symbol,
-            "kind": tonation.kind
-        },
-        "preview_file": preview_file
-    }
-    return jsonify(result)
+    return jsonify(render_result(notes, chords, tonation, preview_file, 4, 8))
 
 
 @app.route('/music_simple', methods=['GET', 'POST'])
@@ -107,14 +81,14 @@ def frontend_communication_simple():
         })
     notes, chords, tonation, preview_file = \
         chords_simplification.simplify(*process_file(filename))
-    result = {
-        "notes": [
-            {
-                "symbol": note.symbol,
-                "rhythmic_value": constants.DURATION_TO_RHYTMIC_VALUE[note.duration]
-            }
-            for note in notes
-        ],
+    return jsonify(render_result(notes, chords, tonation, preview_file, 4, 8))
+
+def render_result(notes, chords, tonation, preview_file, metrum_upper, metrum_lower):
+    return {
+        "notes": vextab_parsing.generate_vextab_notes(notes, tonation, metrum_upper,metrum_lower),
+        "key": vextab_parsing.generate_vextab_key(tonation),
+        "metrum": vextab_parsing.generate_vextab_metrum(metrum_upper, metrum_lower),
+        "chord_types": vextab_parsing.generate_vextab_chord_types(chords),
         "chords": [
             {
                 "symbol": chord.symbol,
@@ -129,8 +103,6 @@ def frontend_communication_simple():
         },
         "preview_file": preview_file
     }
-    return jsonify(result)
-
 
 def print_debug_info(sounds, chords):
     logger.debug("Melody with chords:")

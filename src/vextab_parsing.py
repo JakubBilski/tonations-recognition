@@ -13,13 +13,13 @@ DURATION_TO_VEXTAB_DURATION = {
     32 : "1"
 }
 
-def generate_vextab_notes(sounds, tonation, metrum):
+def generate_vextab_notes(sounds, tonation, metrum_upper, metrum_lower):
     key = tonation.symbol
     if tonation.kind == 'minor':
         key = key + 'm'
     result = []
     notes_vextab = ""
-    bar_duration = metrum[0]*metrum[1]
+    bar_duration = metrum_upper*metrum_lower
     duration_from_start = 0
     no_bars_from_start = 0
     for sound in sounds:
@@ -48,11 +48,21 @@ def generate_vextab_key(tonation):
         key = key + 'm'
     return key
 
-def generate_vextab_metrum(metrum):   
+def generate_vextab_metrum(metrum_upper, metrum_lower):   
     metrum_transform = {
         16 : 2,
         8 : 4,
         4 : 8,
         2 : 16
     }
-    return str(metrum[0]) + "/" + str(metrum_transform[metrum[1]])
+    return str(metrum_upper) + "/" + str(metrum_transform[metrum_lower])
+
+
+def generate_vextab_chord_types(chords):   
+    chord_types = []
+    for chord in chords:
+        if chord.kind == "major":
+            chord_types.append(f"{chord.symbol} Major")
+        else:
+            chord_types.append(f"{chord.symbol} Minor")
+    return chord_types

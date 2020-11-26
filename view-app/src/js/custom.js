@@ -126,7 +126,7 @@
 	});
 
 	$(document).ready(function () {
-	    $(document).on("scroll", onScroll);
+	    // $(document).on("scroll", onScroll);
 	    
 	    //smoothscroll
 	    $('a[href^="#"]').on('click', function (e) {

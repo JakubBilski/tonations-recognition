@@ -1,33 +1,39 @@
-//let input = document.querySelector('#Python_btn')
 let result = document.querySelector('#result')
-let btn = document.querySelector('#Python_btn')
+let transposeButton = document.querySelector('#transpose_btn')
+let hideNotesButton = document.querySelector('#hide_notes_btn')
+let isShowingTransposed = false
+let isShowingNotes = true
 
-// let { PythonShell } = require('python-shell');
-
-function sendToPython() {
-  
-
-  let options = {
-    mode: 'text'
-  };
-  
-  // PythonShell.run('././src/tmp_view_app_server.py', options, function (err, results) {
-  //   if (err) throw err;
-  //   // results is an array consisting of messages collected during execution
-  //   console.log('response: ', results);
-
-  // });
+function onclickTransposeButton(){
+  if(isShowingTransposed) {
+    transposeButton.textContent = "Transpose to easier tonation";
+    transposeButton.className = "main-stroked-button"
+    fetchAndDisplayGuitar(false, isShowingNotes);
+  } else {
+    transposeButton.textContent = "Transpose to original tonation";
+    transposeButton.className = "main-filled-button";
+    fetchAndDisplayGuitar(true, isShowingNotes);
+  }
+  isShowingTransposed = !isShowingTransposed;
 }
 
-
-function onclick(){
-  console.log(btn.value);
-  fetchChords();
+function onclickHideNotesButton() {
+  if(isShowingNotes) {
+    hideNotesButton.textContent = "Show notes";
+    hideNotesButton.className = "main-filled-button";
+    fetchAndDisplayGuitar(isShowingTransposed, false);
+  } else {
+    hideNotesButton.textContent = "Hide notes";
+    hideNotesButton.className = "main-stroked-button"
+    fetchAndDisplayGuitar(isShowingTransposed, true);
+  }
+  isShowingNotes = !isShowingNotes;
 }
 
-sendToPython();
-
-btn.addEventListener('click', () => {
-  onclick();
+transposeButton.addEventListener('click', () => {
+  onclickTransposeButton();
+});
+hideNotesButton.addEventListener('click', () => {
+  onclickHideNotesButton();
 });
 

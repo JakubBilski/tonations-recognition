@@ -3,7 +3,7 @@
 const chordChart = [
   {
     description:
-      'These chords you should use',
+      'Open chords',
     chords: [
       {
         name: 'C Major',

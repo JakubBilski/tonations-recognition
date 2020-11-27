@@ -1,8 +1,12 @@
-let result = document.querySelector('#result')
-let transposeButton = document.querySelector('#transpose_btn')
-let hideNotesButton = document.querySelector('#hide_notes_btn')
-let isShowingTransposed = false
-let isShowingNotes = true
+const recordButton = document.querySelector('#record_btn');
+const soundClipContainer = document.querySelector('#soundClipContainer');
+const filePathInfo = document.querySelector('#result')
+const result = document.querySelector('#result')
+const transposeButton = document.querySelector('#transpose_btn')
+const hideNotesButton = document.querySelector('#hide_notes_btn')
+isShowingTransposed = false
+isShowingNotes = true
+isRecording = false
 
 function onclickTransposeButton(){
   if(isShowingTransposed) {

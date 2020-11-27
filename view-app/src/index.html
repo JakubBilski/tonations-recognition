@@ -61,11 +61,11 @@ https://templatemo.com/tm-543-breezed
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                          <li class="scroll-to-section"><a href="#record">Record</a></li>
-                          <li class="scroll-to-section"><a href="#music">Music</a></li>
-                          <li class="scroll-to-section"><a href="#chords">Chords</a></li>
-                          <li class="scroll-to-section"><a href="#play">Play</a></li>
-                          <li class="scroll-to-section"><a href="#about">About Us</a></li> 
+                          <li class="scroll-to-section"><a href="#record_section">Record</a></li>
+                          <li class="scroll-to-section"><a href="#music_section">Music</a></li>
+                          <li class="scroll-to-section"><a href="#chords_section">Chords</a></li>
+                          <li class="scroll-to-section"><a href="#play_section">Play</a></li>
+                          <li class="scroll-to-section"><a href="#about_section">About Us</a></li> 
                           
                       </ul>        
                         <a class='menu-trigger'>
@@ -79,7 +79,7 @@ https://templatemo.com/tm-543-breezed
     </header>
     <!-- ***** Header Area End ***** -->
 
-    <section class="section" id="record">
+    <section class="section" id="record_section">
 
         <div class="main-banner header-text">
             <div class="Record">
@@ -89,9 +89,9 @@ https://templatemo.com/tm-543-breezed
                     <img src="images/record2.jfif" alt="" width="100">
                     <div class="text-content">
                       <h5>Get file</h5>  
-                      <a  class="main-record-button">Record</a>
-                    </br>                
-                      <a id="openDialog" class="main-record-button">From dialog</a>
+                      <div id="soundClipContainer"></div>
+                      <a class="main-record-button" id="record_btn">Start recording</a>
+                      <a id="openDialog" class="main-record-button">Open file</a>
                       
                       <h3 id="result">No file uploaded</h3>
                     </div>
@@ -104,7 +104,7 @@ https://templatemo.com/tm-543-breezed
      
     <div class="scroll-down scroll-to-section"><a href="#choose"><i class="fa fa-arrow-down"></i></a></div>
     
-    <section class="section" id="choose">
+    <section class="section" id="choose_section">
     <div class="main-banner header-text" id="top">
         <div class="Modern-Slider">
           <!-- Item -->
@@ -139,7 +139,7 @@ https://templatemo.com/tm-543-breezed
 
     <!-- ***** Main Banner Area End ***** -->
     <!--- ***** Notes Area Starts *****-->
-    <section class="section" id="music">
+    <section class="section" id="music_section">
         <div class="container">
             
                 <div id="boo"></div>
@@ -149,7 +149,7 @@ https://templatemo.com/tm-543-breezed
     </section>
     <!--- ***** Notes Area End *****-->
     <!--- ***** Chords Area Starts *****-->
-    <section class="section" id="chords">
+    <section class="section" id="chords_section">
         <div class="row">
             <div class="container">
                 <div id="container-chords"></div>
@@ -158,10 +158,9 @@ https://templatemo.com/tm-543-breezed
         </div>
     </section>
     <!--- ***** Chords Area End *****-->
-<!-- ***** Play Area Starts ***** -->
 
     <!-- ***** About Area Starts ***** -->
-    <section class="section" id="play">
+    <section class="section" id="play_section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-xs-12">
@@ -189,7 +188,7 @@ https://templatemo.com/tm-543-breezed
 <!-- ***** About Area Ends ***** -->
    
     <!-- ***** About Area Starts ***** -->
-    <section class="section" id="about">
+    <section class="section" id="about_section">
         <div class="container">
             <div class="row">
               <div class="col-lg-6 col-md-6 col-xs-12">
@@ -274,7 +273,7 @@ https://templatemo.com/tm-543-breezed
     <script src="js/Vex/chords.js"></script> 
         
     <script src="js/custom.js"></script>
- 
     <script src="btn_click.js"></script>
+    <script src="record.js"></script>
   </body>
 </html>

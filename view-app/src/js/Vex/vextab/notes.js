@@ -72,17 +72,17 @@ function drawTabstaves(text, showNotes, showTablature) {
 }
 
 function unhideMusicInfoSections() {
-  document.getElementById('choose').style.display = "initial";
-  document.getElementById('music').style.display = "initial";
-  document.getElementById('chords').style.display = "initial";
-  document.getElementById('play').style.display = "initial";
+  document.getElementById('choose_section').style.display = "initial";
+  document.getElementById('music_section').style.display = "initial";
+  document.getElementById('chords_section').style.display = "initial";
+  document.getElementById('play_section').style.display = "initial";
 }
 
 function hideMusicInfoSections() {
-  document.getElementById('choose').style.display = "none";
-  document.getElementById('music').style.display = "none";
-  document.getElementById('chords').style.display = "none";
-  document.getElementById('play').style.display = "none";
+  document.getElementById('choose_section').style.display = "none";
+  document.getElementById('music_section').style.display = "none";
+  document.getElementById('chords_section').style.display = "none";
+  document.getElementById('play_section').style.display = "none";
 }
 
 function drawVexTabChordsCheetSheet(text) {
@@ -92,8 +92,6 @@ function drawVexTabChordsCheetSheet(text) {
 hideMusicInfoSections();
 
 const VF = vextab.Vex.Flow
-const renderer = new VF.Renderer($('#boo')[0],
-	VF.Renderer.Backends.SVG);
-// Initialize VexTab artist and parser.
+const renderer = new VF.Renderer($('#boo')[0], VF.Renderer.Backends.SVG);
 const artist = new vextab.Artist(10, 10, 750, { scale: 0.8 });
 const tab = new vextab.VexTab(artist);

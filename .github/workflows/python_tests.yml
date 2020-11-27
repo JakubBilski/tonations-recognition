@@ -18,6 +18,7 @@ jobs:
         architecture: 'x64'
     - name: Install dependencies
       run: |
+        sudo apt-get install libsndfile1-dev
         python -m pip install --upgrade pip
         pip install flake8
         if [ -f src/requirements.txt ]; then pip install -r src/requirements.txt; fi

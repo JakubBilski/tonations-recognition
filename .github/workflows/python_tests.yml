@@ -32,4 +32,4 @@ jobs:
         # test tonations from file
         python src/tests/tonation_from_sounds_test.py
         # test sounds from file
-        python src/tests/sound_from_file.py
+        python src/tests/sound_from_file_test.py

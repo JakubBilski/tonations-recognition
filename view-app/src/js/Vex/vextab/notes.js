@@ -1,18 +1,5 @@
-async function postData(url = '', data = {}) {
-  // Default options are marked with *
-  const response = await fetch(url, {
-    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    headers: {
-      'Content-Type': 'application/json'
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: JSON.stringify(data) // body data type must match "Content-Type" header
-  });
-  return response.json(); // parses JSON response into native JavaScript objects
-}
-
 function fetchAndDisplaySimplifiedGuitar(){
-  postData(`http://127.0.0.1:5000/music`, {input_file: localStorage.getItem("filePath")}).then((data)=>{      
+  postJsonData(`http://127.0.0.1:5000/music`, {input_file: localStorage.getItem("filePath")}).then((data)=>{      
       return data;
   }).then((text)=>{
     tab.reset();
@@ -46,7 +33,7 @@ function fetchAndDisplayGuitar(simplified, showNotes){
   else {
     var postPath = `http://127.0.0.1:5000/music`;
   }
-  postData(postPath, {input_file: localStorage.getItem("filePath")}).then((data)=>{      
+  postJsonData(postPath, {input_file: localStorage.getItem("filePath")}).then((data)=>{      
       return data;
   }).then((text)=>{
     drawTabstaves(text, showNotes, true);

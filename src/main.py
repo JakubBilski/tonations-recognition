@@ -1,8 +1,10 @@
 from pydub import AudioSegment
 from flask import Flask, request, jsonify
+from werkzeug.utils import secure_filename
 import argparse
 import pathlib
 import logging
+import os
 
 import music
 import vextab_parsing
@@ -23,6 +25,7 @@ logger = logging.getLogger('tonation_recognition')
 logger.setLevel(logging.DEBUG)
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'data\\uploads'
 
 
 def parse_args():
@@ -47,19 +50,30 @@ def parse_args():
 
 @app.route('/music', methods=['GET', 'POST'])
 def frontend_communication():
-    try:
-        filename = request.json["input_file"]
-    except Exception as e:
-        logger.error(f"Bad request: {request}\n Exception: {e}")
-        return jsonify({
-            "error": "Expected json with input_file key"
-        })
-    filename = pathlib.Path(filename)
-    if not filename.is_file():
-        logger.error(f"File {filename} does not exist.")
-        return jsonify({
-            "error": f"File {filename} does not exist."
-        })
+    if 'recordingTemp' in request.files:
+        file = request.files['recordingTemp']
+        filename = os.path.join(app.config['UPLOAD_FOLDER'], "recordingTemp.wav")
+        file.save(filename)
+        filename = pathlib.Path(filename)
+        # TODO: this is apparently not a valid music file (according to parselmouth's error)
+        # maybe use ffmpg to convert it to something acceptable for parselmouth?
+        # note: Windows Media Player can open the file without any problems
+        # for now, return none
+        filename = "data\\other_rec\\ach_spij_C.wav"
+    else:
+        try:
+            filename = request.json["input_file"]
+        except Exception as e:
+            logger.error(f"Bad request: {request}\n Exception: {e}")
+            return jsonify({
+                "error": "Expected json with input_file key"
+            })
+        filename = pathlib.Path(filename)
+        if not filename.is_file():
+            logger.error(f"File {filename} does not exist.")
+            return jsonify({
+                "error": f"File {filename} does not exist."
+            })
     notes, chords, tonation, preview_file = process_file(filename)
     return jsonify(render_result(notes, chords, tonation, preview_file, 4, 8))
 

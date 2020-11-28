@@ -7,7 +7,9 @@ document.querySelector('#openDialog').addEventListener('click', function (event)
         if(!result.canceled) {
           filePathInfo.textContent = result.filePaths;
           localStorage.setItem("filePath", result.filePaths);
-          soundClipContainer.removeChild(soundClipContainer.lastChild);
+          if(soundClipContainer.lastChild) {
+            soundClipContainer.removeChild(soundClipContainer.lastChild);
+          }
           fetchAndDisplayGuitar(isShowingTransposed, isShowingNotes);
         }
       }).catch(err => {

@@ -17,7 +17,6 @@ function onclickRecordButton() {
 }
 
 function onstopMediaRecorder() {
-  console.log("recorder stopped");
   const clipContainer = document.createElement('article');
   const audio = document.createElement('audio');
   clipContainer.classList.add('clip');

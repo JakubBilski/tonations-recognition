@@ -1,6 +1,5 @@
 from pydub import AudioSegment
 from flask import Flask, request, jsonify
-from werkzeug.utils import secure_filename
 import argparse
 import pathlib
 import logging
@@ -58,7 +57,7 @@ def frontend_communication():
         # TODO: this is apparently not a valid music file (according to parselmouth's error)
         # maybe use ffmpg to convert it to something acceptable for parselmouth?
         # note: Windows Media Player can open the file without any problems
-        # for now, return none
+        # for now, return results for the default music file
         filename = "data\\other_rec\\ach_spij_C.wav"
     else:
         try:

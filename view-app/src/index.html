@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <title>Tone App</title>
+
+<!--
+
+Breezed Template
+
+https://templatemo.com/tm-543-breezed
+
+-->
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+
+    <link rel="stylesheet" href="css/templatemo-breezed.css">
+
+    <link rel="stylesheet" href="css/owl-carousel.css">
+
+    <link rel="stylesheet" href="css/lightbox.css">
+
+    <link rel="stylesheet" href="css/chord.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
+
+    </head>
+    
+    <body>
+    
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>  
+    <!-- ***** Preloader End ***** -->
+    
+    
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky background-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="index.html" class="logo">
+                            .ToneApp
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                          <li class="scroll-to-section"><a href="#record_section">Record</a></li>
+                          <li class="scroll-to-section-disabled"><a href="#music_section">Music</a></li>
+                          <li class="scroll-to-section-disabled"><a href="#chords_section">Chords</a></li>
+                          <li class="scroll-to-section-disabled"><a href="#play_section">Play</a></li>
+                          <li class="scroll-to-section"><a href="#about_section">About Us</a></li> 
+                          
+                      </ul>        
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+    <section class="section" id="record_section">
+
+        <div class="main-banner header-text">
+            <div class="Record">
+              <!-- Item -->
+              <div class="item">
+                <div class="img-fill">
+                    <img src="images/record2.jfif" alt="" width="100">
+                    <div class="text-content">
+                      <h5>Get file</h5>  
+                      <div id="soundClipContainer"></div>
+                      <a class="main-record-button" id="record_btn">Start recording</a>
+                      <a id="openDialog" class="main-record-button">Open file</a>
+                      
+                      <h3 id="result">No file uploaded</h3>
+                    </div>
+                </div>
+              </div>
+              <!-- // Item -->
+            </div>
+        </div>
+     </section>
+     
+    <div class="scroll-down scroll-to-section"><a href="#choose"><i class="fa fa-arrow-down"></i></a></div>
+    
+    <section class="section" id="choose_section">
+    <div class="main-banner header-text" id="top">
+        <div class="Modern-Slider">
+          <!-- Item -->
+          <div class="item">
+            <div class="img-fill">
+                <img src="images/slide-01.jpg" alt="" width="200">
+                <div class="text-content">
+                  <h3 id="result">Let's play</h3>
+                  <h5>Guitar</h5>         
+                  <a id="transpose_btn" class="main-stroked-button">Transpose to easier tonation</a>
+                  <a id="hide_notes_btn" class="main-stroked-button">Hide notes</a>
+                </div>
+            </div>
+          </div>
+          <!-- // Item -->
+          <!-- Item -->
+          <div class="item">
+            <div class="img-fill">
+                <img src="images/headphones.jpg" alt="" width="200">
+                <div class="text-content">
+                  <h5 >Music information</h5>
+                  <a  class="main-filled-button">Show tonation</a>
+                  <a  class="main-stroked-button">Show used music function</a>
+                </div>
+            </div>
+          </div>
+          <!-- // Item -->
+        </div>
+    </div>
+    </section>
+
+
+    <!-- ***** Main Banner Area End ***** -->
+    <!--- ***** Notes Area Starts *****-->
+    <section class="section" id="music_section">
+        <div class="container">
+            
+                <div id="boo"></div>
+                <div id="error"></div>
+            
+        </div>  
+    </section>
+    <!--- ***** Notes Area End *****-->
+    <!--- ***** Chords Area Starts *****-->
+    <section class="section" id="chords_section">
+        <div class="row">
+            <div class="container">
+                <div id="container-chords"></div>
+                
+            </div>
+        </div>
+    </section>
+    <!--- ***** Chords Area End *****-->
+
+    <!-- ***** About Area Starts ***** -->
+    <section class="section" id="play_section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                    <div class="left-text-content">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="#" class="main-button-icon"  >
+                                    Play melody with chords<i class="fa fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="#" class="main-button-icon" >
+                                    Save melody with chords<i class="fa fa-arrow-down"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** About Area Ends ***** -->
+<!-- ***** About Area Ends ***** -->
+   
+    <!-- ***** About Area Starts ***** -->
+    <section class="section" id="about_section">
+        <div class="container">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-xs-12">
+                <div class="features-item">
+                    <div class="features-icon">
+                        <img src="images/features-icon-1.png" alt="">
+                    </div>
+                    <div class="features-content">
+                        <h4>Team</h4>
+                        <p></br>Anna Buchman
+                        </br> Jakub Bilski
+                        </br> Jakub Brojacz
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-12">
+                <div class="features-item">
+                    <div class="features-icon">
+                        <img src="images/logo_wydzialu.png" alt="">
+                    </div>
+                    <div class="features-content">
+                        <h4>Faculty</h4>
+                        <p>This work was created as filnal work at the Warsaw University of Technology at the Faculty of Mathematics and Information Science</p>
+                        <a href="https://ww2.mini.pw.edu.pl/" class="text-button-icon">
+                            Learn More <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** About Area Ends ***** -->
+
+    
+    <!-- ***** Footer Start ***** -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-xs-12">
+                    <div class="left-text-content">
+                        <p>Copyright &copy; 2020 
+                        
+                        - Authors: Anna Buchman, Jakub Bilski, Jakub Brojacz</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- jQuery -->
+    <script src="js/jquery-2.1.0.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugins -->
+    <script src="js/owl-carousel.js"></script>
+    <script src="js/scrollreveal.min.js"></script>
+    <script src="js/waypoints.min.js"></script>
+    <script src="js/jquery.counterup.min.js"></script>
+    <script src="js/imgfix.min.js"></script> 
+    <script src="js/slick.js"></script> 
+    <script src="js/lightbox.js"></script> 
+    <script src="js/isotope.js"></script> 
+    
+    <!-- Global Init -->
+    <script src="js/custom.js"></script>
+ 
+    <script src="render.js"></script>
+    <script type="text/coffeescript" src="js/Vex/vextab/artist.coffee"></script>
+    <script src="js/Vex/vexflow/vexflow-debug.js"></script>
+    <script src="js/Vex/vextab/main.js"></script> 
+    
+    <script src="js/Vex/vextab/notes.js"></script> 
+    <script src="js/Vex/vexchords/chordbox.js"></script> 
+    <script src="js/Vex/vexchords/builder.js"></script> 
+    <script src="js/Vex/chords.js"></script> 
+        
+    <script src="js/custom.js"></script>
+    <script src="file_dialog.js"></script>
+    <script src="record.js"></script>
+    <script src="post_requests.js"></script>
+  </body>
+</html>

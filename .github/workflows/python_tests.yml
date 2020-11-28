@@ -24,10 +24,9 @@ jobs:
         if [ -f src/requirements.txt ]; then pip install -r src/requirements.txt; fi
     - name: Lint with flake8
       run: |
-        # stop the build if there are Python syntax errors or undefined names
+        # stop the build if there are linter errors
         flake8 src --count --select=E9,F63,F7,F82 --show-source --statistics
-        # The GitHub editor is 127 chars wide
-        flake8 src --count --max-line-length=127 --statistics
+        flake8 src --count --statistics
     - name: Run tests
       run: |
         # test tonations from file

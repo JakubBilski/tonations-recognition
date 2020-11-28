@@ -1,7 +1,6 @@
 from typing import List, Tuple
 
 import music
-from utils import constants
 
 # https://www.fim.uni-passau.de/fileadmin/dokumente/fakultaeten/fim/lehrstuhl/sauer/geyer/BA_MA_Arbeiten/BA-HausnerChristoph-201409.pdf
 '''

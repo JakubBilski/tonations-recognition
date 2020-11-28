@@ -1,7 +1,6 @@
 from typing import List, Tuple
 
 import music
-from utils import constants
 from . import daria_params as params
 
 # https://www.fim.uni-passau.de/fileadmin/dokumente/fakultaeten/fim/lehrstuhl/sauer/geyer/BA_MA_Arbeiten/BA-HausnerChristoph-201409.pdf
@@ -45,7 +44,8 @@ def points_for_sound(chord: music.Chord, sound: music.Sound):
     return params.POINTS[chord.kind][diff]
 
 
-def point_coef(chord: music.Chord, first_sound: music.Sound, last_chord_level: int):
+def point_coef(chord: music.Chord, first_sound: music.Sound,
+               last_chord_level: int):
     if chord.note == first_sound.note:
         first_sound_coef = params.FIRST_SOUND
     else:
@@ -107,7 +107,7 @@ def get_chords_daria(sounds: List[music.Sound],
             i += 1
             t_c[-1].duration += 1
 
-    # merge chords with the same note 
+    # merge chords with the same note
     chords = []
     for c in t_c:
         if any(chords) and chords[-1].symbol == c.symbol:

@@ -3,8 +3,6 @@ import pathlib
 from midiutil.MidiFile import MIDIFile
 from midi2audio import FluidSynth
 
-from utils import constants
-
 
 def add_sound(track, sound, start_time, duration_ms_of_32):
     duration = sound.duration * duration_ms_of_32

@@ -1,5 +1,5 @@
 from . import base_sound
-from utils import constants
+
 
 class Chord(base_sound.BaseSound):
     def __init__(self, note=None, symbol=None, duration=None,
@@ -51,5 +51,5 @@ class Chord(base_sound.BaseSound):
     @base_sound.BaseSound.duration.setter
     def duration(self, duration):
         if isinstance(duration, float):
-            raise Exception(f"Tried to set duration to float")
+            raise Exception("Tried to set duration to float")
         self._duration = duration

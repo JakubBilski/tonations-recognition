@@ -7,7 +7,8 @@ from utils import constants
 
 
 class TestModel:
-    def __init__(self, file_path=None, sounds=None, tonation=None, chords=None):
+    def __init__(self, file_path=None, sounds=None, tonation=None,
+                 chords=None):
         self.file_path = file_path
         self.sounds = sounds
         self.tonation = tonation
@@ -36,13 +37,18 @@ def get_other_rec_test_models():
                 currect_sounds = []
             elif line.startswith('t'):
                 kind = 'major' if line.split()[1].isupper() else 'minor'
-                current_testcase.tonation = Tonation(symbol=line.split()[1], kind=kind)
+                current_testcase.tonation = Tonation(
+                    symbol=line.split()[1], kind=kind)
             elif len(line.split()) == 3:
                 spl = line.split()
                 currect_sounds.append(
-                    Sound(symbol=spl[0], duration=constants.RHYTMIC_VALUE_TO_DURATION[spl[2]]))
+                    Sound(symbol=spl[0],
+                          duration=constants.RHYTMIC_VALUE_TO_DURATION[spl[2]])
+                )
             elif line.startswith('r'):
                 spl = line.split()
                 currect_sounds.append(
-                    Sound(note=None, duration=constants.RHYTMIC_VALUE_TO_DURATION[spl[1]]))
+                    Sound(note=None,
+                          duration=constants.RHYTMIC_VALUE_TO_DURATION[spl[1]])
+                )
     return result

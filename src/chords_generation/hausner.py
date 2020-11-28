@@ -56,7 +56,7 @@ def points(chord: music.Chord, sound: music.Sound):
 
 def get_chords_hausner(sounds: List[music.Sound],
                        tonation: music.Tonation,
-                       meter: Tuple[int, int]):
+                       meter: Tuple[int, int]):  # noqa: C901
     if meter[0] == 2:
         meter = (
             4,

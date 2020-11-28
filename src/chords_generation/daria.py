@@ -57,7 +57,7 @@ def point_coef(chord: music.Chord, first_sound: music.Sound,
 
 def get_chords_daria(sounds: List[music.Sound],
                      tonation: music.Tonation,
-                     meter: Tuple[int, int]):
+                     meter: Tuple[int, int]):  # noqa: C901
     if meter[0] == 2:
         meter = (
             4,

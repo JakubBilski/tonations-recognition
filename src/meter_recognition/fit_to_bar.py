@@ -28,7 +28,7 @@ def simple_sound_beat_dur(beats, sound):
     return duration_components
 
 
-def update_sounds_with_rhythmic_values_fit_to_bar(tempo, beats, sounds):  # noqa: C901
+def update_sounds_with_rhythmic_values_fit_to_bar(tempo, beats, sounds):
     # lets assume it is 4/4 meter
     # and that min note is thirty two
 

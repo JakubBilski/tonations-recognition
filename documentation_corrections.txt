@@ -1,0 +1,43 @@
+
+# Historia zmian
+Historia zmian (co zostało zmienione w dokumentacji) jako tabela
+"Wersja zaakceptowana przez promotora" w historii zmian
+
+# Słowniczek
+Słowniczek zamienić na wstęp teoretyczny (podstawowe terminy)
+Zrobić słowniczek z bardzo krótkiomi opisami podstawowych pojęć (lub odnośnikami do wstępu teoretycznego) 
+
+# Tabele
+Do każdej tabeli odwołanie w tekście "wyróżniamy interwały przedstawione w tabeli 1"
+Nazwy tabel nad tabelami, nazwy rysunków pod rysunkami
+Tabelę trzeba umieć czytać bez otaczającego tekstu (np nie ma odmian wyrazów)
+Więcej tabel i ryzunków
+Do każdego obrazka jakiś tekst komentujący z odwołaniem do obrazka
+
+# Tytuły
+Tytuł nie jest częścią rozdziału, tekst trzeba umieć czytać niezależnie od tytułu (nie zaczynamy rozdziału od "Jest to ...")
+Nie stawiać dwukropków po nagłówkach
+Za dużo głównych rozdziałów
+Nie powinno być trzeciego poziomu podrozdziałów
+
+# Przypadki użycia
+Połączyć przypadki użycia i wymagania funkcjonalne
+Inaczej nazwać użytkownika, bardziej specyficzna nazwa (np Muzyk, pisze się z dużej litery, albo pogrubioną, albo kursywą)
+
+# Harmonogram
+Harmonogram ma się odnosić do przypadków użycia
+Harmonogram obrazować jako diagram gantta
+Kolorkami kto co robi? Chcemy mieć kolorki w pracy?
+
+# Literówki
+wymagania niefunkcjonalne (a nie pozafunkcjonalne)
+osoba rzeczywista zamienić na osoba
+"Prawdopodobieństwo ryzyka" zamiast "ryzyko" na odreślenie prawdopodobieństwa ryzyka
+"plan przeciwdziałania" zamienić na "przeciwdziałanie"
+
+# Dokumentacja techniczna
+Nie ma być opisu kodu
+
+# inne
+usunąć WSZYSTKIE wolne przestrzenie (na końcowym dokumencie)
+wyróżnić nazwy modułów kursywą / pogrubieniem

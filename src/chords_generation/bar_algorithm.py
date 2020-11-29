@@ -1,7 +1,6 @@
 from typing import List, Tuple
 
 import music
-import utils.constants
 
 
 def get_sounds_at_metrum(sounds: List[music.Sound], meter: Tuple[int, int]):

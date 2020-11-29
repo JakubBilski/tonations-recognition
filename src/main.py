@@ -1,20 +1,18 @@
-from pydub import AudioSegment
 from flask import Flask, request, jsonify
+
 import argparse
 import pathlib
 import logging
 import os
 
-import music
-import vextab_parsing
-import music_synthesis
-import sounds_generation
-import chords_generation
-import meter_recognition
-import sounds_manipulation
-import tonation_recognition
 import chords_simplification
-from utils import constants
+import tonation_recognition
+import chords_generation
+import sounds_generation
+import meter_recognition
+import music_synthesis
+import vextab_parsing
+import music
 
 
 BEAT_TO_NOTE_VERSION = "fit_to_bar"
@@ -51,11 +49,14 @@ def parse_args():
 def frontend_communication():
     if 'recordingTemp' in request.files:
         file = request.files['recordingTemp']
-        filename = os.path.join(app.config['UPLOAD_FOLDER'], "recordingTemp.wav")
+        filename = os.path.join(
+            app.config['UPLOAD_FOLDER'], "recordingTemp.wav")
         file.save(filename)
         filename = pathlib.Path(filename)
-        # TODO: this is apparently not a valid music file (according to parselmouth's error)
-        # maybe use ffmpg to convert it to something acceptable for parselmouth?
+        # TODO: this is apparently not a valid music file
+        # (according to parselmouth's error)
+        # maybe use ffmpg to convert it to something
+        # acceptable for parselmouth?
         # note: Windows Media Player can open the file without any problems
         # for now, return results for the default music file
         filename = "data\\other_rec\\ach_spij_C.wav"
@@ -96,11 +97,15 @@ def frontend_communication_simple():
         chords_simplification.simplify(*process_file(filename))
     return jsonify(render_result(notes, chords, tonation, preview_file, 4, 8))
 
-def render_result(notes, chords, tonation, preview_file, metrum_upper, metrum_lower):
+
+def render_result(notes, chords, tonation, preview_file,
+                  metrum_upper, metrum_lower):
     return {
-        "notes": vextab_parsing.generate_vextab_notes(notes, tonation, metrum_upper,metrum_lower),
+        "notes": vextab_parsing.generate_vextab_notes(
+            notes, tonation, metrum_upper, metrum_lower),
         "key": vextab_parsing.generate_vextab_key(tonation),
-        "metrum": vextab_parsing.generate_vextab_metrum(metrum_upper, metrum_lower),
+        "metrum": vextab_parsing.generate_vextab_metrum(
+            metrum_upper, metrum_lower),
         "chord_types": vextab_parsing.generate_vextab_chord_types(chords),
         "chords": [
             {
@@ -116,6 +121,7 @@ def render_result(notes, chords, tonation, preview_file, metrum_upper, metrum_lo
         },
         "preview_file": preview_file
     }
+
 
 def print_debug_info(sounds, chords):
     logger.debug("Melody with chords:")

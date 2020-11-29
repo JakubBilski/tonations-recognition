@@ -2,6 +2,7 @@ import enum
 
 from music.tonation import Tonation
 
+
 POINTS_SCALE_FIT = 10
 POINTS_CADENCE = 200
 POINTS_GREAT_AUTHENTIC_CADENCE = 80
@@ -20,12 +21,16 @@ class ChordType(enum.Enum):
 
 
 class TonationWithPoints:
-    def __init__(self, tonation, points_from_scale, points_from_chord_patterns, points_from_tail):
+    def __init__(self, tonation, points_from_scale,
+                 points_from_chord_patterns,
+                 points_from_tail):
         self.tonation = tonation
         self.points_from_scale = points_from_scale
         self.points_from_chord_patterns = points_from_chord_patterns
         self.points_from_tail = points_from_tail
-        self.points = points_from_scale + points_from_chord_patterns + points_from_tail
+        self.points = points_from_scale + \
+            points_from_chord_patterns + \
+            points_from_tail
 
     def __str__(self):
         return f"{self.tonation}\n"\
@@ -37,8 +42,12 @@ class TonationWithPoints:
 
 def tonation_to_scale(key, kind):
     if kind == 'major':
-        return [note % 12 for note in [key, key+2, key+4, key+5, key+7, key+9, key+11]]
-    return [note % 12 for note in [key, key+2, key+3, key+5, key+7, key+8, key+10]]
+        return [note % 12
+                for note in
+                [key, key+2, key+4, key+5, key+7, key+9, key+11]]
+    return [note % 12
+            for note in
+            [key, key+2, key+3, key+5, key+7, key+8, key+10]]
 
 
 def tonation_to_tonic(key, kind):
@@ -85,7 +94,8 @@ def get_tonation(sounds):
 
 
 def get_aligned_chord_types(sounds, tonic, subdominant, dominant):
-    tend_to_tonic = True  # handles first-in-tonic = last-in-subdominant uncertainty
+    # handles first-in-tonic = last-in-subdominant uncertainty
+    tend_to_tonic = True
     chord_types = []
     for sound in sounds:
         chord_type = sound_to_chord_type(

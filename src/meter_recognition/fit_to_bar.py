@@ -1,4 +1,3 @@
-from librosa import util
 from utils import constants
 
 
@@ -87,7 +86,8 @@ def update_sounds_with_rhythmic_values_fit_to_bar(tempo, beats, sounds):
                 sounds.pop(j)
                 i -= 1
                 j -= 1
-            if s.duration in constants.LEGAL_DOTTED_DURATION_VALUES and s.duration // 3 <= diff:
+            if s.duration in constants.LEGAL_DOTTED_DURATION_VALUES and \
+                    s.duration // 3 <= diff:
                 diff -= s.duration // 3
                 s.duration = (s.duration // 3) * 2
 

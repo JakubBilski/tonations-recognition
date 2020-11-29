@@ -13,7 +13,8 @@ from utils import constants
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description='Test convering audio files to notes with time of occurrence')
+        description='Test convering audio files to notes with '
+        'time of occurrence')
     parser.add_argument('--verbose', '-V',
                         action="store_true",
                         help='Print detailed info about tests')
@@ -49,7 +50,8 @@ def match_sounds(sounds, test_sounds):
             d[i][j] = min(
                 (d[i-1][j][0] + deletion(sounds[i-1]), -1),
                 (d[i][j-1][0] + insertion(test_sounds[j-1]), 1),
-                (d[i-1][j-1][0] + substitution(test_sounds[j-1], sounds[i-1]), 0),
+                (d[i-1][j-1][0] +
+                    substitution(test_sounds[j-1], sounds[i-1]), 0),
                 key=lambda val: val[0]
             )
 
@@ -113,7 +115,7 @@ def main(args, rec_meth):
         meter, beats = meter_recognition.get_meter(test.file_path, sounds)
         if rec_meth == "fit_to_bar":
             meter_recognition.update_sounds_with_rhythmic_values_fit_to_bar(
-                meter, beats, sounds  
+                meter, beats, sounds
             )
         sounds = list(reversed(sounds))
         test.sounds = list(reversed(test.sounds))
@@ -136,7 +138,8 @@ def main(args, rec_meth):
         if args.verbose:
             visualize_d(d_list, sounds, test_sounds)
     print(
-        f"Average match factor for beat recognition {rec_meth}: {match_factor_sum/len(tests)}")
+        f"Average match factor for beat recognition {rec_meth}: "
+        f"{match_factor_sum/len(tests)}")
 
 
 if __name__ == "__main__":

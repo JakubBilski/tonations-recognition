@@ -1,4 +1,3 @@
-from utils import constants
 from . import base_sound
 
 
@@ -12,7 +11,6 @@ class Sound(base_sound.BaseSound):
             self.duration_ms = duration_ms
         if duration is not None:
             self.duration = duration
-        
 
     @property
     def end_timestamp(self):

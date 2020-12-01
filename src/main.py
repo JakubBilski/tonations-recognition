@@ -6,6 +6,7 @@ import logging
 import os
 
 import chords_simplification
+from recorded_file_fixing import convert_file
 import tonation_recognition
 import chords_generation
 import sounds_generation
@@ -44,36 +45,39 @@ def parse_args():
     args = parser.parse_args()
     return args
 
+@app.route('/recorded', methods=['GET', 'POST'])
+def frontend_communication_upload_recorded():
+    try:
+        file = request.files['recordingTemp']
+    except Exception as e:
+        logger.error(f"Bad request: {request}\n Exception: {e}")
+        return jsonify({
+            "error": "Expected file named recordingTemp"
+        })
+    filename_ogg = os.path.join(
+        app.config['UPLOAD_FOLDER'], "recordingTemp.ogg")
+    file.save(filename_ogg)
+    filename_ogg = pathlib.Path(filename_ogg)
+    filename = os.path.join(
+        app.config['UPLOAD_FOLDER'], "recordingTemp.wav")
+    convert_file(filename_ogg, filename)
+    return jsonify(success=True)
 
 @app.route('/music', methods=['GET', 'POST'])
 def frontend_communication():
-    if 'recordingTemp' in request.files:
-        file = request.files['recordingTemp']
-        filename = os.path.join(
-            app.config['UPLOAD_FOLDER'], "recordingTemp.wav")
-        file.save(filename)
-        filename = pathlib.Path(filename)
-        # TODO: this is apparently not a valid music file
-        # (according to parselmouth's error)
-        # maybe use ffmpg to convert it to something
-        # acceptable for parselmouth?
-        # note: Windows Media Player can open the file without any problems
-        # for now, return results for the default music file
-        filename = "data\\other_rec\\ach_spij_C.wav"
-    else:
-        try:
-            filename = request.json["input_file"]
-        except Exception as e:
-            logger.error(f"Bad request: {request}\n Exception: {e}")
-            return jsonify({
-                "error": "Expected json with input_file key"
-            })
-        filename = pathlib.Path(filename)
-        if not filename.is_file():
-            logger.error(f"File {filename} does not exist.")
-            return jsonify({
-                "error": f"File {filename} does not exist."
-            })
+    try:
+        filename = request.json["input_file"]
+    except Exception as e:
+        logger.error(f"Bad request: {request}\n Exception: {e}")
+        return jsonify({
+            "error": "Expected json with input_file key"
+        })
+    filename = pathlib.Path(filename)
+    if not filename.is_file():
+        logger.error(f"File {filename} does not exist.")
+        return jsonify({
+            "error": f"File {filename} does not exist."
+        })
     notes, chords, tonation, preview_file = process_file(filename)
     return jsonify(render_result(notes, chords, tonation, preview_file, 4, 8))
 

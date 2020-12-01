@@ -6,7 +6,7 @@ document.querySelector('#openDialog').addEventListener('click', function (event)
         console.log(result.filePaths)
         if(!result.canceled) {
           filePathInfo.textContent = result.filePaths;
-          localStorage.setItem("filePath", result.filePaths);
+          filePath = result.filePaths;
           if(soundClipContainer.lastChild) {
             soundClipContainer.removeChild(soundClipContainer.lastChild);
           }

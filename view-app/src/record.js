@@ -3,7 +3,6 @@ function onclickRecordButton() {
     mediaRecorder.stop();
     recordButton.textContent = "Start recording";
     filePathInfo.textContent = "Recorded track";
-    fetchAndDisplayGuitar(isShowingTransposed, isShowingNotes);
   }
   else {
     mediaRecorder.start();
@@ -29,7 +28,12 @@ function onstopMediaRecorder() {
   audio.src = audioURL;
   var formData = new FormData();
   formData.append('recordingTemp', blob);
-  postFormData(`http://127.0.0.1:5000/music`, formData);
+  postFormData(`http://127.0.0.1:5000/recorded`, formData).then((data)=>{      
+    return data;
+    }).then((text)=>{
+      filePath = text.filename;
+      fetchAndDisplayGuitar(isShowingTransposed, isShowingNotes);
+  });
 }
 
 let recordedChunks = [];

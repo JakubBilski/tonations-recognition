@@ -3,7 +3,6 @@ from flask import Flask, request, jsonify
 import argparse
 import pathlib
 import logging
-import os
 
 import chords_simplification
 import tonation_recognition
@@ -13,6 +12,7 @@ import meter_recognition
 import music_synthesis
 import vextab_parsing
 import music
+import pydub
 
 
 BEAT_TO_NOTE_VERSION = "fit_to_bar"
@@ -22,7 +22,7 @@ logger = logging.getLogger('tonation_recognition')
 logger.setLevel(logging.DEBUG)
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'data\\uploads'
+app.config['UPLOAD_FOLDER'] = pathlib.Path('data\\uploads')
 
 
 def parse_args():
@@ -45,35 +45,38 @@ def parse_args():
     return args
 
 
+@app.route('/recorded', methods=['GET', 'POST'])
+def frontend_communication_upload_recorded():
+    try:
+        file = request.files['recordingTemp']
+    except Exception as e:
+        logger.error(f"Bad request: {request}\n Exception: {e}")
+        return jsonify({
+            "error": "Expected file named recordingTemp"
+        })
+    filename_ogg = app.config['UPLOAD_FOLDER'] / "recordingTemp.ogg"
+    file.save(filename_ogg)
+    filename_ogg = pathlib.Path(filename_ogg)
+    filename = app.config['UPLOAD_FOLDER'] / "recordingTemp.wav"
+    convert_recorded_file(filename_ogg, filename)
+    return jsonify({"filename": str(filename)})
+
+
 @app.route('/music', methods=['GET', 'POST'])
 def frontend_communication():
-    if 'recordingTemp' in request.files:
-        file = request.files['recordingTemp']
-        filename = os.path.join(
-            app.config['UPLOAD_FOLDER'], "recordingTemp.wav")
-        file.save(filename)
-        filename = pathlib.Path(filename)
-        # TODO: this is apparently not a valid music file
-        # (according to parselmouth's error)
-        # maybe use ffmpg to convert it to something
-        # acceptable for parselmouth?
-        # note: Windows Media Player can open the file without any problems
-        # for now, return results for the default music file
-        filename = "data\\other_rec\\ach_spij_C.wav"
-    else:
-        try:
-            filename = request.json["input_file"]
-        except Exception as e:
-            logger.error(f"Bad request: {request}\n Exception: {e}")
-            return jsonify({
-                "error": "Expected json with input_file key"
-            })
-        filename = pathlib.Path(filename)
-        if not filename.is_file():
-            logger.error(f"File {filename} does not exist.")
-            return jsonify({
-                "error": f"File {filename} does not exist."
-            })
+    try:
+        filename = request.json["input_file"]
+    except Exception as e:
+        logger.error(f"Bad request: {request}\n Exception: {e}")
+        return jsonify({
+            "error": "Expected json with input_file key"
+        })
+    filename = pathlib.Path(filename)
+    if not filename.is_file():
+        logger.error(f"File {filename} does not exist.")
+        return jsonify({
+            "error": f"File {filename} does not exist."
+        })
     notes, chords, tonation, preview_file = process_file(filename)
     return jsonify(render_result(notes, chords, tonation, preview_file, 4, 8))
 
@@ -182,6 +185,11 @@ def process_file(filename):
     logger.debug(f"Result file:\t\t{result_file}")
 
     return sounds, chords, tonation, str(result_file)
+
+
+def convert_recorded_file(source_file, destination_file):
+    sound = pydub.AudioSegment.from_file(source_file)
+    sound.export(destination_file, format="wav")
 
 
 if __name__ == "__main__":

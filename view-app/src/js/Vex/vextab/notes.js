@@ -5,7 +5,7 @@ function fetchAndDisplayGuitar(simplified, showNotes){
   else {
     var postPath = `http://127.0.0.1:5000/music`;
   }
-  postJsonData(postPath, {input_file: localStorage.getItem("filePath")}).then((data)=>{      
+  postJsonData(postPath, {input_file: filePath}).then((data)=>{      
       return data;
   }).then((text)=>{
     drawTabstaves(text, showNotes, true);

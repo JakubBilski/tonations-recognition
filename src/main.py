@@ -45,6 +45,7 @@ def parse_args():
     args = parser.parse_args()
     return args
 
+
 @app.route('/recorded', methods=['GET', 'POST'])
 def frontend_communication_upload_recorded():
     try:
@@ -62,6 +63,7 @@ def frontend_communication_upload_recorded():
         app.config['UPLOAD_FOLDER'], "recordingTemp.wav")
     convert_file(filename_ogg, filename)
     return jsonify(success=True)
+
 
 @app.route('/music', methods=['GET', 'POST'])
 def frontend_communication():

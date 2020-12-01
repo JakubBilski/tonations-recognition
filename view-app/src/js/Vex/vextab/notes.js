@@ -34,14 +34,12 @@ function unhideMusicInfoSections() {
   document.getElementById('choose_section').style.display = "initial";
   document.getElementById('music_section').style.display = "initial";
   document.getElementById('chords_section').style.display = "initial";
-  document.getElementById('play_section').style.display = "initial";
 }
 
 function hideMusicInfoSections() {
   document.getElementById('choose_section').style.display = "none";
   document.getElementById('music_section').style.display = "none";
   document.getElementById('chords_section').style.display = "none";
-  document.getElementById('play_section').style.display = "none";
 }
 
 function drawVexTabChordsCheatSheet(text) {

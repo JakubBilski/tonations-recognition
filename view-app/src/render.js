@@ -1,9 +1,13 @@
 const recordButton = document.querySelector('#record_btn');
-const soundClipContainer = document.querySelector('#soundClipContainer');
+const recordedSoundClipContainer = document.querySelector('#recordedSoundClipContainer');
+const withChordsSoundClipContainer = document.querySelector('#withChordsSoundClipContainer');
 const filePathInfo = document.querySelector('#result')
 const result = document.querySelector('#result')
 const transposeButton = document.querySelector('#transpose_btn')
 const hideNotesButton = document.querySelector('#hide_notes_btn')
+const saveWithChordsButton = document.querySelector('#save_with_chords_btn')
+const saveRecordedButton = document.querySelector('#save_recorded_btn')
+
 isShowingTransposed = false
 isShowingNotes = true
 isRecording = false
@@ -34,10 +38,24 @@ function onclickHideNotesButton() {
   isShowingNotes = !isShowingNotes;
 }
 
+function onclickSaveWithChordsButton(){
+  window.dialog().showSaveDialog( {
+    defaultPath: 'resultWithChords.wav'
+  }).then(result => {
+    var postPath = `http://127.0.0.1:5000/saveWithChords`;
+    postJsonData(postPath, {output_file: result});
+  }).catch(err => {
+    console.log(err)
+  })
+}
+
 transposeButton.addEventListener('click', () => {
   onclickTransposeButton();
 });
 hideNotesButton.addEventListener('click', () => {
   onclickHideNotesButton();
+});
+saveWithChordsButton.addEventListener('click', () => {
+  onclickSaveWithChordsButton();
 });
 

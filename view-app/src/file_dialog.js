@@ -7,8 +7,8 @@ document.querySelector('#openDialog').addEventListener('click', function (event)
         if(!result.canceled) {
           filePathInfo.textContent = result.filePaths[0];
           filePath = result.filePaths[0];
-          if(soundClipContainer.lastChild) {
-            soundClipContainer.removeChild(soundClipContainer.lastChild);
+          if(recordedSoundClipContainer.lastChild) {
+            recordedSoundClipContainer.removeChild(recordedSoundClipContainer.lastChild);
           }
           fetchAndDisplayGuitar(isShowingTransposed, isShowingNotes);
         }

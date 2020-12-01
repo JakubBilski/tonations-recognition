@@ -6,8 +6,8 @@ function onclickRecordButton() {
   }
   else {
     mediaRecorder.start();
-    if (soundClipContainer.lastChild) {
-      soundClipContainer.removeChild(soundClipContainer.lastChild);
+    if (recordedSoundClipContainer.lastChild) {
+      recordedSoundClipContainer.removeChild(recordedSoundClipContainer.lastChild);
     }
     filePathInfo.textContent = "Recording now";
     recordButton.textContent = "Stop recording";
@@ -21,7 +21,7 @@ function onstopMediaRecorder() {
   clipContainer.classList.add('clip');
   audio.setAttribute('controls', '');
   clipContainer.appendChild(audio);
-  soundClipContainer.appendChild(clipContainer);
+  recordedSoundClipContainer.appendChild(clipContainer);
   const blob = new Blob(recordedChunks, { 'type' : 'audio/ogg; codecs=opus' } );
   recordedChunks = [];
   const audioURL = window.URL.createObjectURL(blob);

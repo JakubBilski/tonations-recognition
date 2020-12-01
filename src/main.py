@@ -186,10 +186,10 @@ def process_file(filename):
 
     return sounds, chords, tonation, str(result_file)
 
+
 def convert_recorded_file(source_file, destination_file):
     sound = pydub.AudioSegment.from_file(source_file)
     sound.export(destination_file, format="wav")
-
 
 
 if __name__ == "__main__":

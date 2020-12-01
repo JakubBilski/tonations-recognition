@@ -5,8 +5,8 @@ document.querySelector('#openDialog').addEventListener('click', function (event)
         console.log(result.canceled)
         console.log(result.filePaths)
         if(!result.canceled) {
-          filePathInfo.textContent = result.filePaths;
-          filePath = result.filePaths;
+          filePathInfo.textContent = result.filePaths[0];
+          filePath = result.filePaths[0];
           if(soundClipContainer.lastChild) {
             soundClipContainer.removeChild(soundClipContainer.lastChild);
           }

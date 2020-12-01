@@ -62,7 +62,7 @@ def frontend_communication_upload_recorded():
     filename = os.path.join(
         app.config['UPLOAD_FOLDER'], "recordingTemp.wav")
     convert_file(filename_ogg, filename)
-    return jsonify({"filename" : filename})
+    return jsonify({"filename": filename})
 
 
 @app.route('/music', methods=['GET', 'POST'])

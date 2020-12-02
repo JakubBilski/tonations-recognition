@@ -203,11 +203,15 @@ def process_file(filename):
     chords = chords_generation.get_chords_daria(sounds, tonation, (4, 8))
 
     duration_ms_of_32 = meter / 4
-    result_file = music_synthesis.create_midi(app.config['TEMP_FOLDER'] / "output.midi", sounds,
-                                              chords, duration_ms_of_32)
+    result_file = music_synthesis.create_midi(
+        app.config['TEMP_FOLDER'] / "output.midi",
+        sounds,
+        chords,
+        duration_ms_of_32)
     if args.wav:
-        result_file = music_synthesis.save_midifile_as_wav(app.config['TEMP_FOLDER'] / "output.midi",
-                                                           app.config['TEMP_FOLDER'] / "output.wav")
+        result_file = music_synthesis.save_midifile_as_wav(
+            app.config['TEMP_FOLDER'] / "output.midi",
+            app.config['TEMP_FOLDER'] / "output.wav")
 
     logger.debug(f"Meter:\t\t{meter}")
     logger.debug(f"Tonation:\t\t{tonation}")

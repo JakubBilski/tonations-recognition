@@ -11,6 +11,7 @@ import sounds_generation
 import meter_recognition
 import music_synthesis
 import vextab_parsing
+import shutil
 import music
 import pydub
 
@@ -72,6 +73,22 @@ def frontend_communication_save_with_chords():
         })
     filename_src = app.config['TEMP_FOLDER'] / "output.midi"
     music_synthesis.save_midifile_as_wav(filename_src, filename_dest)
+    return jsonify({})
+
+
+@app.route('/saveRecorded', methods=['POST'])
+def frontend_communication_save_recorded():
+    try:
+        filename_dest = request.json["output_file"]
+    except Exception as e:
+        logger.error(f"Bad request: {request}\n Exception: {e}")
+        return jsonify({
+            "error": "Expected json with output_file key"
+        })
+    print(filename_dest)
+    filename_src = app.config['TEMP_FOLDER'] / "recordingTemp.wav"
+    print(filename_src)
+    shutil.copyfile(filename_src, filename_dest)
     return jsonify({})
 
 

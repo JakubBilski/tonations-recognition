@@ -43,7 +43,18 @@ function onclickSaveWithChordsButton(){
     defaultPath: 'resultWithChords.wav'
   }).then(result => {
     var postPath = `http://127.0.0.1:5000/saveWithChords`;
-    postJsonData(postPath, {output_file: result});
+    postJsonData(postPath, {output_file: result.filePath});
+  }).catch(err => {
+    console.log(err)
+  })
+}
+
+function onclickSavRecordedButton(){
+  window.dialog().showSaveDialog( {
+    defaultPath: 'recordedTrack.wav'
+  }).then(result => {
+    var postPath = `http://127.0.0.1:5000/saveRecorded`;
+    postJsonData(postPath, {output_file: result.filePath});
   }).catch(err => {
     console.log(err)
   })
@@ -57,5 +68,8 @@ hideNotesButton.addEventListener('click', () => {
 });
 saveWithChordsButton.addEventListener('click', () => {
   onclickSaveWithChordsButton();
+});
+saveRecordedButton.addEventListener('click', () => {
+  onclickSavRecordedButton();
 });
 

@@ -1,6 +1,9 @@
 document.querySelector('#openDialog').addEventListener('click', function (event) {
     window.dialog().showOpenDialog( {
-        properties: ['openFile']
+        properties: ['openFile'],
+        filters: [
+          { name: 'Audio', extensions: ['wav'] }
+        ]
       }).then(result => {
         console.log(result.canceled)
         console.log(result.filePaths)

@@ -35,8 +35,8 @@ def sound_to_string(sound):
                      (STRINGS[i-1][1] == sound.height and
                       STRINGS[i-1][0] < sound.note)):
         i -= 1
-    string_pos = (STRINGS[i][1] - sound.height)*12 + STRINGS[i][0] - sound.note
-    return f"{string_pos}/{i}"
+    fret = (STRINGS[i][1] - sound.height)*12 + STRINGS[i][0] - sound.note
+    return f"{fret}/{i}"
 
 
 def generate_vextab_notes(sounds, tonation, metrum_upper, metrum_lower):

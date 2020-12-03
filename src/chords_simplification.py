@@ -52,7 +52,8 @@ def simplify(notes, chords, tonation, preview_file):
             min_trans = i
     tonation.note += min_trans
     for i in range(len(notes)):
-        notes[i].note += min_trans
+        if notes[i].note is not None:
+            notes[i].note += min_trans
     for i in range(len(chords)):
         chords[i].note += min_trans
     return notes, chords, tonation, preview_file

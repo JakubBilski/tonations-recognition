@@ -48,6 +48,7 @@ def parse_args():
 
 @app.route('/recorded', methods=['POST'])
 def frontend_communication_upload_recorded():
+    """Used to upload a previously recorded audio file"""
     try:
         file = request.files['recordingTemp']
     except Exception as e:
@@ -64,6 +65,7 @@ def frontend_communication_upload_recorded():
 
 @app.route('/saveWithChords', methods=['POST'])
 def frontend_communication_save_with_chords():
+    """Used to copy generated music file to a chosen file"""
     try:
         filename_dest = request.json["output_file"]
     except Exception as e:
@@ -78,6 +80,7 @@ def frontend_communication_save_with_chords():
 
 @app.route('/saveRecorded', methods=['POST'])
 def frontend_communication_save_recorded():
+    """Used to copy recorded track file to a chosen file"""
     try:
         filename_dest = request.json["output_file"]
     except Exception as e:
@@ -94,6 +97,7 @@ def frontend_communication_save_recorded():
 
 @app.route('/music', methods=['GET', 'POST'])
 def frontend_communication():
+    """Used to obtain all the information about chosen music file"""
     try:
         filename = request.json["input_file"]
     except Exception as e:
@@ -113,6 +117,8 @@ def frontend_communication():
 
 @app.route('/music_simple', methods=['GET', 'POST'])
 def frontend_communication_simple():
+    """Used to obtain all the information about chosen music file
+    transposed into some easier key"""
     try:
         filename = request.json["input_file"]
     except Exception as e:

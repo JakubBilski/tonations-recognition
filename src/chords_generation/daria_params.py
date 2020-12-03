@@ -1,3 +1,4 @@
+"""Global arameters used by chords generation functions"""
 POINTS = {
     "major": [
         1,

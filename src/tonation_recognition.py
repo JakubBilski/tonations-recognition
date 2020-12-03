@@ -67,6 +67,15 @@ def tonation_to_dominant(key, kind):
 
 
 def get_tonation(sounds):
+    """Use list of Sounds to recognize a key
+    used in the piece
+
+    Parameters:
+    sounds (list[Sound])
+
+    Returns:
+    (Tonation) : recognized key
+    """
     tonations_and_points = []
     for kind in ['major', 'minor']:
         for base_key in range(12):

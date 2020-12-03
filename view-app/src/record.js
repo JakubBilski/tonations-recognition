@@ -3,14 +3,16 @@ function onclickRecordButton() {
     mediaRecorder.stop();
     recordButton.textContent = "Start recording";
     filePathInfo.textContent = "Recorded track";
+    unhideSaveRecordedButton();
   }
   else {
     mediaRecorder.start();
-    if (soundClipContainer.lastChild) {
-      soundClipContainer.removeChild(soundClipContainer.lastChild);
+    if (recordedSoundClipContainer.lastChild) {
+      recordedSoundClipContainer.removeChild(recordedSoundClipContainer.lastChild);
     }
     filePathInfo.textContent = "Recording now";
     recordButton.textContent = "Stop recording";
+    hideSaveRecordedButton();
   }
   isRecording = !isRecording;
 }
@@ -21,7 +23,7 @@ function onstopMediaRecorder() {
   clipContainer.classList.add('clip');
   audio.setAttribute('controls', '');
   clipContainer.appendChild(audio);
-  soundClipContainer.appendChild(clipContainer);
+  recordedSoundClipContainer.appendChild(clipContainer);
   const blob = new Blob(recordedChunks, { 'type' : 'audio/ogg; codecs=opus' } );
   recordedChunks = [];
   const audioURL = window.URL.createObjectURL(blob);
@@ -34,6 +36,14 @@ function onstopMediaRecorder() {
       filePath = text.filename;
       fetchAndDisplayGuitar(isShowingTransposed, isShowingNotes);
   });
+}
+
+function unhideSaveRecordedButton() {
+  document.getElementById('save_recorded_btn').style.display = "initial";
+}
+
+function hideSaveRecordedButton() {
+  document.getElementById('save_recorded_btn').style.display = "none";
 }
 
 let recordedChunks = [];
@@ -64,3 +74,5 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 recordButton.addEventListener('click', () => {
   onclickRecordButton();
 });
+
+hideSaveRecordedButton();

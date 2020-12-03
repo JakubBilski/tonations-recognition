@@ -11,6 +11,7 @@ import sounds_generation
 import meter_recognition
 import music_synthesis
 import vextab_parsing
+import shutil
 import music
 import pydub
 
@@ -22,7 +23,7 @@ logger = logging.getLogger('tonation_recognition')
 logger.setLevel(logging.DEBUG)
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = pathlib.Path('data\\uploads')
+app.config['TEMP_FOLDER'] = pathlib.Path('data\\temp')
 
 
 def parse_args():
@@ -45,7 +46,7 @@ def parse_args():
     return args
 
 
-@app.route('/recorded', methods=['GET', 'POST'])
+@app.route('/recorded', methods=['POST'])
 def frontend_communication_upload_recorded():
     try:
         file = request.files['recordingTemp']
@@ -54,12 +55,41 @@ def frontend_communication_upload_recorded():
         return jsonify({
             "error": "Expected file named recordingTemp"
         })
-    filename_ogg = app.config['UPLOAD_FOLDER'] / "recordingTemp.ogg"
+    filename_ogg = app.config['TEMP_FOLDER'] / "recordingTemp.ogg"
     file.save(filename_ogg)
-    filename_ogg = pathlib.Path(filename_ogg)
-    filename = app.config['UPLOAD_FOLDER'] / "recordingTemp.wav"
-    convert_recorded_file(filename_ogg, filename)
+    filename = app.config['TEMP_FOLDER'] / "recordingTemp.wav"
+    convert_recorded_to_wav(filename_ogg, filename)
     return jsonify({"filename": str(filename)})
+
+
+@app.route('/saveWithChords', methods=['POST'])
+def frontend_communication_save_with_chords():
+    try:
+        filename_dest = request.json["output_file"]
+    except Exception as e:
+        logger.error(f"Bad request: {request}\n Exception: {e}")
+        return jsonify({
+            "error": "Expected json with output_file key"
+        })
+    filename_src = app.config['TEMP_FOLDER'] / "output.midi"
+    music_synthesis.save_midifile_as_wav(filename_src, filename_dest)
+    return jsonify({})
+
+
+@app.route('/saveRecorded', methods=['POST'])
+def frontend_communication_save_recorded():
+    try:
+        filename_dest = request.json["output_file"]
+    except Exception as e:
+        logger.error(f"Bad request: {request}\n Exception: {e}")
+        return jsonify({
+            "error": "Expected json with output_file key"
+        })
+    print(filename_dest)
+    filename_src = app.config['TEMP_FOLDER'] / "recordingTemp.wav"
+    print(filename_src)
+    shutil.copyfile(filename_src, filename_dest)
+    return jsonify({})
 
 
 @app.route('/music', methods=['GET', 'POST'])
@@ -173,11 +203,15 @@ def process_file(filename):
     chords = chords_generation.get_chords_daria(sounds, tonation, (4, 8))
 
     duration_ms_of_32 = meter / 4
-    result_file = music_synthesis.create_midi("output.midi", sounds,
-                                              chords, duration_ms_of_32)
+    result_file = music_synthesis.create_midi(
+        app.config['TEMP_FOLDER'] / "output.midi",
+        sounds,
+        chords,
+        duration_ms_of_32)
     if args.wav:
-        result_file = music_synthesis.save_midifile_as_wav("output.midi",
-                                                           "output.wav")
+        result_file = music_synthesis.save_midifile_as_wav(
+            app.config['TEMP_FOLDER'] / "output.midi",
+            app.config['TEMP_FOLDER'] / "output.wav")
 
     logger.debug(f"Meter:\t\t{meter}")
     logger.debug(f"Tonation:\t\t{tonation}")
@@ -187,7 +221,7 @@ def process_file(filename):
     return sounds, chords, tonation, str(result_file)
 
 
-def convert_recorded_file(source_file, destination_file):
+def convert_recorded_to_wav(source_file, destination_file):
     sound = pydub.AudioSegment.from_file(source_file)
     sound.export(destination_file, format="wav")
 

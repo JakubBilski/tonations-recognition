@@ -28,7 +28,6 @@
 </summary>
 <pre><code class="python">from flask import Flask, request, jsonify
 
-import argparse
 import pathlib
 import logging
 import shutil
@@ -52,26 +51,6 @@ logger.setLevel(logging.DEBUG)
 
 app = Flask(__name__)
 app.config[&#39;TEMP_FOLDER&#39;] = pathlib.Path(&#39;data\\temp&#39;)
-
-
-def parse_args():
-    parser = argparse.ArgumentParser(
-        description=&#39;Add chords to audio file&#39;)
-    parser.add_argument(&#39;--http&#39;, &#39;-H&#39;,
-                        action=&#34;store_true&#34;,
-                        help=&#39;Run program as http server&#39;)
-    parser.add_argument(&#39;--input&#39;, &#39;-I&#39;,
-                        default=&#34;data/other_rec/ach_spij_C.wav&#34;,
-                        help=&#39;Input audio file. Formats: [.mp3, .wav]&#39;,
-                        type=pathlib.Path)
-    parser.add_argument(&#39;--tonation&#39;, &#39;-T&#39;,
-                        help=&#39;Use correct tonation instead of detected&#39;,
-                        type=str)
-    parser.add_argument(&#39;--wav&#39;,
-                        action=&#34;store_true&#34;,
-                        help=&#39;Save file as WAVE; works only on linux&#39;)
-    args = parser.parse_args()
-    return args
 
 
 @app.route(&#39;/recorded&#39;, methods=[&#39;POST&#39;])
@@ -250,7 +229,7 @@ def print_debug_info(sounds, chords):
             chords_i += 1
 
 
-def process_file(filename):
+def process_file(filename, force_tonation=None, output_wav=False):
     logger.debug(f&#34;Procesing {filename}&#34;)
     sounds = sounds_generation.get_sounds_from_file(filename)
     # sounds = sounds_manipulation.change_tonation(sounds, 2)
@@ -262,12 +241,12 @@ def process_file(filename):
     else:
         raise(f&#34;BEAT_TO_NOTE_VERSION &#39;{BEAT_TO_NOTE_VERSION}&#39;&#39; not recognized&#34;)
 
-    if args.tonation:
-        if args.tonation.islower():
+    if force_tonation:
+        if force_tonation.islower():
             kind = &#34;minor&#34;
         else:
             kind = &#34;major&#34;
-        tonation = music.Tonation(symbol=args.tonation.lower(), kind=kind)
+        tonation = music.Tonation(symbol=force_tonation.lower(), kind=kind)
     else:
         tonation = tonation_recognition.get_tonation(sounds)
 
@@ -279,7 +258,7 @@ def process_file(filename):
         sounds,
         chords,
         duration_ms_of_32)
-    if args.wav:
+    if output_wav:
         result_file = music_synthesis.save_midifile_as_wav(
             app.config[&#39;TEMP_FOLDER&#39;] / &#34;output.midi&#34;,
             app.config[&#39;TEMP_FOLDER&#39;] / &#34;output.wav&#34;)
@@ -294,7 +273,14 @@ def process_file(filename):
 
 def convert_recorded_to_wav(source_file, destination_file):
     sound = pydub.AudioSegment.from_file(source_file)
-    sound.export(destination_file, format=&#34;wav&#34;)</code></pre>
+    sound.export(destination_file, format=&#34;wav&#34;)
+
+
+def start_server(args):
+    if args.http:
+        app.run()
+    else:
+        process_file(args.input, args.tonation, args.wav)</code></pre>
 </details>
 </section>
 <section>
@@ -519,35 +505,6 @@ def frontend_communication_upload_recorded():
     return jsonify({&#34;filename&#34;: str(filename)})</code></pre>
 </details>
 </dd>
-<dt id="src.music_server.parse_args"><code class="name flex">
-<span>def <span class="ident">parse_args</span></span>(<span>)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def parse_args():
-    parser = argparse.ArgumentParser(
-        description=&#39;Add chords to audio file&#39;)
-    parser.add_argument(&#39;--http&#39;, &#39;-H&#39;,
-                        action=&#34;store_true&#34;,
-                        help=&#39;Run program as http server&#39;)
-    parser.add_argument(&#39;--input&#39;, &#39;-I&#39;,
-                        default=&#34;data/other_rec/ach_spij_C.wav&#34;,
-                        help=&#39;Input audio file. Formats: [.mp3, .wav]&#39;,
-                        type=pathlib.Path)
-    parser.add_argument(&#39;--tonation&#39;, &#39;-T&#39;,
-                        help=&#39;Use correct tonation instead of detected&#39;,
-                        type=str)
-    parser.add_argument(&#39;--wav&#39;,
-                        action=&#34;store_true&#34;,
-                        help=&#39;Save file as WAVE; works only on linux&#39;)
-    args = parser.parse_args()
-    return args</code></pre>
-</details>
-</dd>
 <dt id="src.music_server.print_debug_info"><code class="name flex">
 <span>def <span class="ident">print_debug_info</span></span>(<span>sounds, chords)</span>
 </code></dt>
@@ -581,7 +538,7 @@ def frontend_communication_upload_recorded():
 </details>
 </dd>
 <dt id="src.music_server.process_file"><code class="name flex">
-<span>def <span class="ident">process_file</span></span>(<span>filename)</span>
+<span>def <span class="ident">process_file</span></span>(<span>filename, force_tonation=None, output_wav=False)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -589,7 +546,7 @@ def frontend_communication_upload_recorded():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def process_file(filename):
+<pre><code class="python">def process_file(filename, force_tonation=None, output_wav=False):
     logger.debug(f&#34;Procesing {filename}&#34;)
     sounds = sounds_generation.get_sounds_from_file(filename)
     # sounds = sounds_manipulation.change_tonation(sounds, 2)
@@ -601,12 +558,12 @@ def frontend_communication_upload_recorded():
     else:
         raise(f&#34;BEAT_TO_NOTE_VERSION &#39;{BEAT_TO_NOTE_VERSION}&#39;&#39; not recognized&#34;)
 
-    if args.tonation:
-        if args.tonation.islower():
+    if force_tonation:
+        if force_tonation.islower():
             kind = &#34;minor&#34;
         else:
             kind = &#34;major&#34;
-        tonation = music.Tonation(symbol=args.tonation.lower(), kind=kind)
+        tonation = music.Tonation(symbol=force_tonation.lower(), kind=kind)
     else:
         tonation = tonation_recognition.get_tonation(sounds)
 
@@ -618,7 +575,7 @@ def frontend_communication_upload_recorded():
         sounds,
         chords,
         duration_ms_of_32)
-    if args.wav:
+    if output_wav:
         result_file = music_synthesis.save_midifile_as_wav(
             app.config[&#39;TEMP_FOLDER&#39;] / &#34;output.midi&#34;,
             app.config[&#39;TEMP_FOLDER&#39;] / &#34;output.wav&#34;)
@@ -665,6 +622,22 @@ def frontend_communication_upload_recorded():
     }</code></pre>
 </details>
 </dd>
+<dt id="src.music_server.start_server"><code class="name flex">
+<span>def <span class="ident">start_server</span></span>(<span>args)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def start_server(args):
+    if args.http:
+        app.run()
+    else:
+        process_file(args.input, args.tonation, args.wav)</code></pre>
+</details>
+</dd>
 </dl>
 </section>
 <section>
@@ -689,10 +662,10 @@ def frontend_communication_upload_recorded():
 <li><code><a title="src.music_server.frontend_communication_save_with_chords" href="#src.music_server.frontend_communication_save_with_chords">frontend_communication_save_with_chords</a></code></li>
 <li><code><a title="src.music_server.frontend_communication_simple" href="#src.music_server.frontend_communication_simple">frontend_communication_simple</a></code></li>
 <li><code><a title="src.music_server.frontend_communication_upload_recorded" href="#src.music_server.frontend_communication_upload_recorded">frontend_communication_upload_recorded</a></code></li>
-<li><code><a title="src.music_server.parse_args" href="#src.music_server.parse_args">parse_args</a></code></li>
 <li><code><a title="src.music_server.print_debug_info" href="#src.music_server.print_debug_info">print_debug_info</a></code></li>
 <li><code><a title="src.music_server.process_file" href="#src.music_server.process_file">process_file</a></code></li>
 <li><code><a title="src.music_server.render_result" href="#src.music_server.render_result">render_result</a></code></li>
+<li><code><a title="src.music_server.start_server" href="#src.music_server.start_server">start_server</a></code></li>
 </ul>
 </li>
 </ul>

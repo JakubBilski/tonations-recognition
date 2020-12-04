@@ -168,7 +168,7 @@ def main(args, rec_meth):
         f&#34;{match_factor_sum/len(tests)}&#34;)
 
 
-if __name__ == &#34;__main__&#34;:
+def run_tests():
     args = parse_args()
     rec_meths = []
     rec_meths.append(&#34;fit_to_bar&#34;)
@@ -309,6 +309,23 @@ if __name__ == &#34;__main__&#34;:
     return args</code></pre>
 </details>
 </dd>
+<dt id="src.tests.sound_from_file_test.run_tests"><code class="name flex">
+<span>def <span class="ident">run_tests</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run_tests():
+    args = parse_args()
+    rec_meths = []
+    rec_meths.append(&#34;fit_to_bar&#34;)
+    for rec_meth in rec_meths:
+        main(args, rec_meth)</code></pre>
+</details>
+</dd>
 <dt id="src.tests.sound_from_file_test.substitution"><code class="name flex">
 <span>def <span class="ident">substitution</span></span>(<span>s1: <a title="src.music.sound.Sound" href="../music/sound.html#src.music.sound.Sound">Sound</a>, s2: <a title="src.music.sound.Sound" href="../music/sound.html#src.music.sound.Sound">Sound</a>)</span>
 </code></dt>
@@ -409,6 +426,7 @@ if __name__ == &#34;__main__&#34;:
 <li><code><a title="src.tests.sound_from_file_test.main" href="#src.tests.sound_from_file_test.main">main</a></code></li>
 <li><code><a title="src.tests.sound_from_file_test.match_sounds" href="#src.tests.sound_from_file_test.match_sounds">match_sounds</a></code></li>
 <li><code><a title="src.tests.sound_from_file_test.parse_args" href="#src.tests.sound_from_file_test.parse_args">parse_args</a></code></li>
+<li><code><a title="src.tests.sound_from_file_test.run_tests" href="#src.tests.sound_from_file_test.run_tests">run_tests</a></code></li>
 <li><code><a title="src.tests.sound_from_file_test.substitution" href="#src.tests.sound_from_file_test.substitution">substitution</a></code></li>
 <li><code><a title="src.tests.sound_from_file_test.try_to_move_sounds" href="#src.tests.sound_from_file_test.try_to_move_sounds">try_to_move_sounds</a></code></li>
 <li><code><a title="src.tests.sound_from_file_test.visualize_d" href="#src.tests.sound_from_file_test.visualize_d">visualize_d</a></code></li>

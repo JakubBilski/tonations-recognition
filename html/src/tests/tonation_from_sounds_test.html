@@ -69,7 +69,7 @@ class Mismatch(music.Tonation):
         return f&#34;{round(self.timestamp, 3)} - {round(self.end_timestamp, 3)}: Expected {self.tonation_model}, got {super().__str__()}&#34;  # noqa
 
 
-if __name__ == &#34;__main__&#34;:
+def run_tests():
     verbose_factor_threshold = parse_args().verbose_factor_threshold
     verbose_duration_threshold = parse_args().verbose_duration_threshold
     if verbose_factor_threshold is None:
@@ -118,6 +118,35 @@ if __name__ == &#34;__main__&#34;:
                         type=float)
     args = parser.parse_args()
     return args</code></pre>
+</details>
+</dd>
+<dt id="src.tests.tonation_from_sounds_test.run_tests"><code class="name flex">
+<span>def <span class="ident">run_tests</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run_tests():
+    verbose_factor_threshold = parse_args().verbose_factor_threshold
+    verbose_duration_threshold = parse_args().verbose_duration_threshold
+    if verbose_factor_threshold is None:
+        verbose_factor_threshold = 0.5
+    if verbose_duration_threshold is None:
+        verbose_duration_threshold = 0.1
+    tests = test_data.get_all_test_models()
+    print(&#34;-----------TONATIONS TEST-----------------&#34;)
+    for test in tests:
+        tonation = tonation_recognition.get_tonation(test.sounds)
+        match = tonation == test.tonation
+        if match:
+            color = &#39;\033[92m&#39;
+            print(f&#34;{test.file_path}: {color} {tonation} matches {test.tonation} \033[0m&#34;)  # noqa
+        else:
+            color = &#39;\033[91m&#39;
+            print(f&#34;{test.file_path}: {color}{tonation} doesn&#39;t match {test.tonation} \033[0m&#34;)  # noqa</code></pre>
 </details>
 </dd>
 </dl>
@@ -211,6 +240,7 @@ def tonation_model(self):
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
 <li><code><a title="src.tests.tonation_from_sounds_test.parse_args" href="#src.tests.tonation_from_sounds_test.parse_args">parse_args</a></code></li>
+<li><code><a title="src.tests.tonation_from_sounds_test.run_tests" href="#src.tests.tonation_from_sounds_test.run_tests">run_tests</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>

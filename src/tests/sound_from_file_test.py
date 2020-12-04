@@ -140,7 +140,7 @@ def main(args, rec_meth):
         f"{match_factor_sum/len(tests)}")
 
 
-if __name__ == "__main__":
+def run_tests():
     args = parse_args()
     rec_meths = []
     rec_meths.append("fit_to_bar")

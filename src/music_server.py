@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
 
-import argparse
 import pathlib
 import logging
 import shutil
@@ -24,26 +23,6 @@ logger.setLevel(logging.DEBUG)
 
 app = Flask(__name__)
 app.config['TEMP_FOLDER'] = pathlib.Path('data\\temp')
-
-
-def parse_args():
-    parser = argparse.ArgumentParser(
-        description='Add chords to audio file')
-    parser.add_argument('--http', '-H',
-                        action="store_true",
-                        help='Run program as http server')
-    parser.add_argument('--input', '-I',
-                        default="data/other_rec/ach_spij_C.wav",
-                        help='Input audio file. Formats: [.mp3, .wav]',
-                        type=pathlib.Path)
-    parser.add_argument('--tonation', '-T',
-                        help='Use correct tonation instead of detected',
-                        type=str)
-    parser.add_argument('--wav',
-                        action="store_true",
-                        help='Save file as WAVE; works only on linux')
-    args = parser.parse_args()
-    return args
 
 
 @app.route('/recorded', methods=['POST'])
@@ -222,8 +201,7 @@ def print_debug_info(sounds, chords):
             chords_i += 1
 
 
-def process_file(args):
-    filename = args.input
+def process_file(filename, force_tonation=None, output_wav=False):
     logger.debug(f"Procesing {filename}")
     sounds = sounds_generation.get_sounds_from_file(filename)
     # sounds = sounds_manipulation.change_tonation(sounds, 2)
@@ -235,12 +213,12 @@ def process_file(args):
     else:
         raise(f"BEAT_TO_NOTE_VERSION '{BEAT_TO_NOTE_VERSION}'' not recognized")
 
-    if args.tonation:
-        if args.tonation.islower():
+    if force_tonation:
+        if force_tonation.islower():
             kind = "minor"
         else:
             kind = "major"
-        tonation = music.Tonation(symbol=args.tonation.lower(), kind=kind)
+        tonation = music.Tonation(symbol=force_tonation.lower(), kind=kind)
     else:
         tonation = tonation_recognition.get_tonation(sounds)
 
@@ -252,7 +230,7 @@ def process_file(args):
         sounds,
         chords,
         duration_ms_of_32)
-    if args.wav:
+    if output_wav:
         result_file = music_synthesis.save_midifile_as_wav(
             app.config['TEMP_FOLDER'] / "output.midi",
             app.config['TEMP_FOLDER'] / "output.wav")
@@ -270,9 +248,8 @@ def convert_recorded_to_wav(source_file, destination_file):
     sound.export(destination_file, format="wav")
 
 
-def start_server():
-    args = parse_args()
+def start_server(args):
     if args.http:
         app.run()
     else:
-        process_file(args)
+        process_file(args.input, args.tonation, args.wav)

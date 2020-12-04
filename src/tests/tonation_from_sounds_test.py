@@ -41,7 +41,7 @@ class Mismatch(music.Tonation):
         return f"{round(self.timestamp, 3)} - {round(self.end_timestamp, 3)}: Expected {self.tonation_model}, got {super().__str__()}"  # noqa
 
 
-if __name__ == "__main__":
+def run_tests():
     verbose_factor_threshold = parse_args().verbose_factor_threshold
     verbose_duration_threshold = parse_args().verbose_duration_threshold
     if verbose_factor_threshold is None:

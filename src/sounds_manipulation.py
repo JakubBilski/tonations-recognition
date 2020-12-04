@@ -8,7 +8,6 @@ def change_tonation(sounds, diff):
     Parameters:
     sounds (list[Sound]) : Sounds to transpose
     diff (int) : Chosen number of halftones
-    duration_ms_of_32 (float) : Duration of 32th note in miliseconds
 
     Returns:
     (list[Sound]) : Transposed sounds

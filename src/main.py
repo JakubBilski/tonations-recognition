@@ -48,7 +48,14 @@ def parse_args():
 
 @app.route('/recorded', methods=['POST'])
 def frontend_communication_upload_recorded():
-    """Used to upload a previously recorded audio file"""
+    """Used to upload a previously recorded audio file
+
+    Request body:
+    files.recordingTemp (binary file) : recorded file in .ogg format
+
+    Response:
+    filename (str) : path to a recorded file saved in .wav format
+    """
     try:
         file = request.files['recordingTemp']
     except Exception as e:
@@ -65,7 +72,11 @@ def frontend_communication_upload_recorded():
 
 @app.route('/saveWithChords', methods=['POST'])
 def frontend_communication_save_with_chords():
-    """Used to copy generated music file to a chosen file"""
+    """Used to copy generated music file to a chosen file
+
+    Request body:
+    output_file (str) : path to the chosen file
+    """
     try:
         filename_dest = request.json["output_file"]
     except Exception as e:
@@ -80,7 +91,11 @@ def frontend_communication_save_with_chords():
 
 @app.route('/saveRecorded', methods=['POST'])
 def frontend_communication_save_recorded():
-    """Used to copy recorded track file to a chosen file"""
+    """Used to copy recorded track file to a chosen file
+
+    Request body:
+    output_file (str) : path to the chosen file
+    """
     try:
         filename_dest = request.json["output_file"]
     except Exception as e:
@@ -97,7 +112,29 @@ def frontend_communication_save_recorded():
 
 @app.route('/music', methods=['GET', 'POST'])
 def frontend_communication():
-    """Used to obtain all the information about chosen music file"""
+    """Used to obtain all the information about chosen music file
+
+    Request body:
+    input_file (str) : path to the chosen file
+
+    Response:
+    notes (List[str]): Lines of notes prepared for displaying
+    key (str): Key of the whole piece, prepared for displaying
+    metrum (str): Metrum of the whole piece, prepared for displaying
+    chord_types (list[str]) : All chords used in the piece,
+        prepared for displaying
+    chords: (list[{
+        symbol (str): symbol of the chord, see: Chord
+        kind (str): kind of the chord, see: Chord
+        duration: duration of the chord, see: Chord
+    }]) : Chords used in the piece
+    tonation ({
+        symbol (str): symbol of the key, see: Tonation
+        kind: kind of the key, see: Tonation
+    }): The key the piece is in
+    preview_file (str) : Path to the audio file
+        with melody and chords played together
+    """
     try:
         filename = request.json["input_file"]
     except Exception as e:

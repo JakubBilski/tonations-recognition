@@ -1,4 +1,3 @@
-from . import chord
 from . import base_sound
 
 

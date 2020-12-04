@@ -84,8 +84,8 @@ def get_chords_hausner(sounds: List[Sound],
                 max_score = score
                 max_chord = c
         t_c.append(Chord(max_chord.note,
-                               duration=half_meter_len,
-                               kind=max_chord.kind))
+                         duration=half_meter_len,
+                         kind=max_chord.kind))
         i += half_meter_len
         while i < len(t_s) and t_s[i] == t_s[i-1]:
             i += 1

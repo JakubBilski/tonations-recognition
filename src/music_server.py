@@ -222,7 +222,8 @@ def print_debug_info(sounds, chords):
             chords_i += 1
 
 
-def process_file(filename):
+def process_file(args):
+    filename = args.input
     logger.debug(f"Procesing {filename}")
     sounds = sounds_generation.get_sounds_from_file(filename)
     # sounds = sounds_manipulation.change_tonation(sounds, 2)
@@ -267,3 +268,11 @@ def process_file(filename):
 def convert_recorded_to_wav(source_file, destination_file):
     sound = pydub.AudioSegment.from_file(source_file)
     sound.export(destination_file, format="wav")
+
+
+def start_server():
+    args = parse_args()
+    if args.http:
+        app.run()
+    else:
+        process_file(args)

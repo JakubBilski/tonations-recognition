@@ -3,17 +3,17 @@ from flask import Flask, request, jsonify
 import argparse
 import pathlib
 import logging
-
-import chords_simplification
-import tonation_recognition
-import chords_generation
-import sounds_generation
-import meter_recognition
-import music_synthesis
-import vextab_parsing
 import shutil
-import music
 import pydub
+
+from . import chords_simplification
+from . import tonation_recognition
+from . import chords_generation
+from . import sounds_generation
+from . import meter_recognition
+from . import music_synthesis
+from . import vextab_parsing
+from . import music
 
 
 BEAT_TO_NOTE_VERSION = "fit_to_bar"
@@ -267,11 +267,3 @@ def process_file(filename):
 def convert_recorded_to_wav(source_file, destination_file):
     sound = pydub.AudioSegment.from_file(source_file)
     sound.export(destination_file, format="wav")
-
-
-if __name__ == "__main__":
-    args = parse_args()
-    if args.http:
-        app.run()
-    else:
-        process_file(args.input)

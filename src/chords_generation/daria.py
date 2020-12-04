@@ -1,6 +1,6 @@
 from typing import List, Tuple
 
-import music
+from ..music import Chord, Sound, Tonation
 from . import daria_params as params
 
 # https://www.fim.uni-passau.de/fileadmin/dokumente/fakultaeten/fim/lehrstuhl/sauer/geyer/BA_MA_Arbeiten/BA-HausnerChristoph-201409.pdf
@@ -12,39 +12,39 @@ For each bar get best chord using scoring lists
 '''
 
 
-def tonation_chords(tonation: music.Tonation):
+def tonation_chords(tonation: Tonation):
     n = tonation.note
     if tonation.kind == "major":
         chords = [
-            music.Chord(note=n, kind="major"),
-            music.Chord(note=n+2, kind="minor"),
-            music.Chord(note=n+4, kind="major"),
-            music.Chord(note=n+5, kind="major"),
-            music.Chord(note=n+7, kind="major7"),
-            music.Chord(note=n+9, kind="minor"),
-            music.Chord(note=n+11, kind="diminished")]
+            Chord(note=n, kind="major"),
+            Chord(note=n+2, kind="minor"),
+            Chord(note=n+4, kind="major"),
+            Chord(note=n+5, kind="major"),
+            Chord(note=n+7, kind="major7"),
+            Chord(note=n+9, kind="minor"),
+            Chord(note=n+11, kind="diminished")]
     else:
         chords = [
-            music.Chord(note=n, kind="minor"),
-            music.Chord(note=n+2, kind="diminished"),
-            music.Chord(note=n+4, kind="major"),
-            music.Chord(note=n+5, kind="minor"),
-            music.Chord(note=n+7, kind="major7"),
-            music.Chord(note=n+9, kind="major"),
-            music.Chord(note=n+11, kind="diminished")]
+            Chord(note=n, kind="minor"),
+            Chord(note=n+2, kind="diminished"),
+            Chord(note=n+4, kind="major"),
+            Chord(note=n+5, kind="minor"),
+            Chord(note=n+7, kind="major7"),
+            Chord(note=n+9, kind="major"),
+            Chord(note=n+11, kind="diminished")]
     for i in range(len(chords)):
         chords[i].level = i+1
     return chords
 
 
-def points_for_sound(chord: music.Chord, sound: music.Sound):
+def points_for_sound(chord: Chord, sound: Sound):
     if sound.note is None:
         return 0
     diff = (sound.note+12 - chord.note) % 12
     return params.POINTS[chord.kind][diff]
 
 
-def point_coef(chord: music.Chord, first_sound: music.Sound,
+def point_coef(chord: Chord, first_sound: Sound,
                last_chord_level: int):
     if chord.note == first_sound.note:
         first_sound_coef = params.FIRST_SOUND
@@ -55,8 +55,8 @@ def point_coef(chord: music.Chord, first_sound: music.Sound,
         first_sound_coef
 
 
-def get_chords_daria(sounds: List[music.Sound],
-                     tonation: music.Tonation,
+def get_chords_daria(sounds: List[Sound],
+                     tonation: Tonation,
                      meter: Tuple[int, int]):
     if meter[0] == 2:
         meter = (
@@ -97,7 +97,7 @@ def get_chords_daria(sounds: List[music.Sound],
                 max_score = score
                 max_chord = c
 
-        t_c.append(music.Chord(max_chord.note,
+        t_c.append(Chord(max_chord.note,
                                duration=half_bar_len,
                                kind=max_chord.kind))
         last_chord_level = max_chord.level
@@ -113,7 +113,7 @@ def get_chords_daria(sounds: List[music.Sound],
         if any(chords) and chords[-1].symbol == c.symbol:
             chords[-1].duration += c.duration
         else:
-            chords.append(music.Chord(
+            chords.append(Chord(
                 c.note, duration=c.duration, kind=c.kind))
 
     return chords

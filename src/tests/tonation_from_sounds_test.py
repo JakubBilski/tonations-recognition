@@ -1,10 +1,8 @@
-import path_magic  # noqa
-
 import argparse
 
-import test_data
-import music
-import tonation_recognition
+from . import test_data
+from .. import music
+from .. import tonation_recognition
 
 
 def parse_args():

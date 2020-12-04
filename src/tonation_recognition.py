@@ -1,6 +1,6 @@
 import enum
 
-from music.tonation import Tonation
+from .music.tonation import Tonation
 
 
 POINTS_SCALE_FIT = 10

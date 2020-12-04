@@ -1,14 +1,12 @@
-import path_magic  # noqa
-
 import argparse
 
-import test_data
-import bcolors
+from . import test_data
+from . import bcolors
 
-import music
-import sounds_generation
-import meter_recognition
-from utils import constants
+from .. import music
+from .. import sounds_generation
+from .. import meter_recognition
+from ..utils import constants
 
 
 def parse_args():

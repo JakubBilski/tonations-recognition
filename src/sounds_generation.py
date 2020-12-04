@@ -2,7 +2,7 @@ import math
 
 import parselmouth
 
-import music
+from . import music
 
 
 def frequency_to_note(frequency):

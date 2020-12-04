@@ -1,4 +1,4 @@
-from utils import constants
+from .utils import constants
 
 
 NO_BARS_IN_ROW = 3

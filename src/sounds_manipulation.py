@@ -1,4 +1,4 @@
-import music
+from . import music
 
 
 def change_tonation(sounds, diff):

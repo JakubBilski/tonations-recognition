@@ -1,19 +1,18 @@
 from flask import Flask, request, jsonify
 
-import argparse
 import pathlib
 import logging
-
-import chords_simplification
-import tonation_recognition
-import chords_generation
-import sounds_generation
-import meter_recognition
-import music_synthesis
-import vextab_parsing
 import shutil
-import music
 import pydub
+
+from . import chords_simplification
+from . import tonation_recognition
+from . import chords_generation
+from . import sounds_generation
+from . import meter_recognition
+from . import music_synthesis
+from . import vextab_parsing
+from . import music
 
 
 BEAT_TO_NOTE_VERSION = "fit_to_bar"
@@ -26,28 +25,16 @@ app = Flask(__name__)
 app.config['TEMP_FOLDER'] = pathlib.Path('data\\temp')
 
 
-def parse_args():
-    parser = argparse.ArgumentParser(
-        description='Add chords to audio file')
-    parser.add_argument('--http', '-H',
-                        action="store_true",
-                        help='Run program as http server')
-    parser.add_argument('--input', '-I',
-                        default="data/other_rec/ach_spij_C.wav",
-                        help='Input audio file. Formats: [.mp3, .wav]',
-                        type=pathlib.Path)
-    parser.add_argument('--tonation', '-T',
-                        help='Use correct tonation instead of detected',
-                        type=str)
-    parser.add_argument('--wav',
-                        action="store_true",
-                        help='Save file as WAVE; works only on linux')
-    args = parser.parse_args()
-    return args
-
-
 @app.route('/recorded', methods=['POST'])
 def frontend_communication_upload_recorded():
+    """Used to upload a previously recorded audio file
+
+    Request body:
+    files.recordingTemp (binary file) : recorded file in .ogg format
+
+    Response:
+    filename (str) : path to a recorded file saved in .wav format
+    """
     try:
         file = request.files['recordingTemp']
     except Exception as e:
@@ -64,6 +51,11 @@ def frontend_communication_upload_recorded():
 
 @app.route('/saveWithChords', methods=['POST'])
 def frontend_communication_save_with_chords():
+    """Used to copy generated music file to a chosen file
+
+    Request body:
+    output_file (str) : path to the chosen file
+    """
     try:
         filename_dest = request.json["output_file"]
     except Exception as e:
@@ -78,6 +70,11 @@ def frontend_communication_save_with_chords():
 
 @app.route('/saveRecorded', methods=['POST'])
 def frontend_communication_save_recorded():
+    """Used to copy recorded track file to a chosen file
+
+    Request body:
+    output_file (str) : path to the chosen file
+    """
     try:
         filename_dest = request.json["output_file"]
     except Exception as e:
@@ -94,6 +91,29 @@ def frontend_communication_save_recorded():
 
 @app.route('/music', methods=['GET', 'POST'])
 def frontend_communication():
+    """Used to obtain all the information about chosen music file
+
+    Request body:
+    input_file (str) : path to the chosen file
+
+    Response:
+    notes (List[str]): Lines of notes prepared for displaying
+    key (str): Key of the whole piece, prepared for displaying
+    metrum (str): Metrum of the whole piece, prepared for displaying
+    chord_types (list[str]) : All chords used in the piece,
+        prepared for displaying
+    chords: (list[{
+        symbol (str): symbol of the chord, see: Chord
+        kind (str): kind of the chord, see: Chord
+        duration: duration of the chord, see: Chord
+    }]) : Chords used in the piece
+    tonation ({
+        symbol (str): symbol of the key, see: Tonation
+        kind: kind of the key, see: Tonation
+    }): The key the piece is in
+    preview_file (str) : Path to the audio file
+        with melody and chords played together
+    """
     try:
         filename = request.json["input_file"]
     except Exception as e:
@@ -113,6 +133,8 @@ def frontend_communication():
 
 @app.route('/music_simple', methods=['GET', 'POST'])
 def frontend_communication_simple():
+    """Used to obtain all the information about chosen music file
+    transposed into some easier key"""
     try:
         filename = request.json["input_file"]
     except Exception as e:
@@ -179,7 +201,7 @@ def print_debug_info(sounds, chords):
             chords_i += 1
 
 
-def process_file(filename):
+def process_file(filename, force_tonation=None, output_wav=False):
     logger.debug(f"Procesing {filename}")
     sounds = sounds_generation.get_sounds_from_file(filename)
     # sounds = sounds_manipulation.change_tonation(sounds, 2)
@@ -191,12 +213,12 @@ def process_file(filename):
     else:
         raise(f"BEAT_TO_NOTE_VERSION '{BEAT_TO_NOTE_VERSION}'' not recognized")
 
-    if args.tonation:
-        if args.tonation.islower():
+    if force_tonation:
+        if force_tonation.islower():
             kind = "minor"
         else:
             kind = "major"
-        tonation = music.Tonation(symbol=args.tonation.lower(), kind=kind)
+        tonation = music.Tonation(symbol=force_tonation.lower(), kind=kind)
     else:
         tonation = tonation_recognition.get_tonation(sounds)
 
@@ -208,7 +230,7 @@ def process_file(filename):
         sounds,
         chords,
         duration_ms_of_32)
-    if args.wav:
+    if output_wav:
         result_file = music_synthesis.save_midifile_as_wav(
             app.config['TEMP_FOLDER'] / "output.midi",
             app.config['TEMP_FOLDER'] / "output.wav")
@@ -226,9 +248,8 @@ def convert_recorded_to_wav(source_file, destination_file):
     sound.export(destination_file, format="wav")
 
 
-if __name__ == "__main__":
-    args = parse_args()
+def start_server(args):
     if args.http:
         app.run()
     else:
-        process_file(args.input)
+        process_file(args.input, args.tonation, args.wav)

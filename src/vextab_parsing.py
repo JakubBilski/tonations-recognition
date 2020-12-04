@@ -1,4 +1,4 @@
-from utils import constants
+from .utils import constants
 
 
 NO_BARS_IN_ROW = 3
@@ -40,6 +40,15 @@ def sound_to_string(sound):
 
 
 def generate_vextab_notes(sounds, tonation, metrum_upper, metrum_lower):
+    """Use information about the piece
+    to create notes in an input format
+    suitable for the vextab javascript library
+    http://vexflow.com/vextab/
+
+    Returns:
+    (list[str]) : List of strings with music information
+        for the consecutive lines of music notation
+    """
     key = tonation.symbol
     if tonation.kind == 'minor':
         key = key + 'm'
@@ -70,6 +79,14 @@ def generate_vextab_notes(sounds, tonation, metrum_upper, metrum_lower):
 
 
 def generate_vextab_key(tonation):
+    """Use information about the piece
+    to create key information in an input format
+    suitable for the vextab javascript library
+    http://vexflow.com/vextab/
+
+    Returns:
+    (str)
+    """
     key = tonation.symbol
     if tonation.kind == 'minor':
         key = key + 'm'
@@ -77,6 +94,14 @@ def generate_vextab_key(tonation):
 
 
 def generate_vextab_metrum(metrum_upper, metrum_lower):
+    """Use information about the piece
+    to create metrum information in an input format
+    suitable for the vextab javascript library
+    http://vexflow.com/vextab/
+
+    Returns:
+    (str)
+    """
     metrum_transform = {
         16: 2,
         8: 4,
@@ -87,6 +112,16 @@ def generate_vextab_metrum(metrum_upper, metrum_lower):
 
 
 def generate_vextab_chord_types(chords):
+    """Use information about the piece
+    to create information about all
+    chords used in the piece
+    in an input format
+    suitable for the vextab javascript library
+    http://vexflow.com/vextab/
+
+    Returns:
+    (list[str])
+    """
     chord_types = []
     for chord in chords:
         if chord.kind == "major":

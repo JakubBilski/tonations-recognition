@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>src.tonation_recognition API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>src.tonation_recognition</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import enum
+
+from .music.tonation import Tonation
+
+
+POINTS_SCALE_FIT = 10
+POINTS_CADENCE = 200
+POINTS_GREAT_AUTHENTIC_CADENCE = 80
+POINTS_AUTHENTIC_CADENCE = 40
+POINTS_PLAGAL_CADENCE = 40
+POINTS_HALF_CADENCE = 20
+POINTS_DECEPTIVE_CADENCE = 10
+POINTS_TONIC_AT_THE_END = 50
+
+
+class ChordType(enum.Enum):
+    TONIC = 1
+    SUBDOMINANT = 2
+    DOMINANT = 3
+    OTHER = 4
+
+
+class TonationWithPoints:
+    def __init__(self, tonation, points_from_scale,
+                 points_from_chord_patterns,
+                 points_from_tail):
+        self.tonation = tonation
+        self.points_from_scale = points_from_scale
+        self.points_from_chord_patterns = points_from_chord_patterns
+        self.points_from_tail = points_from_tail
+        self.points = points_from_scale + \
+            points_from_chord_patterns + \
+            points_from_tail
+
+    def __str__(self):
+        return f&#34;{self.tonation}\n&#34;\
+            f&#34;points: {self.points}\n&#34;\
+            f&#34;points_from_scale: {self.points_from_scale}\n&#34;\
+            f&#34;points_from_chord_patterns: {self.points_from_chord_patterns}\n&#34;\
+            f&#34;points_from_tail: {self.points_from_tail}&#34;
+
+
+def tonation_to_scale(key, kind):
+    if kind == &#39;major&#39;:
+        return [note % 12
+                for note in
+                [key, key+2, key+4, key+5, key+7, key+9, key+11]]
+    return [note % 12
+            for note in
+            [key, key+2, key+3, key+5, key+7, key+8, key+10]]
+
+
+def tonation_to_tonic(key, kind):
+    if kind == &#39;major&#39;:
+        return [note % 12 for note in [key, key+4, key+7]]
+    return [note % 12 for note in [key, key+3, key+7]]
+
+
+def tonation_to_subdominant(key, kind):
+    if kind == &#39;major&#39;:
+        return [note % 12 for note in [key+5, key+8, key]]
+    return [note % 12 for note in [key+5, key+9, key]]
+
+
+def tonation_to_dominant(key, kind):
+    return [note % 12 for note in [key+7, key+11, key+2]]
+
+
+def get_tonation(sounds):
+    &#34;&#34;&#34;Use list of Sounds to recognize a key
+    used in the piece
+
+    Parameters:
+    sounds (list[Sound])
+
+    Returns:
+    (Tonation) : recognized key
+    &#34;&#34;&#34;
+    tonations_and_points = []
+    for kind in [&#39;major&#39;, &#39;minor&#39;]:
+        for base_key in range(12):
+            scale = tonation_to_scale(base_key, kind)
+            tonic = tonation_to_tonic(base_key, kind)
+            subdominant = tonation_to_subdominant(base_key, kind)
+            dominant = tonation_to_dominant(base_key, kind)
+            chord_types = get_aligned_chord_types(
+                sounds, tonic, subdominant, dominant)
+            # chord_types = remove_solitary_chords(chord_types)
+            chord_types = join_same_consecutive_chords(chord_types)
+            points_from_scale = get_points_from_scale_fit(sounds, scale)
+            points_from_chord_patterns = get_points_from_chord_patterns_fit(
+                chord_types)
+            points_from_tail = get_extra_points_for_tail(chord_types)
+            tonation = Tonation(note=base_key, kind=kind)
+            tonations_and_points.append(TonationWithPoints(
+                tonation, points_from_scale,
+                points_from_chord_patterns,
+                points_from_tail
+            ))
+    tonations_and_points.sort(key=lambda x: x.points, reverse=True)
+    # do we want to return best tonations, or chances with tonation candidates?
+    return tonations_and_points[0].tonation
+
+
+def get_aligned_chord_types(sounds, tonic, subdominant, dominant):
+    # handles first-in-tonic = last-in-subdominant uncertainty
+    tend_to_tonic = True
+    chord_types = []
+    for sound in sounds:
+        chord_type = sound_to_chord_type(
+            sound, tonic, subdominant, dominant, tend_to_tonic)
+        tend_to_tonic = chord_type != ChordType.SUBDOMINANT
+        chord_types.append(chord_type)
+    return chord_types
+
+
+def sound_to_chord_type(sound, tonic, subdominant, dominant, tend_to_tonic):
+    if sound.note in dominant:
+        return ChordType.DOMINANT
+    if sound.note in tonic:
+        if tend_to_tonic or sound.note not in subdominant:
+            return ChordType.TONIC
+        return ChordType.SUBDOMINANT
+    if sound.note in subdominant:
+        return ChordType.SUBDOMINANT
+    return ChordType.OTHER
+
+
+def remove_solitary_chords(chord_types):
+    if len(chord_types) &lt; 2:
+        return chord_types
+    result = []
+    if chord_types[0] == chord_types[1]:
+        result.append(chord_types[0])
+    for i in range(1, len(chord_types)-1):
+        chord = chord_types[i]
+        if chord_types[i-1] == chord or chord == chord_types[i+1]:
+            result.append(chord)
+    if chord_types[-1] == chord_types[-2]:
+        result.append(chord_types[-1])
+    return result
+
+
+def join_same_consecutive_chords(chord_types):
+    if len(chord_types) &lt; 2:
+        return chord_types
+    result = []
+    last_chord = chord_types[0]
+    result.append(last_chord)
+    for chord in chord_types:
+        if chord != last_chord:
+            last_chord = chord
+            result.append(chord)
+    return result
+
+
+def get_points_from_scale_fit(sounds, scale):
+    points = 0
+    for sound in sounds:
+        if sound.note in scale:
+            points += 10
+    return points
+
+
+class ChordSequencePattern:
+    def __init__(self, sequence, points):
+        self.sequence = sequence
+        self.points = points
+
+
+def get_points_from_chord_patterns_fit(chords):
+    patterns = []
+    patterns.append(ChordSequencePattern(
+        [ChordType.TONIC, ChordType.SUBDOMINANT,
+            ChordType.DOMINANT, ChordType.TONIC],
+        POINTS_CADENCE
+    ))
+    patterns.append(ChordSequencePattern(
+        [ChordType.SUBDOMINANT, ChordType.DOMINANT, ChordType.TONIC],
+        POINTS_GREAT_AUTHENTIC_CADENCE
+    ))
+    patterns.append(ChordSequencePattern(
+        [ChordType.TONIC, ChordType.DOMINANT, ChordType.TONIC],
+        POINTS_AUTHENTIC_CADENCE
+    ))
+    patterns.append(ChordSequencePattern(
+        [ChordType.TONIC, ChordType.SUBDOMINANT, ChordType.TONIC],
+        POINTS_PLAGAL_CADENCE
+    ))
+    patterns.append(ChordSequencePattern(
+        [ChordType.SUBDOMINANT, ChordType.DOMINANT],
+        POINTS_HALF_CADENCE
+    ))
+    patterns.append(ChordSequencePattern(
+        [ChordType.TONIC, ChordType.DOMINANT],
+        POINTS_HALF_CADENCE
+    ))
+    # we don&#39;t use deceptive cadence, as it was not in the book
+    points = 0
+    for pattern in patterns:
+        no_occurences = get_no_pattern_occurences(chords, pattern.sequence)
+        points += no_occurences * pattern.points
+    return points
+
+
+def get_no_pattern_occurences(sequence, pattern):
+    len_seq = len(sequence)
+    len_pat = len(pattern)
+    if len_seq &lt; len_pat:
+        return 0
+    no_occurences = len_seq-len_pat+1
+    for i in range(len_seq-len_pat+1):
+        for j in range(len_pat):
+            if pattern[j] != sequence[i+j]:
+                no_occurences -= 1
+                break
+    return no_occurences
+
+
+def get_extra_points_for_tail(chords):
+    if chords[-1] == ChordType.TONIC:
+        return POINTS_TONIC_AT_THE_END
+    return 0</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="src.tonation_recognition.get_aligned_chord_types"><code class="name flex">
+<span>def <span class="ident">get_aligned_chord_types</span></span>(<span>sounds, tonic, subdominant, dominant)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_aligned_chord_types(sounds, tonic, subdominant, dominant):
+    # handles first-in-tonic = last-in-subdominant uncertainty
+    tend_to_tonic = True
+    chord_types = []
+    for sound in sounds:
+        chord_type = sound_to_chord_type(
+            sound, tonic, subdominant, dominant, tend_to_tonic)
+        tend_to_tonic = chord_type != ChordType.SUBDOMINANT
+        chord_types.append(chord_type)
+    return chord_types</code></pre>
+</details>
+</dd>
+<dt id="src.tonation_recognition.get_extra_points_for_tail"><code class="name flex">
+<span>def <span class="ident">get_extra_points_for_tail</span></span>(<span>chords)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_extra_points_for_tail(chords):
+    if chords[-1] == ChordType.TONIC:
+        return POINTS_TONIC_AT_THE_END
+    return 0</code></pre>
+</details>
+</dd>
+<dt id="src.tonation_recognition.get_no_pattern_occurences"><code class="name flex">
+<span>def <span class="ident">get_no_pattern_occurences</span></span>(<span>sequence, pattern)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_no_pattern_occurences(sequence, pattern):
+    len_seq = len(sequence)
+    len_pat = len(pattern)
+    if len_seq &lt; len_pat:
+        return 0
+    no_occurences = len_seq-len_pat+1
+    for i in range(len_seq-len_pat+1):
+        for j in range(len_pat):
+            if pattern[j] != sequence[i+j]:
+                no_occurences -= 1
+                break
+    return no_occurences</code></pre>
+</details>
+</dd>
+<dt id="src.tonation_recognition.get_points_from_chord_patterns_fit"><code class="name flex">
+<span>def <span class="ident">get_points_from_chord_patterns_fit</span></span>(<span>chords)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_points_from_chord_patterns_fit(chords):
+    patterns = []
+    patterns.append(ChordSequencePattern(
+        [ChordType.TONIC, ChordType.SUBDOMINANT,
+            ChordType.DOMINANT, ChordType.TONIC],
+        POINTS_CADENCE
+    ))
+    patterns.append(ChordSequencePattern(
+        [ChordType.SUBDOMINANT, ChordType.DOMINANT, ChordType.TONIC],
+        POINTS_GREAT_AUTHENTIC_CADENCE
+    ))
+    patterns.append(ChordSequencePattern(
+        [ChordType.TONIC, ChordType.DOMINANT, ChordType.TONIC],
+        POINTS_AUTHENTIC_CADENCE
+    ))
+    patterns.append(ChordSequencePattern(
+        [ChordType.TONIC, ChordType.SUBDOMINANT, ChordType.TONIC],
+        POINTS_PLAGAL_CADENCE
+    ))
+    patterns.append(ChordSequencePattern(
+        [ChordType.SUBDOMINANT, ChordType.DOMINANT],
+        POINTS_HALF_CADENCE
+    ))
+    patterns.append(ChordSequencePattern(
+        [ChordType.TONIC, ChordType.DOMINANT],
+        POINTS_HALF_CADENCE
+    ))
+    # we don&#39;t use deceptive cadence, as it was not in the book
+    points = 0
+    for pattern in patterns:
+        no_occurences = get_no_pattern_occurences(chords, pattern.sequence)
+        points += no_occurences * pattern.points
+    return points</code></pre>
+</details>
+</dd>
+<dt id="src.tonation_recognition.get_points_from_scale_fit"><code class="name flex">
+<span>def <span class="ident">get_points_from_scale_fit</span></span>(<span>sounds, scale)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_points_from_scale_fit(sounds, scale):
+    points = 0
+    for sound in sounds:
+        if sound.note in scale:
+            points += 10
+    return points</code></pre>
+</details>
+</dd>
+<dt id="src.tonation_recognition.get_tonation"><code class="name flex">
+<span>def <span class="ident">get_tonation</span></span>(<span>sounds)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Use list of Sounds to recognize a key
+used in the piece</p>
+<p>Parameters:
+sounds (list[Sound])</p>
+<p>Returns:
+(Tonation) : recognized key</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_tonation(sounds):
+    &#34;&#34;&#34;Use list of Sounds to recognize a key
+    used in the piece
+
+    Parameters:
+    sounds (list[Sound])
+
+    Returns:
+    (Tonation) : recognized key
+    &#34;&#34;&#34;
+    tonations_and_points = []
+    for kind in [&#39;major&#39;, &#39;minor&#39;]:
+        for base_key in range(12):
+            scale = tonation_to_scale(base_key, kind)
+            tonic = tonation_to_tonic(base_key, kind)
+            subdominant = tonation_to_subdominant(base_key, kind)
+            dominant = tonation_to_dominant(base_key, kind)
+            chord_types = get_aligned_chord_types(
+                sounds, tonic, subdominant, dominant)
+            # chord_types = remove_solitary_chords(chord_types)
+            chord_types = join_same_consecutive_chords(chord_types)
+            points_from_scale = get_points_from_scale_fit(sounds, scale)
+            points_from_chord_patterns = get_points_from_chord_patterns_fit(
+                chord_types)
+            points_from_tail = get_extra_points_for_tail(chord_types)
+            tonation = Tonation(note=base_key, kind=kind)
+            tonations_and_points.append(TonationWithPoints(
+                tonation, points_from_scale,
+                points_from_chord_patterns,
+                points_from_tail
+            ))
+    tonations_and_points.sort(key=lambda x: x.points, reverse=True)
+    # do we want to return best tonations, or chances with tonation candidates?
+    return tonations_and_points[0].tonation</code></pre>
+</details>
+</dd>
+<dt id="src.tonation_recognition.join_same_consecutive_chords"><code class="name flex">
+<span>def <span class="ident">join_same_consecutive_chords</span></span>(<span>chord_types)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def join_same_consecutive_chords(chord_types):
+    if len(chord_types) &lt; 2:
+        return chord_types
+    result = []
+    last_chord = chord_types[0]
+    result.append(last_chord)
+    for chord in chord_types:
+        if chord != last_chord:
+            last_chord = chord
+            result.append(chord)
+    return result</code></pre>
+</details>
+</dd>
+<dt id="src.tonation_recognition.remove_solitary_chords"><code class="name flex">
+<span>def <span class="ident">remove_solitary_chords</span></span>(<span>chord_types)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_solitary_chords(chord_types):
+    if len(chord_types) &lt; 2:
+        return chord_types
+    result = []
+    if chord_types[0] == chord_types[1]:
+        result.append(chord_types[0])
+    for i in range(1, len(chord_types)-1):
+        chord = chord_types[i]
+        if chord_types[i-1] == chord or chord == chord_types[i+1]:
+            result.append(chord)
+    if chord_types[-1] == chord_types[-2]:
+        result.append(chord_types[-1])
+    return result</code></pre>
+</details>
+</dd>
+<dt id="src.tonation_recognition.sound_to_chord_type"><code class="name flex">
+<span>def <span class="ident">sound_to_chord_type</span></span>(<span>sound, tonic, subdominant, dominant, tend_to_tonic)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sound_to_chord_type(sound, tonic, subdominant, dominant, tend_to_tonic):
+    if sound.note in dominant:
+        return ChordType.DOMINANT
+    if sound.note in tonic:
+        if tend_to_tonic or sound.note not in subdominant:
+            return ChordType.TONIC
+        return ChordType.SUBDOMINANT
+    if sound.note in subdominant:
+        return ChordType.SUBDOMINANT
+    return ChordType.OTHER</code></pre>
+</details>
+</dd>
+<dt id="src.tonation_recognition.tonation_to_dominant"><code class="name flex">
+<span>def <span class="ident">tonation_to_dominant</span></span>(<span>key, kind)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tonation_to_dominant(key, kind):
+    return [note % 12 for note in [key+7, key+11, key+2]]</code></pre>
+</details>
+</dd>
+<dt id="src.tonation_recognition.tonation_to_scale"><code class="name flex">
+<span>def <span class="ident">tonation_to_scale</span></span>(<span>key, kind)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tonation_to_scale(key, kind):
+    if kind == &#39;major&#39;:
+        return [note % 12
+                for note in
+                [key, key+2, key+4, key+5, key+7, key+9, key+11]]
+    return [note % 12
+            for note in
+            [key, key+2, key+3, key+5, key+7, key+8, key+10]]</code></pre>
+</details>
+</dd>
+<dt id="src.tonation_recognition.tonation_to_subdominant"><code class="name flex">
+<span>def <span class="ident">tonation_to_subdominant</span></span>(<span>key, kind)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tonation_to_subdominant(key, kind):
+    if kind == &#39;major&#39;:
+        return [note % 12 for note in [key+5, key+8, key]]
+    return [note % 12 for note in [key+5, key+9, key]]</code></pre>
+</details>
+</dd>
+<dt id="src.tonation_recognition.tonation_to_tonic"><code class="name flex">
+<span>def <span class="ident">tonation_to_tonic</span></span>(<span>key, kind)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tonation_to_tonic(key, kind):
+    if kind == &#39;major&#39;:
+        return [note % 12 for note in [key, key+4, key+7]]
+    return [note % 12 for note in [key, key+3, key+7]]</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="src.tonation_recognition.ChordSequencePattern"><code class="flex name class">
+<span>class <span class="ident">ChordSequencePattern</span></span>
+<span>(</span><span>sequence, points)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ChordSequencePattern:
+    def __init__(self, sequence, points):
+        self.sequence = sequence
+        self.points = points</code></pre>
+</details>
+</dd>
+<dt id="src.tonation_recognition.ChordType"><code class="flex name class">
+<span>class <span class="ident">ChordType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>An enumeration.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ChordType(enum.Enum):
+    TONIC = 1
+    SUBDOMINANT = 2
+    DOMINANT = 3
+    OTHER = 4</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="src.tonation_recognition.ChordType.DOMINANT"><code class="name">var <span class="ident">DOMINANT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="src.tonation_recognition.ChordType.OTHER"><code class="name">var <span class="ident">OTHER</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="src.tonation_recognition.ChordType.SUBDOMINANT"><code class="name">var <span class="ident">SUBDOMINANT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="src.tonation_recognition.ChordType.TONIC"><code class="name">var <span class="ident">TONIC</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="src.tonation_recognition.TonationWithPoints"><code class="flex name class">
+<span>class <span class="ident">TonationWithPoints</span></span>
+<span>(</span><span>tonation, points_from_scale, points_from_chord_patterns, points_from_tail)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TonationWithPoints:
+    def __init__(self, tonation, points_from_scale,
+                 points_from_chord_patterns,
+                 points_from_tail):
+        self.tonation = tonation
+        self.points_from_scale = points_from_scale
+        self.points_from_chord_patterns = points_from_chord_patterns
+        self.points_from_tail = points_from_tail
+        self.points = points_from_scale + \
+            points_from_chord_patterns + \
+            points_from_tail
+
+    def __str__(self):
+        return f&#34;{self.tonation}\n&#34;\
+            f&#34;points: {self.points}\n&#34;\
+            f&#34;points_from_scale: {self.points_from_scale}\n&#34;\
+            f&#34;points_from_chord_patterns: {self.points_from_chord_patterns}\n&#34;\
+            f&#34;points_from_tail: {self.points_from_tail}&#34;</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="src" href="index.html">src</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="src.tonation_recognition.get_aligned_chord_types" href="#src.tonation_recognition.get_aligned_chord_types">get_aligned_chord_types</a></code></li>
+<li><code><a title="src.tonation_recognition.get_extra_points_for_tail" href="#src.tonation_recognition.get_extra_points_for_tail">get_extra_points_for_tail</a></code></li>
+<li><code><a title="src.tonation_recognition.get_no_pattern_occurences" href="#src.tonation_recognition.get_no_pattern_occurences">get_no_pattern_occurences</a></code></li>
+<li><code><a title="src.tonation_recognition.get_points_from_chord_patterns_fit" href="#src.tonation_recognition.get_points_from_chord_patterns_fit">get_points_from_chord_patterns_fit</a></code></li>
+<li><code><a title="src.tonation_recognition.get_points_from_scale_fit" href="#src.tonation_recognition.get_points_from_scale_fit">get_points_from_scale_fit</a></code></li>
+<li><code><a title="src.tonation_recognition.get_tonation" href="#src.tonation_recognition.get_tonation">get_tonation</a></code></li>
+<li><code><a title="src.tonation_recognition.join_same_consecutive_chords" href="#src.tonation_recognition.join_same_consecutive_chords">join_same_consecutive_chords</a></code></li>
+<li><code><a title="src.tonation_recognition.remove_solitary_chords" href="#src.tonation_recognition.remove_solitary_chords">remove_solitary_chords</a></code></li>
+<li><code><a title="src.tonation_recognition.sound_to_chord_type" href="#src.tonation_recognition.sound_to_chord_type">sound_to_chord_type</a></code></li>
+<li><code><a title="src.tonation_recognition.tonation_to_dominant" href="#src.tonation_recognition.tonation_to_dominant">tonation_to_dominant</a></code></li>
+<li><code><a title="src.tonation_recognition.tonation_to_scale" href="#src.tonation_recognition.tonation_to_scale">tonation_to_scale</a></code></li>
+<li><code><a title="src.tonation_recognition.tonation_to_subdominant" href="#src.tonation_recognition.tonation_to_subdominant">tonation_to_subdominant</a></code></li>
+<li><code><a title="src.tonation_recognition.tonation_to_tonic" href="#src.tonation_recognition.tonation_to_tonic">tonation_to_tonic</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="src.tonation_recognition.ChordSequencePattern" href="#src.tonation_recognition.ChordSequencePattern">ChordSequencePattern</a></code></h4>
+</li>
+<li>
+<h4><code><a title="src.tonation_recognition.ChordType" href="#src.tonation_recognition.ChordType">ChordType</a></code></h4>
+<ul class="">
+<li><code><a title="src.tonation_recognition.ChordType.DOMINANT" href="#src.tonation_recognition.ChordType.DOMINANT">DOMINANT</a></code></li>
+<li><code><a title="src.tonation_recognition.ChordType.OTHER" href="#src.tonation_recognition.ChordType.OTHER">OTHER</a></code></li>
+<li><code><a title="src.tonation_recognition.ChordType.SUBDOMINANT" href="#src.tonation_recognition.ChordType.SUBDOMINANT">SUBDOMINANT</a></code></li>
+<li><code><a title="src.tonation_recognition.ChordType.TONIC" href="#src.tonation_recognition.ChordType.TONIC">TONIC</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="src.tonation_recognition.TonationWithPoints" href="#src.tonation_recognition.TonationWithPoints">TonationWithPoints</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

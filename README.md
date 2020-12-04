@@ -34,3 +34,8 @@ curl --header "Content-Type: application/json" \
   http://localhost:5000/music
 ```
 
+Automatyczne generowanie dokumentacji:
+``` bash
+pip install pdoc3
+pdoc --html .\path_to_file_or_module
+```

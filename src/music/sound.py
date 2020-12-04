@@ -2,6 +2,18 @@ from . import base_sound
 
 
 class Sound(base_sound.BaseSound):
+    """A sound of one pitch present in a music piece
+
+    Attributes:
+        timestamp (float) : the moment when the sound
+            started, expressed in miliseconds
+            elapsed since the beginning of the piece
+        duration_ms (float) : duration of the sound
+            in miliseconds
+        duration (int) : rhytmic value of the sound
+            expressed in numbers of equivalent 32th notes
+        all atributes of the base class (BaseSound)
+    """
     def __init__(self, note=None, timestamp=None, duration_ms=None,
                  duration=None, symbol=None):
         super().__init__(note, symbol)

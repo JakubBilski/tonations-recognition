@@ -2,7 +2,7 @@ import math
 
 import parselmouth
 
-import music
+from . import music
 
 
 def frequency_to_note(frequency):
@@ -21,6 +21,14 @@ def note_to_frequency(note):
 
 
 def get_sounds_from_file(file):
+    """Use audio file to generate Sounds
+
+    Parameters:
+    file (str) : Path to the audio file
+
+    Returns:
+    (list[Sound]) : List of generated Sounds
+    """
     snd = parselmouth.Sound(str(file))
     pitch = snd.to_pitch()
     frequencies = pitch.selected_array['frequency']

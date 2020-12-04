@@ -1,4 +1,4 @@
-from utils import constants
+from ..utils import constants
 
 
 def beat_id_closest_to_timestamp(beats, timestamp):

@@ -1,10 +1,8 @@
-import path_magic  # noqa
-
 import argparse
 
-import test_data
-import music
-import tonation_recognition
+from . import test_data
+from .. import music
+from .. import tonation_recognition
 
 
 def parse_args():
@@ -43,7 +41,7 @@ class Mismatch(music.Tonation):
         return f"{round(self.timestamp, 3)} - {round(self.end_timestamp, 3)}: Expected {self.tonation_model}, got {super().__str__()}"  # noqa
 
 
-if __name__ == "__main__":
+def run_tests():
     verbose_factor_threshold = parse_args().verbose_factor_threshold
     verbose_duration_threshold = parse_args().verbose_duration_threshold
     if verbose_factor_threshold is None:

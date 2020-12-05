@@ -1,6 +1,6 @@
 from typing import List, Tuple
 
-import music
+from ..music import Chord, Sound, Tonation
 
 # https://www.fim.uni-passau.de/fileadmin/dokumente/fakultaeten/fim/lehrstuhl/sauer/geyer/BA_MA_Arbeiten/BA-HausnerChristoph-201409.pdf
 '''
@@ -40,11 +40,11 @@ MINOR_POINTS = [
     0.3,
     0
 ]
-ALL_CHORDS = [music.Chord(note=i, kind='minor') for i in range(12)] +\
-    [music.Chord(note=i, kind='major') for i in range(12)]
+ALL_CHORDS = [Chord(note=i, kind='minor') for i in range(12)] +\
+    [Chord(note=i, kind='major') for i in range(12)]
 
 
-def points(chord: music.Chord, sound: music.Sound):
+def points(chord: Chord, sound: Sound):
     if sound.note is None:
         return 0
     diff = (sound.note+12 - chord.note) % 12
@@ -54,8 +54,8 @@ def points(chord: music.Chord, sound: music.Sound):
         return MINOR_POINTS[diff]*MINOR_COEF
 
 
-def get_chords_hausner(sounds: List[music.Sound],
-                       tonation: music.Tonation,
+def get_chords_hausner(sounds: List[Sound],
+                       tonation: Tonation,
                        meter: Tuple[int, int]):
     if meter[0] == 2:
         meter = (
@@ -83,9 +83,9 @@ def get_chords_hausner(sounds: List[music.Sound],
             if score > max_score:
                 max_score = score
                 max_chord = c
-        t_c.append(music.Chord(max_chord.note,
-                               duration=half_meter_len,
-                               kind=max_chord.kind))
+        t_c.append(Chord(max_chord.note,
+                         duration=half_meter_len,
+                         kind=max_chord.kind))
         i += half_meter_len
         while i < len(t_s) and t_s[i] == t_s[i-1]:
             i += 1
@@ -96,7 +96,7 @@ def get_chords_hausner(sounds: List[music.Sound],
         if any(chords) and chords[-1].symbol == c.symbol:
             chords[-1].duration += c.duration
         else:
-            chords.append(music.Chord(
+            chords.append(Chord(
                 c.note, duration=c.duration, kind=c.kind))
 
     return chords

@@ -24,6 +24,18 @@ def add_chord(track, chord, start_time, duration_ms_of_32):
 
 
 def create_midi(filename, sounds, chords, duration_ms_of_32):
+    """Create a MIDI file containing sounds mixed
+    with chords
+
+    Parameters:
+    filename (str) : Path to the file that will be created
+    sounds (list[Sound])
+    chords (list[Chord])
+    duration_ms_of_32 (float) : Duration of 32th note in miliseconds
+
+    Returns:
+    (os.path-like) : Absolute path to the saved file
+    """
     midifile = MIDIFile(1)
 
     start_time = 0

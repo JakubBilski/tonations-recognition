@@ -1,7 +1,14 @@
-from utils import constants
+from ..utils import constants
 
 
 class BaseSound:
+    """Base class containing basic sound infromation
+
+    Attributes:
+        note (int) : note as number of halftones
+            from the nearest C, going down
+            (zero for C)
+    """
     def __init__(self, note=None, symbol=None):
         self.note = note
         if symbol is not None:
@@ -9,6 +16,10 @@ class BaseSound:
 
     @property
     def symbol(self):
+        """Returns:
+        (string) : representation of the note
+            in "C", "C#", "D", ... convention
+        """
         if self.note is None:
             return 'r'
 
@@ -24,6 +35,9 @@ class BaseSound:
 
     @property
     def duration(self):
+        """(int) : Rhytmic value of the sound
+            expressed in numbers of equivalent 32th notes
+        """
         return self._duration
 
     @duration.setter

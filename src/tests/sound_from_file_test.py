@@ -1,14 +1,12 @@
-import path_magic  # noqa
-
 import argparse
 
-import test_data
-import bcolors
+from . import test_data
+from . import bcolors
 
-import music
-import sounds_generation
-import meter_recognition
-from utils import constants
+from .. import music
+from .. import sounds_generation
+from .. import meter_recognition
+from ..utils import constants
 
 
 def parse_args():
@@ -142,7 +140,7 @@ def main(args, rec_meth):
         f"{match_factor_sum/len(tests)}")
 
 
-if __name__ == "__main__":
+def run_tests():
     args = parse_args()
     rec_meths = []
     rec_meths.append("fit_to_bar")

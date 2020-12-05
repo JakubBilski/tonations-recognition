@@ -1,9 +1,9 @@
 import pathlib
 import os
 
-from music.sound import Sound
-from music.tonation import Tonation
-from utils import constants
+from ..music.sound import Sound
+from ..music.tonation import Tonation
+from ..utils import constants
 
 
 class TestModel:

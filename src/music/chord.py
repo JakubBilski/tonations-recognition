@@ -2,6 +2,16 @@ from . import base_sound
 
 
 class Chord(base_sound.BaseSound):
+    """A set of notes, not necessarily played together
+
+    Attributes:
+        kind (str) : "minor", "major" or other chord
+            type from the music theory
+        duration (int) : rhytmic value of the chord
+            (if all the notes are played together)
+            expressed in numbers of equivalent 32th notes
+        all atributes of the base class (BaseSound)
+    """
     def __init__(self, note=None, symbol=None, duration=None,
                  kind=None):
         super().__init__(note, symbol)
@@ -11,6 +21,12 @@ class Chord(base_sound.BaseSound):
             self.duration = duration
 
     def parallel(self):
+        """
+        Returns:
+        (Chord) : chord consisting of the same set of notes,
+            but of an opposite kind ("minor" when "major"
+            and "major" when "minor")
+        """
         if "major" in self.kind:
             return Chord(self.note+9, duration=self.duration,
                          kind=self.kind.replace("major", "minor"))
@@ -19,6 +35,10 @@ class Chord(base_sound.BaseSound):
                          kind=self.kind.replace("minor", "major"))
 
     def sounds(self):
+        """
+        Returns:
+        (list[Sound]) : list of Sounds the chord comprises
+        """
         if self.kind == "major":
             return [base_sound.BaseSound(self.note),
                     base_sound.BaseSound(self.note+4),

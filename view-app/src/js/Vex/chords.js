@@ -241,18 +241,27 @@ function createShapeChart(keys, container, shapes, shape,chordNames) {
     }
   }
 }
-
-var keys_E = ['F', 'F#', 'Gb', 'G', 'G#', 'Ab',  'A#', 'Bb', 'C'];
-var keys_A = ['C#', 'Db', 'D', 'D#', 'Eb'];
+var keys_EG = ['G'];
+var shapes_EG = [
+  'm E',
+  'dim E',
+  'm7 E'
+];
+var keys_E = ['F', 'F#', 'Gb', 'G#', 'Ab',  'A#', 'B', 'C'];
+var keys_A = ['C#', 'Db', 'D#', 'Eb'];
 var shapes_E = [
   'M E',
   'm E',
-  '7 E'
+  '7 E',
+  'dim E',
+  'm7 E'
 ];
 var shapes_A = [
   'M A',
   'm A',
-  '7 A'
+  '7 A',
+  'dim A',
+  'm7 A'
 ];
 
 function draw_chords(chordNames) {
@@ -275,7 +284,8 @@ function draw_chords(chordNames) {
 
   }
   createShapeChart(keys_E, container, shapes_E, 'E',chordNames);
-  createShapeChart(keys_A, container, shapes_A, 'A',chordNames);
+  createShapeChart(keys_A, container, shapes_A, 'A',chordNames);  
+  createShapeChart(keys_EG, container, shapes_EG, 'E',chordNames);
   chords.forEach(chord => {
     new ChordBox(chord.el, {
       width: 130,

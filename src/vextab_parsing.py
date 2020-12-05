@@ -65,7 +65,9 @@ def generate_vextab_chord_types(chords):
     chord_types = []
     for chord in chords:
         if chord.kind == "major":
-            chord_types.append(f"{chord.symbol} Major")
+            chord_types.append(f"{chord.symbol}Maj")
+        elif chord.kind == "major7":
+            chord_types.append(f"{chord.symbol}7")
         else:
-            chord_types.append(f"{chord.symbol} Minor")
+            chord_types.append(f"{chord.symbol}m")
     return chord_types

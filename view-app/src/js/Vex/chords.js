@@ -3,7 +3,7 @@
 const chordChart = [
   {
     description:
-      'Open chords',
+      'How to play chords',
     chords: [
       {
         name: 'CMaj',

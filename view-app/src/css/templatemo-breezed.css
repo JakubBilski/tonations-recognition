@@ -807,6 +807,22 @@ banner
   display: inline-block;
   max-width: none;
 }
+.img-fill-record{
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  position: relative;
+  text-align: center
+}
+
+.img-fill-record img {
+  min-height: 60%;
+  height: 25em;
+  min-width: 100%;
+  position: relative;
+  display: inline-block;
+  max-width: none;
+}
 
 *,
 *:before,
@@ -1030,44 +1046,70 @@ ul.slick-dots {
 .slick-loading .slick-slide{visibility:hidden}
 .slick-vertical .slick-slide{display:block;height:auto;border:1px solid transparent}
 
-
+/*music_section
+*/
+#music_section{  
+  padding: 120px 0px 0px 0px;
+  position: relative;
+  z-index: 9;
+}
+#music_section .container {
+  margin-top: 20px;
+  border-bottom: 5px solid #f7f7f7;
+  padding-bottom: 80px;
+}
+#boo .svg
+{
+  margin: 0 auto;
+}
+/* chords_section
+*/
+#chords_section{  
+  padding: 120px 0px 0px 0px;
+  position: relative;
+  z-index: 9;
+}
+#chords_section .container {
+  border-bottom: 5px solid #f7f7f7;
+  padding-bottom: 80px;
+}
 /*
 ---------------------------------------------
 about
 ---------------------------------------------
 */
 
-#about {
+#about_section {
   padding: 120px 0px 0px 0px;
   position: relative;
   z-index: 9;
 }
 
-#about .container {
+#about_section .container {
   border-bottom: 5px solid #f7f7f7;
   padding-bottom: 80px;
 }
 
-#about .section-heading {
+#about_section .section-heading {
   margin-bottom: 10px;
 }
 
-#about .section-heading h6 {
+#about_section .section-heading h6 {
   color: #5fb759;
 }
 
-#about .service-item {
+#about_section .service-item {
   margin-top: 30px;
 }
 
-#about .service-item img {
+#about_section .service-item img {
   float: left;
   margin-right: 15px;
   width: 46px;
   height: 46px;
 }
 
-#about .service-item h4 {
+#about_section .service-item h4 {
   font-size: 15px;
   font-weight: 700;
   text-transform: uppercase;
@@ -1075,16 +1117,16 @@ about
   line-height: 46px;
 }
 
-#about a.main-button-icon {
+#about_section a.main-button-icon {
   display: inline-block;
   margin-top: 60px;
 }
 
-#about .right-text-content {
+#about_section .right-text-content {
   margin-top: 40px;
 }
 
-#about .right-text-content p {
+#about_section .right-text-content p {
   font-size: 16px;
   line-height: 27px;
   color: #777;

@@ -1,6 +1,6 @@
 import enum
 
-from .music.tonation import Tonation
+from .music.key import Key
 
 
 POINTS_SCALE_FIT = 10
@@ -20,11 +20,11 @@ class ChordType(enum.Enum):
     OTHER = 4
 
 
-class TonationWithPoints:
-    def __init__(self, tonation, points_from_scale,
+class KeyWithPoints:
+    def __init__(self, key, points_from_scale,
                  points_from_chord_patterns,
                  points_from_tail):
-        self.tonation = tonation
+        self.key = key
         self.points_from_scale = points_from_scale
         self.points_from_chord_patterns = points_from_chord_patterns
         self.points_from_tail = points_from_tail
@@ -33,14 +33,14 @@ class TonationWithPoints:
             points_from_tail
 
     def __str__(self):
-        return f"{self.tonation}\n"\
+        return f"{self.key}\n"\
             f"points: {self.points}\n"\
             f"points_from_scale: {self.points_from_scale}\n"\
             f"points_from_chord_patterns: {self.points_from_chord_patterns}\n"\
             f"points_from_tail: {self.points_from_tail}"
 
 
-def tonation_to_scale(key, kind):
+def key_to_scale(key, kind):
     if kind == 'major':
         return [note % 12
                 for note in
@@ -50,23 +50,23 @@ def tonation_to_scale(key, kind):
             [key, key+2, key+3, key+5, key+7, key+8, key+10]]
 
 
-def tonation_to_tonic(key, kind):
+def key_to_tonic(key, kind):
     if kind == 'major':
         return [note % 12 for note in [key, key+4, key+7]]
     return [note % 12 for note in [key, key+3, key+7]]
 
 
-def tonation_to_subdominant(key, kind):
+def key_to_subdominant(key, kind):
     if kind == 'major':
         return [note % 12 for note in [key+5, key+8, key]]
     return [note % 12 for note in [key+5, key+9, key]]
 
 
-def tonation_to_dominant(key, kind):
+def key_to_dominant(key, kind):
     return [note % 12 for note in [key+7, key+11, key+2]]
 
 
-def get_tonation(sounds):
+def get_key(sounds):
     """Use list of Sounds to recognize a key
     used in the piece
 
@@ -74,15 +74,15 @@ def get_tonation(sounds):
     sounds (list[Sound])
 
     Returns:
-    (Tonation) : recognized key
+    (Key) : recognized key
     """
-    tonations_and_points = []
+    keys_and_points = []
     for kind in ['major', 'minor']:
         for base_key in range(12):
-            scale = tonation_to_scale(base_key, kind)
-            tonic = tonation_to_tonic(base_key, kind)
-            subdominant = tonation_to_subdominant(base_key, kind)
-            dominant = tonation_to_dominant(base_key, kind)
+            scale = key_to_scale(base_key, kind)
+            tonic = key_to_tonic(base_key, kind)
+            subdominant = key_to_subdominant(base_key, kind)
+            dominant = key_to_dominant(base_key, kind)
             chord_types = get_aligned_chord_types(
                 sounds, tonic, subdominant, dominant)
             # chord_types = remove_solitary_chords(chord_types)
@@ -91,15 +91,15 @@ def get_tonation(sounds):
             points_from_chord_patterns = get_points_from_chord_patterns_fit(
                 chord_types)
             points_from_tail = get_extra_points_for_tail(chord_types)
-            tonation = Tonation(note=base_key, kind=kind)
-            tonations_and_points.append(TonationWithPoints(
-                tonation, points_from_scale,
+            key = Key(note=base_key, kind=kind)
+            keys_and_points.append(KeyWithPoints(
+                key, points_from_scale,
                 points_from_chord_patterns,
                 points_from_tail
             ))
-    tonations_and_points.sort(key=lambda x: x.points, reverse=True)
-    # do we want to return best tonations, or chances with tonation candidates?
-    return tonations_and_points[0].tonation
+    keys_and_points.sort(key=lambda x: x.points, reverse=True)
+    # do we want to return best keys, or chances with key candidates?
+    return keys_and_points[0].key
 
 
 def get_aligned_chord_types(sounds, tonic, subdominant, dominant):

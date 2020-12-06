@@ -1,7 +1,7 @@
 from . import music
 
 
-def change_tonation(sounds, diff):
+def change_key(sounds, diff):
     """Transpose all sounds a chosen number
     of halftones up
 

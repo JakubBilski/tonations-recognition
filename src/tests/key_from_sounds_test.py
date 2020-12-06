@@ -2,12 +2,12 @@ import argparse
 
 from . import test_data
 from .. import music
-from .. import tonation_recognition
+from .. import key_recognition
 
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description='Test getting tonation from sounds')
+        description='Test getting key from sounds')
     parser.add_argument('--verbose_factor_threshold', '-Vft',
                         required=False,
                         help='Color red and print full mismatches list for tests with match factor lesser than VERBOSE_FACTOR_THRESHOLD',  # noqa
@@ -20,7 +20,7 @@ def parse_args():
     return args
 
 
-class Mismatch(music.Tonation):
+class Mismatch(music.Key):
     def __init__(self, note_computed, note_model, kind_computed, kind_model,
                  timestamp, duration_ms):
         super().__init__(note_computed, timestamp, duration_ms, kind_computed)
@@ -28,7 +28,7 @@ class Mismatch(music.Tonation):
         self.kind_model = kind_model
 
     @property
-    def tonation_model(self):
+    def key_model(self):
         if self.note_model is None:
             symbol = 'None'
         else:
@@ -38,7 +38,7 @@ class Mismatch(music.Tonation):
         return f"{symbol}-{self.kind_model}"
 
     def __str__(self):
-        return f"{round(self.timestamp, 3)} - {round(self.end_timestamp, 3)}: Expected {self.tonation_model}, got {super().__str__()}"  # noqa
+        return f"{round(self.timestamp, 3)} - {round(self.end_timestamp, 3)}: Expected {self.key_model}, got {super().__str__()}"  # noqa
 
 
 def run_tests():
@@ -51,11 +51,11 @@ def run_tests():
     tests = test_data.get_all_test_models()
     print("-----------TONATIONS TEST-----------------")
     for test in tests:
-        tonation = tonation_recognition.get_tonation(test.sounds)
-        match = tonation == test.tonation
+        key = key_recognition.get_key(test.sounds)
+        match = key == test.key
         if match:
             color = '\033[92m'
-            print(f"{test.file_path}: {color} {tonation} matches {test.tonation} \033[0m")  # noqa
+            print(f"{test.file_path}: {color} {key} matches {test.key} \033[0m")  # noqa
         else:
             color = '\033[91m'
-            print(f"{test.file_path}: {color}{tonation} doesn't match {test.tonation} \033[0m")  # noqa
+            print(f"{test.file_path}: {color}{key} doesn't match {test.key} \033[0m")  # noqa

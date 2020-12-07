@@ -30,16 +30,16 @@
 import os
 
 from ..music.sound import Sound
-from ..music.tonation import Tonation
+from ..music.key import Key
 from ..utils import constants
 
 
 class TestModel:
-    def __init__(self, file_path=None, sounds=None, tonation=None,
+    def __init__(self, file_path=None, sounds=None, key=None,
                  chords=None):
         self.file_path = file_path
         self.sounds = sounds
-        self.tonation = tonation
+        self.key = key
         self.chords = chords
 
 
@@ -65,7 +65,7 @@ def get_other_rec_test_models():
                 currect_sounds = []
             elif line.startswith(&#39;t&#39;):
                 kind = &#39;major&#39; if line.split()[1].isupper() else &#39;minor&#39;
-                current_testcase.tonation = Tonation(
+                current_testcase.key = Key(
                     symbol=line.split()[1], kind=kind)
             elif len(line.split()) == 3:
                 spl = line.split()
@@ -129,7 +129,7 @@ def get_other_rec_test_models():
                 currect_sounds = []
             elif line.startswith(&#39;t&#39;):
                 kind = &#39;major&#39; if line.split()[1].isupper() else &#39;minor&#39;
-                current_testcase.tonation = Tonation(
+                current_testcase.key = Key(
                     symbol=line.split()[1], kind=kind)
             elif len(line.split()) == 3:
                 spl = line.split()
@@ -153,7 +153,7 @@ def get_other_rec_test_models():
 <dl>
 <dt id="src.tests.test_data.TestModel"><code class="flex name class">
 <span>class <span class="ident">TestModel</span></span>
-<span>(</span><span>file_path=None, sounds=None, tonation=None, chords=None)</span>
+<span>(</span><span>file_path=None, sounds=None, key=None, chords=None)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -162,11 +162,11 @@ def get_other_rec_test_models():
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class TestModel:
-    def __init__(self, file_path=None, sounds=None, tonation=None,
+    def __init__(self, file_path=None, sounds=None, key=None,
                  chords=None):
         self.file_path = file_path
         self.sounds = sounds
-        self.tonation = tonation
+        self.key = key
         self.chords = chords</code></pre>
 </details>
 </dd>

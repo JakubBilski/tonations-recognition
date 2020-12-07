@@ -67,7 +67,7 @@ def sound_to_string(sound):
     return f&#34;{fret}/{i}&#34;
 
 
-def generate_vextab_notes(sounds, tonation, metrum_upper, metrum_lower):
+def generate_vextab_notes(sounds, key, metrum_upper, metrum_lower):
     &#34;&#34;&#34;Use information about the piece
     to create notes in an input format
     suitable for the vextab javascript library
@@ -77,9 +77,9 @@ def generate_vextab_notes(sounds, tonation, metrum_upper, metrum_lower):
     (list[str]) : List of strings with music information
         for the consecutive lines of music notation
     &#34;&#34;&#34;
-    key = tonation.symbol
-    if tonation.kind == &#39;minor&#39;:
-        key = key + &#39;m&#39;
+    key_vextab = key.symbol
+    if key.kind == &#39;minor&#39;:
+        key_vextab = key_vextab + &#39;m&#39;
     result = []
     notes_vextab = &#34;&#34;
     bar_duration = metrum_upper*metrum_lower
@@ -106,7 +106,7 @@ def generate_vextab_notes(sounds, tonation, metrum_upper, metrum_lower):
     return result
 
 
-def generate_vextab_key(tonation):
+def generate_vextab_key(key):
     &#34;&#34;&#34;Use information about the piece
     to create key information in an input format
     suitable for the vextab javascript library
@@ -115,10 +115,10 @@ def generate_vextab_key(tonation):
     Returns:
     (str)
     &#34;&#34;&#34;
-    key = tonation.symbol
-    if tonation.kind == &#39;minor&#39;:
-        key = key + &#39;m&#39;
-    return key
+    key_vextab = key.symbol
+    if key.kind == &#39;minor&#39;:
+        key_vextab = key_vextab + &#39;m&#39;
+    return key_vextab
 
 
 def generate_vextab_metrum(metrum_upper, metrum_lower):
@@ -203,7 +203,7 @@ suitable for the vextab javascript library
 </details>
 </dd>
 <dt id="src.vextab_parsing.generate_vextab_key"><code class="name flex">
-<span>def <span class="ident">generate_vextab_key</span></span>(<span>tonation)</span>
+<span>def <span class="ident">generate_vextab_key</span></span>(<span>key)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Use information about the piece
@@ -216,7 +216,7 @@ suitable for the vextab javascript library
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def generate_vextab_key(tonation):
+<pre><code class="python">def generate_vextab_key(key):
     &#34;&#34;&#34;Use information about the piece
     to create key information in an input format
     suitable for the vextab javascript library
@@ -225,10 +225,10 @@ suitable for the vextab javascript library
     Returns:
     (str)
     &#34;&#34;&#34;
-    key = tonation.symbol
-    if tonation.kind == &#39;minor&#39;:
-        key = key + &#39;m&#39;
-    return key</code></pre>
+    key_vextab = key.symbol
+    if key.kind == &#39;minor&#39;:
+        key_vextab = key_vextab + &#39;m&#39;
+    return key_vextab</code></pre>
 </details>
 </dd>
 <dt id="src.vextab_parsing.generate_vextab_metrum"><code class="name flex">
@@ -264,7 +264,7 @@ suitable for the vextab javascript library
 </details>
 </dd>
 <dt id="src.vextab_parsing.generate_vextab_notes"><code class="name flex">
-<span>def <span class="ident">generate_vextab_notes</span></span>(<span>sounds, tonation, metrum_upper, metrum_lower)</span>
+<span>def <span class="ident">generate_vextab_notes</span></span>(<span>sounds, key, metrum_upper, metrum_lower)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Use information about the piece
@@ -278,7 +278,7 @@ for the consecutive lines of music notation</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def generate_vextab_notes(sounds, tonation, metrum_upper, metrum_lower):
+<pre><code class="python">def generate_vextab_notes(sounds, key, metrum_upper, metrum_lower):
     &#34;&#34;&#34;Use information about the piece
     to create notes in an input format
     suitable for the vextab javascript library
@@ -288,9 +288,9 @@ for the consecutive lines of music notation</p></div>
     (list[str]) : List of strings with music information
         for the consecutive lines of music notation
     &#34;&#34;&#34;
-    key = tonation.symbol
-    if tonation.kind == &#39;minor&#39;:
-        key = key + &#39;m&#39;
+    key_vextab = key.symbol
+    if key.kind == &#39;minor&#39;:
+        key_vextab = key_vextab + &#39;m&#39;
     result = []
     notes_vextab = &#34;&#34;
     bar_duration = metrum_upper*metrum_lower

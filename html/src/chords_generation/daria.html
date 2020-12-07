@@ -28,7 +28,7 @@
 </summary>
 <pre><code class="python">from typing import List, Tuple
 
-from ..music import Chord, Sound, Tonation
+from ..music import Chord, Sound, Key
 from . import daria_params as params
 
 # https://www.fim.uni-passau.de/fileadmin/dokumente/fakultaeten/fim/lehrstuhl/sauer/geyer/BA_MA_Arbeiten/BA-HausnerChristoph-201409.pdf
@@ -40,9 +40,9 @@ For each bar get best chord using scoring lists
 &#39;&#39;&#39;
 
 
-def tonation_chords(tonation: Tonation):
-    n = tonation.note
-    if tonation.kind == &#34;major&#34;:
+def key_chords(key: Key):
+    n = key.note
+    if key.kind == &#34;major&#34;:
         chords = [
             Chord(note=n, kind=&#34;major&#34;),
             Chord(note=n+2, kind=&#34;minor&#34;),
@@ -84,7 +84,7 @@ def point_coef(chord: Chord, first_sound: Sound,
 
 
 def get_chords_daria(sounds: List[Sound],
-                     tonation: Tonation,
+                     key: Key,
                      meter: Tuple[int, int]):
     if meter[0] == 2:
         meter = (
@@ -104,7 +104,7 @@ def get_chords_daria(sounds: List[Sound],
     # generate chords
     t_c = []
     i = 0
-    # chord level - on which tonation note the chord is built
+    # chord level - on which key note the chord is built
     last_chord_level = 0  # 0 means &#34;start of the song&#34;
     while i &lt; len(t_s):
 
@@ -114,7 +114,7 @@ def get_chords_daria(sounds: List[Sound],
         # for each chord in available chords get points
         max_score = -1
         max_chord = None
-        for c in tonation_chords(tonation):
+        for c in key_chords(key):
             score = 0
             # add score for each sound (based on sound length)
             for j in window:
@@ -155,7 +155,7 @@ def get_chords_daria(sounds: List[Sound],
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="src.chords_generation.daria.get_chords_daria"><code class="name flex">
-<span>def <span class="ident">get_chords_daria</span></span>(<span>sounds: List[<a title="src.music.sound.Sound" href="../music/sound.html#src.music.sound.Sound">Sound</a>], tonation: <a title="src.music.tonation.Tonation" href="../music/tonation.html#src.music.tonation.Tonation">Tonation</a>, meter: Tuple[int, int])</span>
+<span>def <span class="ident">get_chords_daria</span></span>(<span>sounds: List[<a title="src.music.sound.Sound" href="../music/sound.html#src.music.sound.Sound">Sound</a>], key: <a title="src.music.key.Key" href="../music/key.html#src.music.key.Key">Key</a>, meter: Tuple[int, int])</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -164,7 +164,7 @@ def get_chords_daria(sounds: List[Sound],
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_chords_daria(sounds: List[Sound],
-                     tonation: Tonation,
+                     key: Key,
                      meter: Tuple[int, int]):
     if meter[0] == 2:
         meter = (
@@ -184,7 +184,7 @@ def get_chords_daria(sounds: List[Sound],
     # generate chords
     t_c = []
     i = 0
-    # chord level - on which tonation note the chord is built
+    # chord level - on which key note the chord is built
     last_chord_level = 0  # 0 means &#34;start of the song&#34;
     while i &lt; len(t_s):
 
@@ -194,7 +194,7 @@ def get_chords_daria(sounds: List[Sound],
         # for each chord in available chords get points
         max_score = -1
         max_chord = None
-        for c in tonation_chords(tonation):
+        for c in key_chords(key):
             score = 0
             # add score for each sound (based on sound length)
             for j in window:
@@ -224,6 +224,40 @@ def get_chords_daria(sounds: List[Sound],
             chords.append(Chord(
                 c.note, duration=c.duration, kind=c.kind))
 
+    return chords</code></pre>
+</details>
+</dd>
+<dt id="src.chords_generation.daria.key_chords"><code class="name flex">
+<span>def <span class="ident">key_chords</span></span>(<span>key: <a title="src.music.key.Key" href="../music/key.html#src.music.key.Key">Key</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def key_chords(key: Key):
+    n = key.note
+    if key.kind == &#34;major&#34;:
+        chords = [
+            Chord(note=n, kind=&#34;major&#34;),
+            Chord(note=n+2, kind=&#34;minor&#34;),
+            Chord(note=n+4, kind=&#34;major&#34;),
+            Chord(note=n+5, kind=&#34;major&#34;),
+            Chord(note=n+7, kind=&#34;major7&#34;),
+            Chord(note=n+9, kind=&#34;minor&#34;),
+            Chord(note=n+11, kind=&#34;diminished&#34;)]
+    else:
+        chords = [
+            Chord(note=n, kind=&#34;minor&#34;),
+            Chord(note=n+2, kind=&#34;diminished&#34;),
+            Chord(note=n+4, kind=&#34;major&#34;),
+            Chord(note=n+5, kind=&#34;minor&#34;),
+            Chord(note=n+7, kind=&#34;major7&#34;),
+            Chord(note=n+9, kind=&#34;major&#34;),
+            Chord(note=n+11, kind=&#34;diminished&#34;)]
+    for i in range(len(chords)):
+        chords[i].level = i+1
     return chords</code></pre>
 </details>
 </dd>
@@ -263,40 +297,6 @@ def get_chords_daria(sounds: List[Sound],
     return params.POINTS[chord.kind][diff]</code></pre>
 </details>
 </dd>
-<dt id="src.chords_generation.daria.tonation_chords"><code class="name flex">
-<span>def <span class="ident">tonation_chords</span></span>(<span>tonation: <a title="src.music.tonation.Tonation" href="../music/tonation.html#src.music.tonation.Tonation">Tonation</a>)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def tonation_chords(tonation: Tonation):
-    n = tonation.note
-    if tonation.kind == &#34;major&#34;:
-        chords = [
-            Chord(note=n, kind=&#34;major&#34;),
-            Chord(note=n+2, kind=&#34;minor&#34;),
-            Chord(note=n+4, kind=&#34;major&#34;),
-            Chord(note=n+5, kind=&#34;major&#34;),
-            Chord(note=n+7, kind=&#34;major7&#34;),
-            Chord(note=n+9, kind=&#34;minor&#34;),
-            Chord(note=n+11, kind=&#34;diminished&#34;)]
-    else:
-        chords = [
-            Chord(note=n, kind=&#34;minor&#34;),
-            Chord(note=n+2, kind=&#34;diminished&#34;),
-            Chord(note=n+4, kind=&#34;major&#34;),
-            Chord(note=n+5, kind=&#34;minor&#34;),
-            Chord(note=n+7, kind=&#34;major7&#34;),
-            Chord(note=n+9, kind=&#34;major&#34;),
-            Chord(note=n+11, kind=&#34;diminished&#34;)]
-    for i in range(len(chords)):
-        chords[i].level = i+1
-    return chords</code></pre>
-</details>
-</dd>
 </dl>
 </section>
 <section>
@@ -316,9 +316,9 @@ def get_chords_daria(sounds: List[Sound],
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
 <li><code><a title="src.chords_generation.daria.get_chords_daria" href="#src.chords_generation.daria.get_chords_daria">get_chords_daria</a></code></li>
+<li><code><a title="src.chords_generation.daria.key_chords" href="#src.chords_generation.daria.key_chords">key_chords</a></code></li>
 <li><code><a title="src.chords_generation.daria.point_coef" href="#src.chords_generation.daria.point_coef">point_coef</a></code></li>
 <li><code><a title="src.chords_generation.daria.points_for_sound" href="#src.chords_generation.daria.points_for_sound">points_for_sound</a></code></li>
-<li><code><a title="src.chords_generation.daria.tonation_chords" href="#src.chords_generation.daria.tonation_chords">tonation_chords</a></code></li>
 </ul>
 </li>
 </ul>

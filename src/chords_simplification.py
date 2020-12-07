@@ -37,7 +37,7 @@ CHORDS_SCORING_MAJOR = {
 }
 
 
-def simplify(notes, chords, tonation, preview_file):
+def simplify(notes, chords, key, preview_file):
     """Transpose all piece information to a key
     in which the chords would be easier to play
     on a guitar
@@ -45,13 +45,13 @@ def simplify(notes, chords, tonation, preview_file):
     Parameters:
     notes (list[Sound])
     chords (list[Chord])
-    tonation (Tonation)
+    key (Key)
     preview_file (os.path-like)
 
     Returns:
     (list[Sound]) : Notes after transposition
     (list[Chord]) : Chords after transposition
-    (Tonation) : Chosen easier key
+    (Key) : Chosen easier key
     (os.path-like) : Melody with chords generated
         using transposed sounds and chords
     """
@@ -67,10 +67,10 @@ def simplify(notes, chords, tonation, preview_file):
         if score < min_score:
             min_score = score
             min_trans = i
-    tonation.note += min_trans
+    key.note += min_trans
     for i in range(len(notes)):
         if notes[i].note is not None:
             notes[i].note += min_trans
     for i in range(len(chords)):
         chords[i].note += min_trans
-    return notes, chords, tonation, preview_file
+    return notes, chords, key, preview_file

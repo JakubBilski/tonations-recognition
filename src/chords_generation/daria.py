@@ -1,6 +1,6 @@
 from typing import List, Tuple
 
-from ..music import Chord, Sound, Tonation
+from ..music import Chord, Sound, Key
 from . import daria_params as params
 
 # https://www.fim.uni-passau.de/fileadmin/dokumente/fakultaeten/fim/lehrstuhl/sauer/geyer/BA_MA_Arbeiten/BA-HausnerChristoph-201409.pdf
@@ -12,9 +12,9 @@ For each bar get best chord using scoring lists
 '''
 
 
-def tonation_chords(tonation: Tonation):
-    n = tonation.note
-    if tonation.kind == "major":
+def key_chords(key: Key):
+    n = key.note
+    if key.kind == "major":
         chords = [
             Chord(note=n, kind="major"),
             Chord(note=n+2, kind="minor"),
@@ -56,7 +56,7 @@ def point_coef(chord: Chord, first_sound: Sound,
 
 
 def get_chords_daria(sounds: List[Sound],
-                     tonation: Tonation,
+                     key: Key,
                      meter: Tuple[int, int]):
     if meter[0] == 2:
         meter = (
@@ -76,7 +76,7 @@ def get_chords_daria(sounds: List[Sound],
     # generate chords
     t_c = []
     i = 0
-    # chord level - on which tonation note the chord is built
+    # chord level - on which key note the chord is built
     last_chord_level = 0  # 0 means "start of the song"
     while i < len(t_s):
 
@@ -86,7 +86,7 @@ def get_chords_daria(sounds: List[Sound],
         # for each chord in available chords get points
         max_score = -1
         max_chord = None
-        for c in tonation_chords(tonation):
+        for c in key_chords(key):
             score = 0
             # add score for each sound (based on sound length)
             for j in window:

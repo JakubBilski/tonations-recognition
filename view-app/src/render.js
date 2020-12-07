@@ -14,11 +14,11 @@ isRecording = false
 
 function onclickTransposeButton(){
   if(isShowingTransposed) {
-    transposeButton.textContent = "Transpose to easier tonation";
+    transposeButton.textContent = "Transpose to easier key";
     transposeButton.className = "main-stroked-button"
     fetchAndDisplayGuitar(false, isShowingNotes);
   } else {
-    transposeButton.textContent = "Transpose to original tonation";
+    transposeButton.textContent = "Transpose to original key";
     transposeButton.className = "main-filled-button";
     fetchAndDisplayGuitar(true, isShowingNotes);
   }

@@ -1,7 +1,7 @@
 from . import base_sound
 
 
-class Tonation(base_sound.BaseSound):
+class Key(base_sound.BaseSound):
     """A sound of one pitch present in a music piece
 
     Attributes:

@@ -39,7 +39,7 @@ def sound_to_string(sound):
     return f"{fret}/{i}"
 
 
-def generate_vextab_notes(sounds, tonation, metrum_upper, metrum_lower):
+def generate_vextab_notes(sounds, key, metrum_upper, metrum_lower):
     """Use information about the piece
     to create notes in an input format
     suitable for the vextab javascript library
@@ -49,9 +49,9 @@ def generate_vextab_notes(sounds, tonation, metrum_upper, metrum_lower):
     (list[str]) : List of strings with music information
         for the consecutive lines of music notation
     """
-    key = tonation.symbol
-    if tonation.kind == 'minor':
-        key = key + 'm'
+    key_vextab = key.symbol
+    if key.kind == 'minor':
+        key_vextab = key_vextab + 'm'
     result = []
     notes_vextab = ""
     bar_duration = metrum_upper*metrum_lower
@@ -78,7 +78,7 @@ def generate_vextab_notes(sounds, tonation, metrum_upper, metrum_lower):
     return result
 
 
-def generate_vextab_key(tonation):
+def generate_vextab_key(key):
     """Use information about the piece
     to create key information in an input format
     suitable for the vextab javascript library
@@ -87,10 +87,10 @@ def generate_vextab_key(tonation):
     Returns:
     (str)
     """
-    key = tonation.symbol
-    if tonation.kind == 'minor':
-        key = key + 'm'
-    return key
+    key_vextab = key.symbol
+    if key.kind == 'minor':
+        key_vextab = key_vextab + 'm'
+    return key_vextab
 
 
 def generate_vextab_metrum(metrum_upper, metrum_lower):

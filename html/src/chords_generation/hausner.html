@@ -28,7 +28,7 @@
 </summary>
 <pre><code class="python">from typing import List, Tuple
 
-from ..music import Chord, Sound, Tonation
+from ..music import Chord, Sound, Key
 
 # https://www.fim.uni-passau.de/fileadmin/dokumente/fakultaeten/fim/lehrstuhl/sauer/geyer/BA_MA_Arbeiten/BA-HausnerChristoph-201409.pdf
 &#39;&#39;&#39;
@@ -83,7 +83,7 @@ def points(chord: Chord, sound: Sound):
 
 
 def get_chords_hausner(sounds: List[Sound],
-                       tonation: Tonation,
+                       key: Key,
                        meter: Tuple[int, int]):
     if meter[0] == 2:
         meter = (
@@ -138,7 +138,7 @@ def get_chords_hausner(sounds: List[Sound],
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="src.chords_generation.hausner.get_chords_hausner"><code class="name flex">
-<span>def <span class="ident">get_chords_hausner</span></span>(<span>sounds: List[<a title="src.music.sound.Sound" href="../music/sound.html#src.music.sound.Sound">Sound</a>], tonation: <a title="src.music.tonation.Tonation" href="../music/tonation.html#src.music.tonation.Tonation">Tonation</a>, meter: Tuple[int, int])</span>
+<span>def <span class="ident">get_chords_hausner</span></span>(<span>sounds: List[<a title="src.music.sound.Sound" href="../music/sound.html#src.music.sound.Sound">Sound</a>], key: <a title="src.music.key.Key" href="../music/key.html#src.music.key.Key">Key</a>, meter: Tuple[int, int])</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -147,7 +147,7 @@ def get_chords_hausner(sounds: List[Sound],
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_chords_hausner(sounds: List[Sound],
-                       tonation: Tonation,
+                       key: Key,
                        meter: Tuple[int, int]):
     if meter[0] == 2:
         meter = (

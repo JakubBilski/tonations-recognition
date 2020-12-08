@@ -88,6 +88,8 @@ def generate_vextab_key(key):
     (str)
     """
     key_vextab = key.symbol
+    if key_vextab == 'D#':
+        key_vextab = 'Eb'
     if key.kind == 'minor':
         key_vextab = key_vextab + 'm'
     return key_vextab

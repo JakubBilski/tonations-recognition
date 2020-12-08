@@ -228,6 +228,10 @@ def process_file(filename, force_key=None, output_wav=True):
             result_file = music_synthesis.save_midifile_as_wav_linux(
                 app.config['TEMP_FOLDER'] / "output.midi",
                 app.config['TEMP_FOLDER'] / "output.wav")
+        convert_wav_to_ogg(
+            app.config['TEMP_FOLDER'] / "output.wav",
+            app.config['TEMP_FOLDER'] / "output.ogg",
+        )
 
     logger.debug(f"Meter:\t\t{meter}")
     logger.debug(f"Key:\t\t{key}")
@@ -240,6 +244,11 @@ def process_file(filename, force_key=None, output_wav=True):
 def convert_recorded_to_wav(source_file, destination_file):
     sound = pydub.AudioSegment.from_file(source_file)
     sound.export(destination_file, format="wav")
+
+
+def convert_wav_to_ogg(source_file, destination_file):
+    sound = pydub.AudioSegment.from_wav(source_file)
+    sound.export(destination_file, format="ogg")
 
 
 def start_server(args):

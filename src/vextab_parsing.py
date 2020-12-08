@@ -39,6 +39,7 @@ def sound_to_string(sound):
     fret = (STRINGS[i][1] - sound.height)*12 + STRINGS[i][0] - sound.note
     return f"{fret}/{i}"
 
+
 def chord_to_string(chord):
     if chord.kind == "major":
         return f"{chord.symbol} "
@@ -48,6 +49,7 @@ def chord_to_string(chord):
         return f"{chord.symbol}dim"
     else:
         return f"{chord.symbol}m"
+
 
 def decompose_chord(chord):
     result = []
@@ -60,6 +62,7 @@ def decompose_chord(chord):
         result.append(new_chord)
         duration -= max_fit
     return result
+
 
 def generate_vextab_notes(sounds, metrum_upper, metrum_lower):
     """Use information about the piece

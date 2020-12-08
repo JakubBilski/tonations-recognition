@@ -5,8 +5,6 @@ document.querySelector('#openDialog').addEventListener('click', function (event)
           { name: 'Audio', extensions: ['wav'] }
         ]
       }).then(result => {
-        console.log(result.canceled)
-        console.log(result.filePaths)
         if(!result.canceled) {
           filePathInfo.textContent = result.filePaths[0];
           filePath = result.filePaths[0];

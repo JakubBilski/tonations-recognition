@@ -64,8 +64,8 @@ def frontend_communication_save_with_chords():
         return jsonify({
             "error": "Expected json with output_file key"
         })
-    filename_src = app.config['TEMP_FOLDER'] / "output.midi"
-    music_synthesis.save_midifile_as_wav(filename_src, filename_dest)
+    filename_src = app.config['TEMP_FOLDER'] / "output.wav"
+    shutil.copyfile(filename_src, filename_dest)
     return jsonify({})
 
 
@@ -190,7 +190,7 @@ def print_debug_info(sounds, chords):
             chords_i += 1
 
 
-def process_file(filename, force_key=None, output_wav=False):
+def process_file(filename, force_key=None, output_wav=True):
     logger.debug(f"Procesing {filename}")
     sounds = sounds_generation.get_sounds_from_file(filename)
     # sounds = sounds_manipulation.change_key(sounds, 2)

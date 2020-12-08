@@ -137,8 +137,6 @@ def generate_vextab_chords(chords, metrum_upper, metrum_lower):
                 result.append(chords_vextab)
                 chords_vextab = ".1"
                 no_bars_from_start = 0
-    for dupa in result:
-        print(dupa)
     return result
 
 

@@ -1,4 +1,5 @@
 from .utils import constants
+from .music.chord import Chord
 
 
 NO_BARS_IN_ROW = 3
@@ -38,8 +39,29 @@ def sound_to_string(sound):
     fret = (STRINGS[i][1] - sound.height)*12 + STRINGS[i][0] - sound.note
     return f"{fret}/{i}"
 
+def chord_to_string(chord):
+    if chord.kind == "major":
+        return f"{chord.symbol} "
+    elif chord.kind == "major7":
+        return f"{chord.symbol}7"
+    elif chord.kind == "diminished":
+        return f"{chord.symbol}dim"
+    else:
+        return f"{chord.symbol}m"
 
-def generate_vextab_notes(sounds, key, metrum_upper, metrum_lower):
+def decompose_chord(chord):
+    result = []
+    duration = chord.duration
+    legal_durations = DURATION_TO_VEXTAB_DURATION.keys()
+    legal_durations = sorted(legal_durations, reverse=True)
+    while(duration > 0):
+        max_fit = [ld for ld in legal_durations if ld <= duration][0]
+        new_chord = Chord(chord.note, chord.symbol, max_fit, chord.kind)
+        result.append(new_chord)
+        duration -= max_fit
+    return result
+
+def generate_vextab_notes(sounds, metrum_upper, metrum_lower):
     """Use information about the piece
     to create notes in an input format
     suitable for the vextab javascript library
@@ -49,9 +71,6 @@ def generate_vextab_notes(sounds, key, metrum_upper, metrum_lower):
     (list[str]) : List of strings with music information
         for the consecutive lines of music notation
     """
-    key_vextab = key.symbol
-    if key.kind == 'minor':
-        key_vextab = key_vextab + 'm'
     result = []
     notes_vextab = ""
     bar_duration = metrum_upper*metrum_lower
@@ -75,6 +94,48 @@ def generate_vextab_notes(sounds, key, metrum_upper, metrum_lower):
                 result.append(notes_vextab)
                 notes_vextab = ""
                 no_bars_from_start = 0
+    return result
+
+
+def generate_vextab_chords(chords, metrum_upper, metrum_lower):
+    """Use information about the piece
+    to create chords information in an input format
+    suitable for the vextab javascript library
+    http://vexflow.com/vextab/
+
+    Returns:
+    (list[str]) : List of strings with chords information
+        for the consecutive lines of music notation
+    """
+    result = []
+    chords_vextab = ""
+    bar_duration = metrum_upper*metrum_lower
+    duration_from_start = 0
+    no_bars_from_start = 0
+    cleared_chords = [dc for chord in chords for dc in decompose_chord(chord)]
+    prev_chord = None
+    chords_vextab += ".1"
+
+    for chord in cleared_chords:
+        chords_vextab += ",:"
+        chords_vextab += DURATION_TO_VEXTAB_DURATION[chord.duration]
+        chords_vextab += ","
+        if chord_to_string(chord) == prev_chord:
+            chords_vextab += " "
+        else:
+            chords_vextab += chord_to_string(chord)
+            prev_chord = chord_to_string(chord)
+        duration_from_start += chord.duration
+        if duration_from_start >= bar_duration:
+            chords_vextab += ",|"
+            duration_from_start -= bar_duration
+            no_bars_from_start += 1
+            if no_bars_from_start >= NO_BARS_IN_ROW:
+                result.append(chords_vextab)
+                chords_vextab = ".1"
+                no_bars_from_start = 0
+    for dupa in result:
+        print(dupa)
     return result
 
 

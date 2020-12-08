@@ -21,10 +21,21 @@ function drawTabstaves(text, showNotes, showTablature) {
     artist.reset();
     for (let i = 0; i < text.notes.length; i++) {
       if(i==0) {
-        tab.parse(`tabstave notation=${showNotes} tablature=${showTablature} key=${text.key} time=${text.metrum}\nnotes ${text.notes[i]}`);
+        tab.parse(`tabstave notation=${showNotes}
+         tablature=${showTablature}
+         key=${text.key}
+         time=${text.metrum}
+         \nnotes ${text.notes[i]}
+         \ntext ${text.chords[i]}`
+         );
       }
       else {
-        tab.parse(`tabstave notation=${showNotes} tablature=${showTablature} key=${text.key} \nnotes ${text.notes[i]}`);
+        tab.parse(`tabstave notation=${showNotes}
+         tablature=${showTablature} 
+         key=${text.key} 
+         \nnotes ${text.notes[i]}
+         \ntext ${text.chords[i]}`
+         );
       }
     }
     artist.render(renderer);

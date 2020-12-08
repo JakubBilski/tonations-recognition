@@ -63,8 +63,8 @@ def save_midifile_as_wav_linux(midi, wav):
 def save_midifile_as_wav_windows(midi, wav):
     # experimental, only works on windows
     # fluidsynth.exe -F ouptut.wav -T wav soundfont.sf2 output.mid
-    fluid_directory = pathlib.Path(__file__).resolve().parent.parent / "fluidsynth"
-    os.system(f'{fluid_directory / "fluidsynth.exe"} -F {wav} -T wav {fluid_directory / "soundfont.sf2"} {midi}')
+    fluid_directory = pathlib.Path(__file__).resolve().parent.parent / "fluidsynth"  # noqa: E501
+    os.system(f'{fluid_directory / "fluidsynth.exe"} -F {wav} -T wav {fluid_directory / "soundfont.sf2"} {midi}')  # noqa: E501
     return pathlib.Path(wav)
 
 

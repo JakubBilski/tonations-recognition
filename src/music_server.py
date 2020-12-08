@@ -4,6 +4,7 @@ import pathlib
 import logging
 import shutil
 import pydub
+import os
 
 from . import chords_simplification
 from . import key_recognition
@@ -219,9 +220,14 @@ def process_file(filename, force_key=None, output_wav=False):
         chords,
         duration_ms_of_32)
     if output_wav:
-        result_file = music_synthesis.save_midifile_as_wav(
-            app.config['TEMP_FOLDER'] / "output.midi",
-            app.config['TEMP_FOLDER'] / "output.wav")
+        if os.name == 'nt':
+            result_file = music_synthesis.save_midifile_as_wav_windows(
+                app.config['TEMP_FOLDER'] / "output.midi",
+                app.config['TEMP_FOLDER'] / "output.wav")
+        else:
+            result_file = music_synthesis.save_midifile_as_wav_linux(
+                app.config['TEMP_FOLDER'] / "output.midi",
+                app.config['TEMP_FOLDER'] / "output.wav")
 
     logger.debug(f"Meter:\t\t{meter}")
     logger.debug(f"Key:\t\t{key}")

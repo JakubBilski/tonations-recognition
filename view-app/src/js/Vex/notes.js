@@ -11,6 +11,7 @@ function fetchAndDisplayGuitar(simplified, showNotes){
     drawTabstaves(text, showNotes, true);
     drawVexTabChordsCheatSheet(text);
     unhideMusicInfoSections();
+    updateWithChordsSoundClipContainer();
   }).catch(e=>{
     console.log(e);
   });
@@ -44,6 +45,20 @@ function hideMusicInfoSections() {
 
 function drawVexTabChordsCheatSheet(text) {
   draw_chords(text.chord_types);
+}
+
+function updateWithChordsSoundClipContainer() {
+  if (withChordsSoundClipContainer.lastChild) {
+    withChordsSoundClipContainer.removeChild(withChordsSoundClipContainer.lastChild);
+  }
+  const clipContainer = document.createElement('article');
+  const audio = document.createElement('audio');
+  clipContainer.classList.add('clip');
+  audio.setAttribute('controls', '');
+  clipContainer.appendChild(audio);
+  withChordsSoundClipContainer.appendChild(clipContainer);
+  const audioURL = "../../data/temp/output.ogg";
+  audio.src = audioURL;
 }
 
 hideMusicInfoSections();

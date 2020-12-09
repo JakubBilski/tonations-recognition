@@ -42,8 +42,10 @@ function onclickSaveWithChordsButton(){
   window.dialog().showSaveDialog( {
     defaultPath: 'resultWithChords.wav'
   }).then(result => {
-    var postPath = `http://127.0.0.1:5000/saveWithChords`;
-    postJsonData(postPath, {output_file: result.filePath});
+    if(!result.canceled) {
+      var postPath = `http://127.0.0.1:5000/saveWithChords`;
+      postJsonData(postPath, {output_file: result.filePath});
+    }
   }).catch(err => {
     console.log(err)
   })

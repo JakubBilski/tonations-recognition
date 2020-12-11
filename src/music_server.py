@@ -158,7 +158,9 @@ def render_result(notes, chords, key, preview_file,
                   metrum_upper, metrum_lower):
     return {
         "notes": vextab_parsing.generate_vextab_notes(
-            notes, key, metrum_upper, metrum_lower),
+            notes, metrum_upper, metrum_lower),
+        "chords": vextab_parsing.generate_vextab_chords(
+            chords, metrum_upper, metrum_lower),
         "key": vextab_parsing.generate_vextab_key(key),
         "metrum": vextab_parsing.generate_vextab_metrum(
             metrum_upper, metrum_lower),

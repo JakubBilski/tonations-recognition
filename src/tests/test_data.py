@@ -52,6 +52,8 @@ def get_other_rec_test_models():
                     Sound(note=None,
                           duration=constants.RHYTMIC_VALUE_TO_DURATION[spl[1]])
                 )
+    current_testcase.sounds = currect_sounds
+    result.append(current_testcase)
     return result
 
 

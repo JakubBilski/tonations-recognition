@@ -1,4 +1,5 @@
 import pathlib
+import os
 
 from midiutil.MidiFile import MIDIFile
 from midi2audio import FluidSynth
@@ -52,10 +53,18 @@ def create_midi(filename, sounds, chords, duration_ms_of_32):
     return pathlib.Path(filename).absolute()
 
 
-def save_midifile_as_wav(midi, wav):
+def save_midifile_as_wav_linux(midi, wav):
     # experimental, only works on linux
     fs = FluidSynth()
     fs.midi_to_audio(midi, wav)
+    return pathlib.Path(wav)
+
+
+def save_midifile_as_wav_windows(midi, wav):
+    # experimental, only works on windows
+    # fluidsynth.exe -F ouptut.wav -T wav soundfont.sf2 output.mid
+    fluid_directory = pathlib.Path(__file__).resolve().parent.parent / "fluidsynth"  # noqa: E501
+    os.system(f'{fluid_directory / "fluidsynth.exe"} -F {wav} -T wav {fluid_directory / "soundfont.sf2"} {midi}')  # noqa: E501
     return pathlib.Path(wav)
 
 

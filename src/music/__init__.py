@@ -2,5 +2,5 @@
 
 from .chord import Chord
 from .sound import Sound
-from .tonation import Tonation
+from .key import Key
 from .base_sound import BaseSound

@@ -2,16 +2,16 @@ import pathlib
 import os
 
 from ..music.sound import Sound
-from ..music.tonation import Tonation
+from ..music.key import Key
 from ..utils import constants
 
 
 class TestModel:
-    def __init__(self, file_path=None, sounds=None, tonation=None,
+    def __init__(self, file_path=None, sounds=None, key=None,
                  chords=None):
         self.file_path = file_path
         self.sounds = sounds
-        self.tonation = tonation
+        self.key = key
         self.chords = chords
 
 
@@ -37,7 +37,7 @@ def get_other_rec_test_models():
                 currect_sounds = []
             elif line.startswith('t'):
                 kind = 'major' if line.split()[1].isupper() else 'minor'
-                current_testcase.tonation = Tonation(
+                current_testcase.key = Key(
                     symbol=line.split()[1], kind=kind)
             elif len(line.split()) == 3:
                 spl = line.split()

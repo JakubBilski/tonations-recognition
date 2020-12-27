@@ -4,9 +4,10 @@ import pathlib
 import logging
 import shutil
 import pydub
+import os
 
 from . import chords_simplification
-from . import tonation_recognition
+from . import key_recognition
 from . import chords_generation
 from . import sounds_generation
 from . import meter_recognition
@@ -18,7 +19,7 @@ from . import music
 BEAT_TO_NOTE_VERSION = "fit_to_bar"
 
 logging.basicConfig(format='%(levelname)s:%(message)s')
-logger = logging.getLogger('tonation_recognition')
+logger = logging.getLogger('key_recognition')
 logger.setLevel(logging.DEBUG)
 
 app = Flask(__name__)
@@ -63,8 +64,8 @@ def frontend_communication_save_with_chords():
         return jsonify({
             "error": "Expected json with output_file key"
         })
-    filename_src = app.config['TEMP_FOLDER'] / "output.midi"
-    music_synthesis.save_midifile_as_wav(filename_src, filename_dest)
+    filename_src = app.config['TEMP_FOLDER'] / "output.wav"
+    shutil.copyfile(filename_src, filename_dest)
     return jsonify({})
 
 
@@ -107,9 +108,9 @@ def frontend_communication():
         kind (str): kind of the chord, see: Chord
         duration: duration of the chord, see: Chord
     }]) : Chords used in the piece
-    tonation ({
-        symbol (str): symbol of the key, see: Tonation
-        kind: kind of the key, see: Tonation
+    key ({
+        symbol (str): symbol of the key, see: Key
+        kind: kind of the key, see: Key
     }): The key the piece is in
     preview_file (str) : Path to the audio file
         with melody and chords played together
@@ -127,8 +128,8 @@ def frontend_communication():
         return jsonify({
             "error": f"File {filename} does not exist."
         })
-    notes, chords, tonation, preview_file = process_file(filename)
-    return jsonify(render_result(notes, chords, tonation, preview_file, 4, 8))
+    notes, chords, key, preview_file = process_file(filename)
+    return jsonify(render_result(notes, chords, key, preview_file, 4, 8))
 
 
 @app.route('/music_simple', methods=['GET', 'POST'])
@@ -148,32 +149,22 @@ def frontend_communication_simple():
         return jsonify({
             "error": f"File {filename} does not exist."
         })
-    notes, chords, tonation, preview_file = \
+    notes, chords, key, preview_file = \
         chords_simplification.simplify(*process_file(filename))
-    return jsonify(render_result(notes, chords, tonation, preview_file, 4, 8))
+    return jsonify(render_result(notes, chords, key, preview_file, 4, 8))
 
 
-def render_result(notes, chords, tonation, preview_file,
+def render_result(notes, chords, key, preview_file,
                   metrum_upper, metrum_lower):
     return {
         "notes": vextab_parsing.generate_vextab_notes(
-            notes, tonation, metrum_upper, metrum_lower),
-        "key": vextab_parsing.generate_vextab_key(tonation),
+            notes, metrum_upper, metrum_lower),
+        "chords": vextab_parsing.generate_vextab_chords(
+            chords, metrum_upper, metrum_lower),
+        "key": vextab_parsing.generate_vextab_key(key),
         "metrum": vextab_parsing.generate_vextab_metrum(
             metrum_upper, metrum_lower),
         "chord_types": vextab_parsing.generate_vextab_chord_types(chords),
-        "chords": [
-            {
-                "symbol": chord.symbol,
-                "kind": chord.kind,
-                "duration": chord.duration*4
-            }
-            for chord in chords
-        ],
-        "tonation": {
-            "symbol": tonation.symbol,
-            "kind": tonation.kind
-        },
         "preview_file": preview_file
     }
 
@@ -201,10 +192,10 @@ def print_debug_info(sounds, chords):
             chords_i += 1
 
 
-def process_file(filename, force_tonation=None, output_wav=False):
+def process_file(filename, force_key=None, output_wav=True):
     logger.debug(f"Procesing {filename}")
     sounds = sounds_generation.get_sounds_from_file(filename)
-    # sounds = sounds_manipulation.change_tonation(sounds, 2)
+    # sounds = sounds_manipulation.change_key(sounds, 2)
 
     meter, beats = meter_recognition.get_meter(filename, sounds)
     if BEAT_TO_NOTE_VERSION == "fit_to_bar":
@@ -213,16 +204,16 @@ def process_file(filename, force_tonation=None, output_wav=False):
     else:
         raise(f"BEAT_TO_NOTE_VERSION '{BEAT_TO_NOTE_VERSION}'' not recognized")
 
-    if force_tonation:
-        if force_tonation.islower():
+    if force_key:
+        if force_key.islower():
             kind = "minor"
         else:
             kind = "major"
-        tonation = music.Tonation(symbol=force_tonation.lower(), kind=kind)
+        key = music.Key(symbol=force_key.lower(), kind=kind)
     else:
-        tonation = tonation_recognition.get_tonation(sounds)
+        key = key_recognition.get_key(sounds)
 
-    chords = chords_generation.get_chords_daria(sounds, tonation, (4, 8))
+    chords = chords_generation.get_chords_daria(sounds, key, (4, 8))
 
     duration_ms_of_32 = meter / 4
     result_file = music_synthesis.create_midi(
@@ -231,16 +222,25 @@ def process_file(filename, force_tonation=None, output_wav=False):
         chords,
         duration_ms_of_32)
     if output_wav:
-        result_file = music_synthesis.save_midifile_as_wav(
-            app.config['TEMP_FOLDER'] / "output.midi",
-            app.config['TEMP_FOLDER'] / "output.wav")
+        if os.name == 'nt':
+            result_file = music_synthesis.save_midifile_as_wav_windows(
+                app.config['TEMP_FOLDER'] / "output.midi",
+                app.config['TEMP_FOLDER'] / "output.wav")
+        else:
+            result_file = music_synthesis.save_midifile_as_wav_linux(
+                app.config['TEMP_FOLDER'] / "output.midi",
+                app.config['TEMP_FOLDER'] / "output.wav")
+        convert_wav_to_ogg(
+            app.config['TEMP_FOLDER'] / "output.wav",
+            app.config['TEMP_FOLDER'] / "output.ogg",
+        )
 
     logger.debug(f"Meter:\t\t{meter}")
-    logger.debug(f"Tonation:\t\t{tonation}")
+    logger.debug(f"Key:\t\t{key}")
     print_debug_info(sounds, chords)
     logger.debug(f"Result file:\t\t{result_file}")
 
-    return sounds, chords, tonation, str(result_file)
+    return sounds, chords, key, str(result_file)
 
 
 def convert_recorded_to_wav(source_file, destination_file):
@@ -248,8 +248,13 @@ def convert_recorded_to_wav(source_file, destination_file):
     sound.export(destination_file, format="wav")
 
 
+def convert_wav_to_ogg(source_file, destination_file):
+    sound = pydub.AudioSegment.from_wav(source_file)
+    sound.export(destination_file, format="ogg")
+
+
 def start_server(args):
     if args.http:
         app.run()
     else:
-        process_file(args.input, args.tonation, args.wav)
+        process_file(args.input, args.key, args.wav)

@@ -1,6 +1,6 @@
 from typing import List, Tuple
 
-from ..music import Chord, Sound, Tonation
+from ..music import Chord, Sound, Key
 
 # https://www.fim.uni-passau.de/fileadmin/dokumente/fakultaeten/fim/lehrstuhl/sauer/geyer/BA_MA_Arbeiten/BA-HausnerChristoph-201409.pdf
 '''
@@ -55,7 +55,7 @@ def points(chord: Chord, sound: Sound):
 
 
 def get_chords_hausner(sounds: List[Sound],
-                       tonation: Tonation,
+                       key: Key,
                        meter: Tuple[int, int]):
     if meter[0] == 2:
         meter = (

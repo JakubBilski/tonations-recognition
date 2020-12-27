@@ -14,11 +14,11 @@ isRecording = false
 
 function onclickTransposeButton(){
   if(isShowingTransposed) {
-    transposeButton.textContent = "Transpose to easier tonation";
+    transposeButton.textContent = "Transpose to easier key";
     transposeButton.className = "main-stroked-button"
     fetchAndDisplayGuitar(false, isShowingNotes);
   } else {
-    transposeButton.textContent = "Transpose to original tonation";
+    transposeButton.textContent = "Transpose to original key";
     transposeButton.className = "main-filled-button";
     fetchAndDisplayGuitar(true, isShowingNotes);
   }
@@ -42,8 +42,10 @@ function onclickSaveWithChordsButton(){
   window.dialog().showSaveDialog( {
     defaultPath: 'resultWithChords.wav'
   }).then(result => {
-    var postPath = `http://127.0.0.1:5000/saveWithChords`;
-    postJsonData(postPath, {output_file: result.filePath});
+    if(!result.canceled) {
+      var postPath = `http://127.0.0.1:5000/saveWithChords`;
+      postJsonData(postPath, {output_file: result.filePath});
+    }
   }).catch(err => {
     console.log(err)
   })

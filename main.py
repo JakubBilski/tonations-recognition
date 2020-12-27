@@ -14,8 +14,8 @@ def parse_args():
                         default="data/other_rec/ach_spij_C.wav",
                         help='Input audio file. Formats: [.mp3, .wav]',
                         type=pathlib.Path)
-    parser.add_argument('--tonation', '-T',
-                        help='Use correct tonation instead of detected',
+    parser.add_argument('--key', '-K',
+                        help='Use correct key instead of detected',
                         type=str)
     parser.add_argument('--wav',
                         action="store_true",

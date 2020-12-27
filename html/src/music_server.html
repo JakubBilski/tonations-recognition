@@ -34,7 +34,7 @@ import shutil
 import pydub
 
 from . import chords_simplification
-from . import tonation_recognition
+from . import key_recognition
 from . import chords_generation
 from . import sounds_generation
 from . import meter_recognition
@@ -46,7 +46,7 @@ from . import music
 BEAT_TO_NOTE_VERSION = &#34;fit_to_bar&#34;
 
 logging.basicConfig(format=&#39;%(levelname)s:%(message)s&#39;)
-logger = logging.getLogger(&#39;tonation_recognition&#39;)
+logger = logging.getLogger(&#39;key_recognition&#39;)
 logger.setLevel(logging.DEBUG)
 
 app = Flask(__name__)
@@ -135,9 +135,9 @@ def frontend_communication():
         kind (str): kind of the chord, see: Chord
         duration: duration of the chord, see: Chord
     }]) : Chords used in the piece
-    tonation ({
-        symbol (str): symbol of the key, see: Tonation
-        kind: kind of the key, see: Tonation
+    key ({
+        symbol (str): symbol of the key, see: Key
+        kind: kind of the key, see: Key
     }): The key the piece is in
     preview_file (str) : Path to the audio file
         with melody and chords played together
@@ -155,8 +155,8 @@ def frontend_communication():
         return jsonify({
             &#34;error&#34;: f&#34;File {filename} does not exist.&#34;
         })
-    notes, chords, tonation, preview_file = process_file(filename)
-    return jsonify(render_result(notes, chords, tonation, preview_file, 4, 8))
+    notes, chords, key, preview_file = process_file(filename)
+    return jsonify(render_result(notes, chords, key, preview_file, 4, 8))
 
 
 @app.route(&#39;/music_simple&#39;, methods=[&#39;GET&#39;, &#39;POST&#39;])
@@ -176,32 +176,20 @@ def frontend_communication_simple():
         return jsonify({
             &#34;error&#34;: f&#34;File {filename} does not exist.&#34;
         })
-    notes, chords, tonation, preview_file = \
+    notes, chords, key, preview_file = \
         chords_simplification.simplify(*process_file(filename))
-    return jsonify(render_result(notes, chords, tonation, preview_file, 4, 8))
+    return jsonify(render_result(notes, chords, key, preview_file, 4, 8))
 
 
-def render_result(notes, chords, tonation, preview_file,
+def render_result(notes, chords, key, preview_file,
                   metrum_upper, metrum_lower):
     return {
         &#34;notes&#34;: vextab_parsing.generate_vextab_notes(
-            notes, tonation, metrum_upper, metrum_lower),
-        &#34;key&#34;: vextab_parsing.generate_vextab_key(tonation),
+            notes, key, metrum_upper, metrum_lower),
+        &#34;key&#34;: vextab_parsing.generate_vextab_key(key),
         &#34;metrum&#34;: vextab_parsing.generate_vextab_metrum(
             metrum_upper, metrum_lower),
         &#34;chord_types&#34;: vextab_parsing.generate_vextab_chord_types(chords),
-        &#34;chords&#34;: [
-            {
-                &#34;symbol&#34;: chord.symbol,
-                &#34;kind&#34;: chord.kind,
-                &#34;duration&#34;: chord.duration*4
-            }
-            for chord in chords
-        ],
-        &#34;tonation&#34;: {
-            &#34;symbol&#34;: tonation.symbol,
-            &#34;kind&#34;: tonation.kind
-        },
         &#34;preview_file&#34;: preview_file
     }
 
@@ -229,10 +217,10 @@ def print_debug_info(sounds, chords):
             chords_i += 1
 
 
-def process_file(filename, force_tonation=None, output_wav=False):
+def process_file(filename, force_key=None, output_wav=False):
     logger.debug(f&#34;Procesing {filename}&#34;)
     sounds = sounds_generation.get_sounds_from_file(filename)
-    # sounds = sounds_manipulation.change_tonation(sounds, 2)
+    # sounds = sounds_manipulation.change_key(sounds, 2)
 
     meter, beats = meter_recognition.get_meter(filename, sounds)
     if BEAT_TO_NOTE_VERSION == &#34;fit_to_bar&#34;:
@@ -241,16 +229,16 @@ def process_file(filename, force_tonation=None, output_wav=False):
     else:
         raise(f&#34;BEAT_TO_NOTE_VERSION &#39;{BEAT_TO_NOTE_VERSION}&#39;&#39; not recognized&#34;)
 
-    if force_tonation:
-        if force_tonation.islower():
+    if force_key:
+        if force_key.islower():
             kind = &#34;minor&#34;
         else:
             kind = &#34;major&#34;
-        tonation = music.Tonation(symbol=force_tonation.lower(), kind=kind)
+        key = music.Key(symbol=force_key.lower(), kind=kind)
     else:
-        tonation = tonation_recognition.get_tonation(sounds)
+        key = key_recognition.get_key(sounds)
 
-    chords = chords_generation.get_chords_daria(sounds, tonation, (4, 8))
+    chords = chords_generation.get_chords_daria(sounds, key, (4, 8))
 
     duration_ms_of_32 = meter / 4
     result_file = music_synthesis.create_midi(
@@ -264,11 +252,11 @@ def process_file(filename, force_tonation=None, output_wav=False):
             app.config[&#39;TEMP_FOLDER&#39;] / &#34;output.wav&#34;)
 
     logger.debug(f&#34;Meter:\t\t{meter}&#34;)
-    logger.debug(f&#34;Tonation:\t\t{tonation}&#34;)
+    logger.debug(f&#34;Key:\t\t{key}&#34;)
     print_debug_info(sounds, chords)
     logger.debug(f&#34;Result file:\t\t{result_file}&#34;)
 
-    return sounds, chords, tonation, str(result_file)
+    return sounds, chords, key, str(result_file)
 
 
 def convert_recorded_to_wav(source_file, destination_file):
@@ -280,7 +268,7 @@ def start_server(args):
     if args.http:
         app.run()
     else:
-        process_file(args.input, args.tonation, args.wav)</code></pre>
+        process_file(args.input, args.key, args.wav)</code></pre>
 </details>
 </section>
 <section>
@@ -322,9 +310,9 @@ symbol (str): symbol of the chord, see: Chord
 kind (str): kind of the chord, see: Chord
 duration: duration of the chord, see: Chord
 }]) : Chords used in the piece
-tonation ({
-symbol (str): symbol of the key, see: Tonation
-kind: kind of the key, see: Tonation
+key ({
+symbol (str): symbol of the key, see: Key
+kind: kind of the key, see: Key
 }): The key the piece is in
 preview_file (str) : Path to the audio file
 with melody and chords played together</p></div>
@@ -350,9 +338,9 @@ def frontend_communication():
         kind (str): kind of the chord, see: Chord
         duration: duration of the chord, see: Chord
     }]) : Chords used in the piece
-    tonation ({
-        symbol (str): symbol of the key, see: Tonation
-        kind: kind of the key, see: Tonation
+    key ({
+        symbol (str): symbol of the key, see: Key
+        kind: kind of the key, see: Key
     }): The key the piece is in
     preview_file (str) : Path to the audio file
         with melody and chords played together
@@ -370,8 +358,8 @@ def frontend_communication():
         return jsonify({
             &#34;error&#34;: f&#34;File {filename} does not exist.&#34;
         })
-    notes, chords, tonation, preview_file = process_file(filename)
-    return jsonify(render_result(notes, chords, tonation, preview_file, 4, 8))</code></pre>
+    notes, chords, key, preview_file = process_file(filename)
+    return jsonify(render_result(notes, chords, key, preview_file, 4, 8))</code></pre>
 </details>
 </dd>
 <dt id="src.music_server.frontend_communication_save_recorded"><code class="name flex">
@@ -463,9 +451,9 @@ def frontend_communication_simple():
         return jsonify({
             &#34;error&#34;: f&#34;File {filename} does not exist.&#34;
         })
-    notes, chords, tonation, preview_file = \
+    notes, chords, key, preview_file = \
         chords_simplification.simplify(*process_file(filename))
-    return jsonify(render_result(notes, chords, tonation, preview_file, 4, 8))</code></pre>
+    return jsonify(render_result(notes, chords, key, preview_file, 4, 8))</code></pre>
 </details>
 </dd>
 <dt id="src.music_server.frontend_communication_upload_recorded"><code class="name flex">
@@ -538,7 +526,7 @@ def frontend_communication_upload_recorded():
 </details>
 </dd>
 <dt id="src.music_server.process_file"><code class="name flex">
-<span>def <span class="ident">process_file</span></span>(<span>filename, force_tonation=None, output_wav=False)</span>
+<span>def <span class="ident">process_file</span></span>(<span>filename, force_key=None, output_wav=False)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -546,10 +534,10 @@ def frontend_communication_upload_recorded():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def process_file(filename, force_tonation=None, output_wav=False):
+<pre><code class="python">def process_file(filename, force_key=None, output_wav=False):
     logger.debug(f&#34;Procesing {filename}&#34;)
     sounds = sounds_generation.get_sounds_from_file(filename)
-    # sounds = sounds_manipulation.change_tonation(sounds, 2)
+    # sounds = sounds_manipulation.change_key(sounds, 2)
 
     meter, beats = meter_recognition.get_meter(filename, sounds)
     if BEAT_TO_NOTE_VERSION == &#34;fit_to_bar&#34;:
@@ -558,16 +546,16 @@ def frontend_communication_upload_recorded():
     else:
         raise(f&#34;BEAT_TO_NOTE_VERSION &#39;{BEAT_TO_NOTE_VERSION}&#39;&#39; not recognized&#34;)
 
-    if force_tonation:
-        if force_tonation.islower():
+    if force_key:
+        if force_key.islower():
             kind = &#34;minor&#34;
         else:
             kind = &#34;major&#34;
-        tonation = music.Tonation(symbol=force_tonation.lower(), kind=kind)
+        key = music.Key(symbol=force_key.lower(), kind=kind)
     else:
-        tonation = tonation_recognition.get_tonation(sounds)
+        key = key_recognition.get_key(sounds)
 
-    chords = chords_generation.get_chords_daria(sounds, tonation, (4, 8))
+    chords = chords_generation.get_chords_daria(sounds, key, (4, 8))
 
     duration_ms_of_32 = meter / 4
     result_file = music_synthesis.create_midi(
@@ -581,15 +569,15 @@ def frontend_communication_upload_recorded():
             app.config[&#39;TEMP_FOLDER&#39;] / &#34;output.wav&#34;)
 
     logger.debug(f&#34;Meter:\t\t{meter}&#34;)
-    logger.debug(f&#34;Tonation:\t\t{tonation}&#34;)
+    logger.debug(f&#34;Key:\t\t{key}&#34;)
     print_debug_info(sounds, chords)
     logger.debug(f&#34;Result file:\t\t{result_file}&#34;)
 
-    return sounds, chords, tonation, str(result_file)</code></pre>
+    return sounds, chords, key, str(result_file)</code></pre>
 </details>
 </dd>
 <dt id="src.music_server.render_result"><code class="name flex">
-<span>def <span class="ident">render_result</span></span>(<span>notes, chords, tonation, preview_file, metrum_upper, metrum_lower)</span>
+<span>def <span class="ident">render_result</span></span>(<span>notes, chords, key, preview_file, metrum_upper, metrum_lower)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -597,27 +585,15 @@ def frontend_communication_upload_recorded():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def render_result(notes, chords, tonation, preview_file,
+<pre><code class="python">def render_result(notes, chords, key, preview_file,
                   metrum_upper, metrum_lower):
     return {
         &#34;notes&#34;: vextab_parsing.generate_vextab_notes(
-            notes, tonation, metrum_upper, metrum_lower),
-        &#34;key&#34;: vextab_parsing.generate_vextab_key(tonation),
+            notes, key, metrum_upper, metrum_lower),
+        &#34;key&#34;: vextab_parsing.generate_vextab_key(key),
         &#34;metrum&#34;: vextab_parsing.generate_vextab_metrum(
             metrum_upper, metrum_lower),
         &#34;chord_types&#34;: vextab_parsing.generate_vextab_chord_types(chords),
-        &#34;chords&#34;: [
-            {
-                &#34;symbol&#34;: chord.symbol,
-                &#34;kind&#34;: chord.kind,
-                &#34;duration&#34;: chord.duration*4
-            }
-            for chord in chords
-        ],
-        &#34;tonation&#34;: {
-            &#34;symbol&#34;: tonation.symbol,
-            &#34;kind&#34;: tonation.kind
-        },
         &#34;preview_file&#34;: preview_file
     }</code></pre>
 </details>
@@ -635,7 +611,7 @@ def frontend_communication_upload_recorded():
     if args.http:
         app.run()
     else:
-        process_file(args.input, args.tonation, args.wav)</code></pre>
+        process_file(args.input, args.key, args.wav)</code></pre>
 </details>
 </dd>
 </dl>

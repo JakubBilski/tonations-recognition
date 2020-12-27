@@ -647,7 +647,7 @@ c 4 2
 
 t C
 
-data/carol/jezus_malusienki_B.wav
+data/carol/jezus_malusienki_Ais.wav
 
 ais 4 8
 a 4 8
@@ -692,4 +692,4 @@ c 4 4
 c 4 4
 ais 4 2
 
-t B
+t A#

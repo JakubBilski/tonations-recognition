@@ -6,3 +6,4 @@ midi2audio
 numpy
 matplotlib
 seaborn
+flask

@@ -16,7 +16,7 @@ from . import vextab_parsing
 from . import music
 
 pydub.AudioSegment.converter = \
-    "D:/moje/studia/tonations-recognition/ffmpeg/ffmpeg.exe"
+    str(pathlib.Path(__file__).parent.parent / "ffmpeg" / "ffmpeg.exe")
 
 
 BEAT_TO_NOTE_VERSION = "fit_to_bar"

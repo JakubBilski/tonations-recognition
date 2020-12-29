@@ -1,5 +1,3 @@
-import enum
-
 from .music.key import Key
 
 
@@ -12,7 +10,6 @@ class KeyWithPoints:
     def __init__(self, key, points):
         self.key = key
         self.points = points
-       
 
     def __str__(self):
         return f"{self.key}\n"\
@@ -64,6 +61,3 @@ def get_points_from_scale_fit(sounds, scale):
         points += 20
 
     return points
-
-
-

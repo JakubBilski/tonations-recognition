@@ -39,3 +39,14 @@ Automatyczne generowanie dokumentacji:
 pip install pdoc3
 pdoc --html .\path_to_file_or_module
 ```
+
+
+Wymagania:
+Wersja pythona >=3.8 ( dla 3.7 są problemy z dll numpy :-/ ) (możliwe że problemem było to że miałem tego pythona ścągniętego ze sklepu, a 3.8 ściągałem ze strony)
+
+Instalacja:
+instalacja pythona (https://www.python.org/downloads/)
+pip install -r src/requirements.txt
+
+instalacja node.js (https://nodejs.org/en/)
+usuń folder c:/python39 (node.js nadpisuje poprzednią instalację pythona bo tak)

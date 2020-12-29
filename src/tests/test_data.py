@@ -17,14 +17,24 @@ class TestModel:
 
 def get_all_test_models():
     models = get_other_rec_test_models()
+    models.extend(get_carol_test_models())
     return models
 
 
 def get_other_rec_test_models():
-    result = []
     test_data_file = pathlib.Path(
         os.path.realpath(__file__)).parent / "test_data.txt"
+    return _get_test_models(test_data_file)
 
+
+def get_carol_test_models():
+    test_data_file = pathlib.Path(
+        os.path.realpath(__file__)).parent / "test_carol.txt"
+    return _get_test_models(test_data_file)
+
+
+def _get_test_models(test_data_file):
+    result = []
     current_testcase = None
     currect_sounds = None
     with open(test_data_file, 'r') as f:
@@ -51,4 +61,6 @@ def get_other_rec_test_models():
                     Sound(note=None,
                           duration=constants.RHYTMIC_VALUE_TO_DURATION[spl[1]])
                 )
+    current_testcase.sounds = currect_sounds
+    result.append(current_testcase)
     return result

@@ -1,0 +1,695 @@
+data/carol/mizerna_d.wav
+
+a 4 4
+a 4 4
+a 4 4
+g 4 2
+g 4 4
+f 4 4
+f 4 4
+f 4 4
+e 4 2
+a 3 4
+d 4 4 
+d 4 4  
+e 4 4 
+f 4 4
+e 4 4 
+d 4 4
+a 4 2. 
+a 4 2.
+a 4 4
+a 4 4
+a 4 4
+g 4 2
+g 4 4
+f 4 4
+f 4 4
+f 4 4
+e 4 2
+a 3 4
+d 4 4 
+d 4 4  
+e 4 4 
+f 4 2
+e 4 4
+d 4 2.
+d 4 2.
+
+t d
+
+data/carol/gdy_sliczna_panna_F.wav 
+
+c 4 2 
+d 4 4 
+e 4 4 
+f 4 2 
+f 4 2 
+g 4 4
+ais 4 4 
+a 4 4 
+g 4 4 
+g 4 2 
+f 4 2 
+c 4 2 
+d 4 4 
+e 4 4
+f 4 2
+f 4 2
+g 4 4
+ais 4 4 
+a 4 4 
+g 4 4 
+g 4 2 
+f 4 2 
+a 4 4 
+g 4 4 
+a 4 4 
+f 4 4 
+g 4 1 
+e 4 4 
+g 4 4 
+f 4 4 
+e 4 4 
+d 4 2 
+c 4 2 
+a 4 4 
+g 4 4 
+a 4 4 
+f 4 4 
+ais 4 1 
+a 4 4 
+c 5 4 
+ais 4 8 
+a 4 8 
+g 4 8 
+f 4 8 
+g 4 2 
+f 4 2 
+
+t F
+
+data/carol/o_gwiazdo_betlejemska_F.wav
+
+c 4 8
+f 4 8
+e 4 8
+f 4 8
+g 4 8
+f 4 8
+g 4 8
+a 4 4.
+c 5 4.
+ais 4 8
+a 4 8 
+g 4 8  
+f 4 4 
+e 4 8
+f 4 4.
+r 4 
+c 4 8
+f 4 8
+e 4 8
+f 4 8
+g 4 8
+f 4 8
+g 4 8
+a 4 4.
+c 5 4.
+ais 4 8
+a 4 8 
+g 4 8  
+f 4 4 
+e 4 8
+f 4 4.
+r 4
+a 4 8
+d 4 4 
+e 4 8
+f 4 8
+e 4 8
+d 4 8
+e 4 4.
+a 4 4.
+a 4 8
+g 4 8
+f 4 8
+f 4 8
+e 4 8
+d 4 8 
+a 4 4.
+r 4  
+a 4 4 
+g 4 8
+g 4 8
+f 4 8
+g 4 8
+a 4 4.
+c 5 4.
+ais 4 8
+a 4 8
+g 4 8
+f 4 4
+e 4 8
+f 4 4.
+
+t F
+
+data/carol/my_tez_paszuszkowie_F.wav
+
+f 4 8
+a 4 8
+c 5 8
+c 5 8
+c 5 8
+c 5 8
+f 5 8
+d 5 8
+c 5 8
+c 5 8
+c 5 8 
+c 5 8  
+c 5 8 
+ais 4 16
+a 4 16 
+ais 4 2
+ais 4 8 
+a 4 16
+g 4 16
+a 4 2
+f 4 8
+a 4 8
+c 5 8
+c 5 8
+c 5 8
+c 5 8
+f 5 8
+d 5 8
+c 5 8
+c 5 8
+c 5 8 
+c 5 8  
+c 5 8 
+ais 4 16
+a 4 16 
+ais 4 2
+ais 4 8 
+a 4 16
+g 4 16
+a 4 2
+a 4 4
+a 4 4
+a 4 4
+a 4 8
+c 5 8
+c 5 8
+ais 4 8
+ais 4 8
+a 4 8 
+g 4 4  
+g 4 4 
+g 4 4
+g 4 8
+ais 4 8
+ais 4 8
+a 4 8
+a 4 8
+g 4 8
+f 5 8
+e 5 16
+f 5 16
+d 5 2
+ais 4 8
+g 4 16
+e 4 16
+f 4 2
+
+t F
+
+data/carol/gdy_sie_chrystus_C.wav
+
+g 4 4
+e 4 4
+c 5 4
+a 4 4
+a 4 2
+g 4 2
+e 4 4
+e 4 4
+f 4 4
+d 4 4
+d 4 2 
+c 4 2
+g 4 4
+e 4 4
+c 5 4
+a 4 4
+a 4 2
+g 4 2
+e 4 4
+e 4 4
+f 4 4
+d 4 4
+d 4 2 
+c 4 2 
+d 4 4 
+d 4 8
+e 4 8 
+f 4 4
+d 4 4 
+e 4 4
+e 4 8
+f 4 8
+g 4 4
+e 4 4
+d 4 4 
+d 4 8
+e 4 8 
+f 4 4
+d 4 4 
+e 4 4
+e 4 8
+f 4 8
+g 4 4
+e 4 4
+g 4 2
+g 4 4
+g 4 4
+a 4 2
+a 4 4
+a 4 4
+b 4 2
+b 4 4
+b 4 4
+c 5 4
+g 4 4
+a 4 4 
+f 4 4  
+e 4 2
+d 4 2
+c 4 1
+
+t C
+
+data/carol/w_zlobie_lezy_F.wav
+
+c 4 8
+c 4 8
+f 4 8
+g 4 8
+a 4 4
+g 4 8
+f 4 8
+g 4 8
+a 4 8
+ais 4 4 
+a 4 8  
+ais 4 8 
+c 5 4
+ais 4 4
+a 4 8
+g 4 8
+f 4 2
+c 4 8
+c 4 8
+f 4 8
+g 4 8
+a 4 4
+g 4 8
+f 4 8
+g 4 8
+a 4 8
+ais 4 4 
+a 4 8  
+ais 4 8 
+c 5 4
+ais 4 4
+a 4 8
+g 4 8
+f 4 2
+c 5 4.
+ais 4 8
+a 4 8
+a 4 8
+d 5 8
+c 5 8
+ais 4 8
+a 4 8
+ais 4 4
+ais 4 4.
+a 4 8 
+g 4 8  
+g 4 8 
+c 5 8
+ais 4 8
+a 4 8
+g 4 8 
+a 4 4
+f 4 8
+e 4 8
+d 4 4
+ais 4 4
+a 4 8
+g 4 8
+f 4 2
+
+t F
+
+
+data/carol/Bog_sie_rodzi_D.wav
+
+d 4 8.
+d 5 16
+d 5 4
+cis 5 8
+b 4 8
+b 4 8.
+b 4 16
+b 4 4
+a 4 8
+g 4 8 
+fis 4 8
+a 4 8
+d 5 8 
+a 4 8
+g 4 8
+fis 4 8
+fis 4 4
+e 4 2
+d 4 8.
+d 5 16
+d 5 4
+cis 5 8
+b 4 8
+b 4 8.
+b 4 16
+b 4 4
+a 4 8
+g 4 8 
+fis 4 8
+a 4 8
+d 5 8 
+a 4 8
+g 4 8
+fis 4 8
+fis 4 4
+e 4 2
+g 4 4.
+e 4 8
+fis 4 8
+g 4 8
+a 4 8
+a 4 8
+fis 4 4 
+a 4 4
+g 4 4.
+e 4 8
+fis 4 8
+g 4 8
+a 4 8
+a 4 8
+fis 4 4 
+a 4 4
+g 4 4.
+e 4 8
+fis 4 8
+g 4 8
+a 4 8
+a 4 8
+fis 4 4 
+a 4 4
+g 4 4.
+e 4 8
+fis 4 8
+g 4 8
+a 4 8.
+cis 4 16
+e 4 4 
+d 4 4
+
+t D
+
+data/carol/do_szopy_D.wav
+
+a 3 4
+d 4 4
+d 4 4
+e 4 8
+d 4 8
+cis 4 4
+cis 4 4
+a 3 4
+e 4 4
+e 4 4
+fis 4 8
+e 4 8
+d 4 2
+a 3 4
+d 4 4
+d 4 4
+e 4 8
+d 4 8
+cis 4 4
+cis 4 4
+a 3 4
+e 4 4
+e 4 4
+fis 4 8
+e 4 8
+d 4 2
+a 3 4
+fis 4 4
+fis 4 4 
+g 4 8
+fis 4 8
+e 4 4
+e 4 4
+e 4 4
+g 4 4
+b 4 4
+a 4 8
+gis 4 8
+a 4 2
+a 3 4
+fis 4 4
+fis 4 4 
+g 4 8
+fis 4 8
+e 4 4
+e 4 4
+a 3 4
+e 4 4
+e 4 4
+fis 4 8 
+e 4 8  
+d 4 2
+
+t D
+
+data/carol/bracia_patrzcie_G.wav
+
+g 4 4.
+d 4 8
+b 3 8
+d 4 8
+g 4 4
+g 3 4
+r 4
+b 4 4.
+a 4 8
+g 4 8
+a 4 8
+b 4 4
+g 4 4
+r 4
+g 4 4.
+d 4 8
+b 3 8
+d 4 8
+g 4 4
+g 3 4
+r 4
+b 4 4.
+a 4 8
+g 4 8
+a 4 8
+b 4 4
+g 4 4
+r 4
+a 4 4.
+b 4 16
+a 4 16
+g 4 8
+e 4 8
+fis 4 4.
+e 4 16
+fis 4 16
+g 4 8
+e 4 8
+a 4 4.
+b 4 16
+a 4 16
+g 4 8
+e 4 8
+fis 4 4.
+g 4 16
+fis 4 16
+e 4 8
+d 4 8
+d 4 4.
+e 4 8
+d 4 8
+c 4 8
+d 4 4.
+e 4 8
+d 4 8
+c 4 8
+g 4 4.
+b 4 8
+a 4 8
+g 4 8
+d 5 2.
+b 4 2
+r 4
+b 4 2
+a 4 8.
+b 4 16
+g 4 2
+
+t D
+
+data/carol/cicha_noc_C.wav
+
+g 4 4.
+a 4 8
+g 4 4
+e 4 2.
+g 4 4.
+a 4 8
+g 4 4
+e 4 2.
+d 5 2
+d 5 4
+b 4 2
+b 4 4
+c 5 2
+c 5 4
+g 4 2.
+a 4 2
+a 4 4
+c 5 4.
+b 4 8
+a 4 4
+g 4 4.
+a 4 8
+g 4 4
+e 4 2
+c 4 4
+a 4 2
+a 4 4
+c 5 4.
+b 4 8
+a 4 4
+g 4 4.
+a 4 8
+g 4 4
+e 4 2
+c 4 4
+d 5 2
+d 5 4
+f 5 4.
+d 5 8
+b 4 4
+c 4 2.
+e 5 4
+r 2
+c 5 4.
+g 4 8
+e 4 4
+g 4 4.
+f 4 8
+d 4 4
+c 4 1
+
+t C
+
+data/carol/medrcy_swiata_C.wav
+
+e 4 4.
+f 4 8
+g 4 4
+g 4 4 
+a 4 4
+a 4 4 
+g 4 4
+g 4 4
+f 4 4.
+e 4 8
+f 4 4
+a 4 4
+g 4 4.
+f 4 8
+e 4 2
+e 4 4.
+f 4 8
+g 4 4
+g 4 4 
+a 4 4
+c 5 4
+b 4 4
+a 4 4
+g 4 4.
+e 4 8
+f 4 4
+d 4 4
+d 4 2
+c 4 2
+
+t C
+
+data/carol/jezus_malusienki_Ais.wav
+
+ais 4 8
+a 4 8
+g 4 4
+fis 4 8
+g 4 8
+a 4 4
+d 4 2
+ais 4 8
+a 4 8
+g 4 4
+fis 4 8
+g 4 8
+a 4 4
+d 4 2
+c 4 8 
+d 4 8
+dis 4 4
+dis 4 4
+d 4 8
+dis 4 8
+f 4 4
+f 4 4
+g 4 8
+f 4 8
+dis 4 4
+c 4 4
+dis 4 4
+d 4 2
+c 4 8 
+d 4 8
+dis 4 4
+dis 4 4
+d 4 8
+dis 4 8
+f 4 4
+f 4 4
+g 4 8
+f 4 8
+dis 4 4
+c 4 4
+c 4 4
+ais 4 2
+
+t A#

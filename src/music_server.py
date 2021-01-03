@@ -241,7 +241,8 @@ def process_file(filename, force_key=None):
             app.config['TEMP_FOLDER'] / "output.midi",
             app.config['TEMP_FOLDER'] / "output.wav")
 
-    unique_preview_file = f"output{datetime.datetime.now().strftime('%m%d%H%M%S')}.ogg"
+    timestamp = datetime.datetime.now().strftime('%m%d%H%M%S')
+    unique_preview_file = f"output{timestamp}.ogg"
     prev_file = app.config['TEMP_FOLDER'] / unique_preview_file
     convert_wav_to_ogg(
         result_file,

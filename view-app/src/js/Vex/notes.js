@@ -1,20 +1,43 @@
+let responseCached = "";
+let simplifiedResponseCached = "";
+
 function fetchAndDisplayGuitar(simplified, showNotes){
   if(simplified) {
-    var postPath = `http://127.0.0.1:5000/music_simple`;
+    if(simplifiedResponseCached === "") {
+      var postPath = `http://127.0.0.1:5000/music_simple`;
+      postJsonData(postPath, {input_file: filePath}).then((text) => {
+        simplifiedResponseCached = text;
+        drawEverything(simplifiedResponseCached, showNotes);
+      });
+    }
+    else {
+      drawEverything(simplifiedResponseCached, showNotes);
+    }
   }
   else {
-    var postPath = `http://127.0.0.1:5000/music`;
+    if(responseCached === "") {
+      var postPath = `http://127.0.0.1:5000/music`;
+      postJsonData(postPath, {input_file: filePath}).then((text) => {
+        responseCached = text;
+        drawEverything(responseCached, showNotes);
+      });
+    }
+    else {
+      drawEverything(responseCached, showNotes);
+    }
   }
-  postJsonData(postPath, {input_file: filePath}).then((data)=>{      
-      return data;
-  }).then((text)=>{
-    drawTabstaves(text, showNotes, true);
-    drawVexTabChordsCheatSheet(text);
-    unhideMusicInfoSections();
-    updateWithChordsSoundClipContainer();
-  }).catch(e=>{
-    console.log(e);
-  });
+}
+
+function drawEverything(vextabInput, showNotes) {
+  drawTabstaves(vextabInput, showNotes, true);
+  drawVexTabChordsCheatSheet(vextabInput);
+  unhideMusicInfoSections();
+  updateWithChordsSoundClipContainer();
+}
+
+function clearCache() {
+  responseCached = "";
+  simplifiedResponseCached = "";
 }
 
 function drawTabstaves(text, showNotes, showTablature) {

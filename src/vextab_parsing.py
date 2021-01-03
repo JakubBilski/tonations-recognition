@@ -97,7 +97,8 @@ def generate_vextab_notes(sounds, metrum_upper, metrum_lower):
                 result.append(notes_vextab)
                 notes_vextab = ""
                 no_bars_from_start = 0
-    result.append(notes_vextab)
+    if notes_vextab != '':
+        result.append(notes_vextab)
     return result
 
 
@@ -140,7 +141,8 @@ def generate_vextab_chords(chords, metrum_upper, metrum_lower):
                 no_bars_from_start = 0
     while chords_vextab[-1] == ' ' and chords_vextab[-2] == ',':
         chords_vextab = chords_vextab[0:chords_vextab[0:-2].rfind(' ,')+1]
-    result.append(chords_vextab)
+    if chords_vextab != '.1':
+        result.append(chords_vextab)
     return result
 
 

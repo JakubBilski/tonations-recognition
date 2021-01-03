@@ -14,6 +14,7 @@ from . import meter_recognition
 from . import music_synthesis
 from . import vextab_parsing
 from . import music
+from .tests import test_data
 
 pydub.AudioSegment.converter = \
     str(pathlib.Path(__file__).parent.parent / "ffmpeg" / "ffmpeg.exe")
@@ -118,21 +119,16 @@ def frontend_communication():
     preview_file (str) : Path to the audio file
         with melody and chords played together
     """
-    try:
-        filename = request.json["input_file"]
-    except Exception as e:
-        logger.error(f"Bad request: {request}\n Exception: {e}")
-        return jsonify({
-            "error": "Expected json with input_file key"
-        })
-    filename = pathlib.Path(filename)
-    if not filename.is_file():
-        logger.error(f"File {filename} does not exist.")
-        return jsonify({
-            "error": f"File {filename} does not exist."
-        })
-    notes, chords, key, preview_file = process_file(filename)
-    return jsonify(render_result(notes, chords, key, preview_file, 4, 8))
+
+    test_models = test_data.get_all_test_models()
+    filename = "data\\carol\\jezus_malusienki_Ais.wav"
+    for tm in test_models:
+        print(tm.file_path)
+    sounds = [tm.sounds for tm in test_models if str(tm.file_path) == filename][0]
+    notes, chords, key = process_file(sounds)
+    ehh = render_result(notes, chords, key, "", 4, 8)
+    print(ehh)
+    return jsonify(ehh)
 
 
 @app.route('/music_simple', methods=['GET', 'POST'])
@@ -195,18 +191,7 @@ def print_debug_info(sounds, chords):
             chords_i += 1
 
 
-def process_file(filename, force_key=None, output_wav=True):
-    logger.debug(f"Procesing {filename}")
-    sounds = sounds_generation.get_sounds_from_file(filename)
-    # sounds = sounds_manipulation.change_key(sounds, 2)
-
-    meter, beats = meter_recognition.get_meter(filename, sounds)
-    if BEAT_TO_NOTE_VERSION == "fit_to_bar":
-        meter_recognition.update_sounds_with_rhythmic_values_fit_to_bar(
-            meter, beats, sounds)
-    else:
-        raise(f"BEAT_TO_NOTE_VERSION '{BEAT_TO_NOTE_VERSION}'' not recognized")
-
+def process_file(sounds, force_key=None):
     if force_key:
         if force_key.islower():
             kind = "minor"
@@ -217,33 +202,10 @@ def process_file(filename, force_key=None, output_wav=True):
         key = key_recognition.get_key(sounds)
 
     chords = chords_generation.get_chords_daria(sounds, key, (4, 8))
-
-    duration_ms_of_32 = meter / 4
-    result_file = music_synthesis.create_midi(
-        app.config['TEMP_FOLDER'] / "output.midi",
-        sounds,
-        chords,
-        duration_ms_of_32)
-    if output_wav:
-        if os.name == 'nt':
-            result_file = music_synthesis.save_midifile_as_wav_windows(
-                app.config['TEMP_FOLDER'] / "output.midi",
-                app.config['TEMP_FOLDER'] / "output.wav")
-        else:
-            result_file = music_synthesis.save_midifile_as_wav_linux(
-                app.config['TEMP_FOLDER'] / "output.midi",
-                app.config['TEMP_FOLDER'] / "output.wav")
-        convert_wav_to_ogg(
-            app.config['TEMP_FOLDER'] / "output.wav",
-            app.config['TEMP_FOLDER'] / "output.ogg",
-        )
-
-    logger.debug(f"Meter:\t\t{meter}")
-    logger.debug(f"Key:\t\t{key}")
-    print_debug_info(sounds, chords)
-    logger.debug(f"Result file:\t\t{result_file}")
-
-    return sounds, chords, key, str(result_file)
+    print(f"sounds: {sounds}")
+    print(f"chords: {chords}")
+    print(f"key: {key}")
+    return sounds, chords, key
 
 
 def convert_recorded_to_wav(source_file, destination_file):

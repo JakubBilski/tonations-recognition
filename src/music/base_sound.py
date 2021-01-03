@@ -28,7 +28,7 @@ class BaseSound:
     @property
     def note(self):
         return self._note % 12 if self._note else self._note
-  
+
     @property
     def octave(self):
         return self._note // 12 if self._note else self._note

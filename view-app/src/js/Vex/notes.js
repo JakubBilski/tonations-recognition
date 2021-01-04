@@ -43,13 +43,16 @@ function drawTabstaves(text, showNotes, showTablature) {
 }
 
 function unhideMusicInfoSections() {
-  document.getElementById('choose_section').style.display = "initial";
-  document.getElementById('music_section').style.display = "initial";
-  document.getElementById('chords_section').style.display = "initial";
+  document.getElementById('choose_section').style.height = chooseSectionHeight;
+  document.getElementById('choose_section').style.overflowY = "auto";
+  document.getElementById('music_section').style.display = "block";
+  document.getElementById('chords_section').style.display = "block";
 }
 
 function hideMusicInfoSections() {
-  document.getElementById('choose_section').style.display = "none";
+  chooseSectionHeight = document.getElementById('choose_section').style.height;
+  document.getElementById('choose_section').style.height = "0px";
+  document.getElementById('choose_section').style.overflowY = "hidden"; 
   document.getElementById('music_section').style.display = "none";
   document.getElementById('chords_section').style.display = "none";
 }

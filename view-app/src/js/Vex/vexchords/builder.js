@@ -5,7 +5,7 @@
 
 const SHAPES = {
   'M E': {
-    name: 'Maj',
+    name: '',
     chord: [[3, 2], [4, 3], [5, 3]],
     barres: [{ fromString: 6, toString: 1, fret: 1 }],
   },
@@ -55,7 +55,7 @@ const SHAPES = {
     positionText: 1,
   },
   'M A': {
-    name: 'Maj',
+    name: '',
     chord: [[2, 3], [3, 3], [4, 3], [6, 'x']],
     barres: [{ fromString: 5, toString: 1, fret: 1 }],
   },

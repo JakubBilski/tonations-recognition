@@ -6,13 +6,13 @@ const chordChart = [
       'How to play chords',
     chords: [
       {
-        name: 'CMaj',
+        name: 'C',
         chord: [[1, 0], [2, 1, '1'], [3, 0], [4, 2, 2], [5, 3, 3]],
         position: 0,
         barres: []
       },
       {
-        name: 'DMaj',
+        name: 'D',
         chord: [
           [1, 2, 2],
           [2, 3, 3],
@@ -25,7 +25,7 @@ const chordChart = [
         barres: []
       },
       {
-        name: 'EMaj',
+        name: 'E',
         chord: [
           [1, 0, 'E'],
           [2, 0],
@@ -38,7 +38,7 @@ const chordChart = [
         barres: []
       },
       {
-        name: 'GMaj',
+        name: 'G',
         chord: [
           [1, 3, 4],
           [2, 3, 3],
@@ -51,7 +51,7 @@ const chordChart = [
         barres: []
       },
       {
-        name: 'AMaj',
+        name: 'A',
         chord: [
           [1, 0],
           [2, 2, 3],
@@ -247,7 +247,7 @@ var shapes_EG = [
   'dim E',
   'm7 E'
 ];
-var keys_E = ['F', 'F#', 'Gb', 'G#', 'Ab',  'A#', 'B', 'C'];
+var keys_E = ['F', 'F#', 'Gb', 'G#', 'Ab',  'A#', 'B'];
 var keys_A = ['C#', 'Db', 'D#', 'Eb'];
 var shapes_E = [
   'M E',

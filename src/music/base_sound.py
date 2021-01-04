@@ -27,11 +27,15 @@ class BaseSound:
 
     @property
     def note(self):
-        return self._note
+        return self._note % 12 if self._note else self._note
+
+    @property
+    def octave(self):
+        return self._note // 12 if self._note else self._note
 
     @note.setter
     def note(self, note):
-        self._note = note % 12 if note else note
+        self._note = note
 
     @property
     def duration(self):

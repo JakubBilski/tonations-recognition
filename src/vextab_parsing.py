@@ -30,13 +30,12 @@ STRINGS = {
 
 def sound_to_string(sound):
     # return f"{sound.symbol}/4"
-    sound.height = 3
     i = 6
-    while i > 1 and (STRINGS[i-1][1] < sound.height or
-                     (STRINGS[i-1][1] == sound.height and
+    while i > 1 and (STRINGS[i-1][1] < sound.octave or
+                     (STRINGS[i-1][1] == sound.octave and
                       STRINGS[i-1][0] < sound.note)):
         i -= 1
-    fret = (STRINGS[i][1] - sound.height)*12 + STRINGS[i][0] - sound.note
+    fret = (STRINGS[i][1] - sound.octave)*12 + STRINGS[i][0] - sound.note
     return f"{fret}/{i}"
 
 

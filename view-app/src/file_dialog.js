@@ -12,6 +12,7 @@ document.querySelector('#openDialog').addEventListener('click', function (event)
           if(recordedSoundClipContainer.lastChild) {
             recordedSoundClipContainer.removeChild(recordedSoundClipContainer.lastChild);
           }
+          clearCache();
           fetchAndDisplayGuitar(isShowingTransposed, isShowingNotes);
         }
       }).catch(err => {

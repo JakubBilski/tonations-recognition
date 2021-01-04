@@ -34,6 +34,7 @@ function onstopMediaRecorder() {
     return data;
     }).then((text)=>{
       filePath = text.filename;
+      clearCache();
       fetchAndDisplayGuitar(isShowingTransposed, isShowingNotes);
   });
 }

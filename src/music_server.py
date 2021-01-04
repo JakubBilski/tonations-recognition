@@ -132,7 +132,7 @@ def frontend_communication():
         return jsonify({
             "error": f"File {filename} does not exist."
         })
-    notes, chords, key, preview_file = process_file(filename)
+    notes, chords, key, preview_file = process_file(filename, False)
     return jsonify(render_result(notes, chords, key, preview_file, 4, 8))
 
 
@@ -154,7 +154,7 @@ def frontend_communication_simple():
             "error": f"File {filename} does not exist."
         })
     notes, chords, key, preview_file = \
-        chords_simplification.simplify(*process_file(filename))
+        chords_simplification.simplify(*process_file(filename, True))
     return jsonify(render_result(notes, chords, key, preview_file, 4, 8))
 
 
@@ -196,7 +196,7 @@ def print_debug_info(sounds, chords):
             chords_i += 1
 
 
-def process_file(filename, force_key=None):
+def process_file(filename, is_simplified: bool, force_key=None):
     logger.debug(f"Procesing {filename}")
     sounds = sounds_generation.get_sounds_from_file(filename)
     # sounds = sounds_manipulation.change_key(sounds, 2)
@@ -224,8 +224,11 @@ def process_file(filename, force_key=None):
     for x in app.config['TEMP_FOLDER'].iterdir():
         if x.is_file():
             file_str = str(x.name)
-            if len(file_str) >= 6 and file_str[0:6] == "output":
-                x.unlink()
+            if len(file_str) >= 7:
+                if is_simplified and file_str[0:7] == "outbase":
+                    x.unlink()
+                elif not is_simplified and file_str[0:7] == "outsimp":
+                    x.unlink()
 
     result_file = music_synthesis.create_midi(
         app.config['TEMP_FOLDER'] / "output.midi",
@@ -242,7 +245,10 @@ def process_file(filename, force_key=None):
             app.config['TEMP_FOLDER'] / "output.wav")
 
     timestamp = datetime.datetime.now().strftime('%m%d%H%M%S')
-    unique_preview_file = f"output{timestamp}.ogg"
+    if is_simplified:
+        unique_preview_file = f"outbase{timestamp}.ogg"
+    else:
+        unique_preview_file = f"outsimp{timestamp}.ogg"
     prev_file = app.config['TEMP_FOLDER'] / unique_preview_file
     convert_wav_to_ogg(
         result_file,
@@ -270,4 +276,4 @@ def start_server(args):
     if args.http:
         app.run()
     else:
-        process_file(args.input, args.key)
+        process_file(args.input, False, args.key)

@@ -1,12 +1,11 @@
 
 .chord { float: left; padding-top: 0px;}
 .chordname {
-  width: 80%;
+  width: 10%;
   margin: auto;
   font-size: 15px;
 }
 .section_chord {
-  padding-top: 30px;
   clear: left;
 }
 #music

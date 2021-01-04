@@ -137,9 +137,12 @@ def generate_vextab_chords(chords, metrum_upper, metrum_lower):
                 result.append(chords_vextab)
                 chords_vextab = ".1"
                 no_bars_from_start = 0
-    while chords_vextab[-1] == ' ' and chords_vextab[-2] == ',':
+    while (len(chords_vextab) > 2 and
+            chords_vextab[-1] == ' ' and
+            chords_vextab[-2] == ','):
         chords_vextab = chords_vextab[0:chords_vextab[0:-2].rfind(' ,')+1]
-    result.append(chords_vextab)
+    if len(chords_vextab) > 2:
+        result.append(chords_vextab)
     return result
 
 

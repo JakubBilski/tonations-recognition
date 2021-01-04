@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 
+import datetime
 import pathlib
 import logging
 import shutil
@@ -195,7 +196,7 @@ def print_debug_info(sounds, chords):
             chords_i += 1
 
 
-def process_file(filename, force_key=None, output_wav=True):
+def process_file(filename, force_key=None):
     logger.debug(f"Procesing {filename}")
     sounds = sounds_generation.get_sounds_from_file(filename)
     # sounds = sounds_manipulation.change_key(sounds, 2)
@@ -219,31 +220,40 @@ def process_file(filename, force_key=None, output_wav=True):
     chords = chords_generation.get_chords_daria(sounds, key, (4, 8))
 
     duration_ms_of_32 = meter / 4
+
+    for x in app.config['TEMP_FOLDER'].iterdir():
+        if x.is_file():
+            file_str = str(x.name)
+            if len(file_str) >= 6 and file_str[0:6] == "output":
+                x.unlink()
+
     result_file = music_synthesis.create_midi(
         app.config['TEMP_FOLDER'] / "output.midi",
         sounds,
         chords,
         duration_ms_of_32)
-    if output_wav:
-        if os.name == 'nt':
-            result_file = music_synthesis.save_midifile_as_wav_windows(
-                app.config['TEMP_FOLDER'] / "output.midi",
-                app.config['TEMP_FOLDER'] / "output.wav")
-        else:
-            result_file = music_synthesis.save_midifile_as_wav_linux(
-                app.config['TEMP_FOLDER'] / "output.midi",
-                app.config['TEMP_FOLDER'] / "output.wav")
-        convert_wav_to_ogg(
-            app.config['TEMP_FOLDER'] / "output.wav",
-            app.config['TEMP_FOLDER'] / "output.ogg",
-        )
+    if os.name == 'nt':
+        result_file = music_synthesis.save_midifile_as_wav_windows(
+            app.config['TEMP_FOLDER'] / "output.midi",
+            app.config['TEMP_FOLDER'] / "output.wav")
+    else:
+        result_file = music_synthesis.save_midifile_as_wav_linux(
+            app.config['TEMP_FOLDER'] / "output.midi",
+            app.config['TEMP_FOLDER'] / "output.wav")
 
+    timestamp = datetime.datetime.now().strftime('%m%d%H%M%S')
+    unique_preview_file = f"output{timestamp}.ogg"
+    prev_file = app.config['TEMP_FOLDER'] / unique_preview_file
+    convert_wav_to_ogg(
+        result_file,
+        prev_file,
+    )
     logger.debug(f"Meter:\t\t{meter}")
     logger.debug(f"Key:\t\t{key}")
     print_debug_info(sounds, chords)
-    logger.debug(f"Result file:\t\t{result_file}")
+    logger.debug(f"Preview file:\t\t{prev_file}")
 
-    return sounds, chords, key, str(result_file)
+    return sounds, chords, key, str(prev_file.absolute())
 
 
 def convert_recorded_to_wav(source_file, destination_file):
@@ -260,4 +270,4 @@ def start_server(args):
     if args.http:
         app.run()
     else:
-        process_file(args.input, args.key, args.wav)
+        process_file(args.input, args.key)

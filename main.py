@@ -17,9 +17,6 @@ def parse_args():
     parser.add_argument('--key', '-K',
                         help='Use correct key instead of detected',
                         type=str)
-    parser.add_argument('--wav',
-                        action="store_true",
-                        help='Save file as WAVE; works only on linux')
     args = parser.parse_args()
     return args
 

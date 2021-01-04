@@ -30,13 +30,12 @@ STRINGS = {
 
 def sound_to_string(sound):
     # return f"{sound.symbol}/4"
-    sound.height = 3
     i = 6
-    while i > 1 and (STRINGS[i-1][1] < sound.height or
-                     (STRINGS[i-1][1] == sound.height and
+    while i > 1 and (STRINGS[i-1][1] < sound.octave or
+                     (STRINGS[i-1][1] == sound.octave and
                       STRINGS[i-1][0] < sound.note)):
         i -= 1
-    fret = (STRINGS[i][1] - sound.height)*12 + STRINGS[i][0] - sound.note
+    fret = (STRINGS[i][1] - sound.octave)*12 + STRINGS[i][0] - sound.note
     return f"{fret}/{i}"
 
 
@@ -138,9 +137,12 @@ def generate_vextab_chords(chords, metrum_upper, metrum_lower):
                 result.append(chords_vextab)
                 chords_vextab = ".1"
                 no_bars_from_start = 0
-    while chords_vextab[-1] == ' ' and chords_vextab[-2] == ',':
+    while (len(chords_vextab) > 2 and
+            chords_vextab[-1] == ' ' and
+            chords_vextab[-2] == ','):
         chords_vextab = chords_vextab[0:chords_vextab[0:-2].rfind(' ,')+1]
-    result.append(chords_vextab)
+    if len(chords_vextab) > 2:
+        result.append(chords_vextab)
     return result
 
 

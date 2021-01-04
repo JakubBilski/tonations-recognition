@@ -32,7 +32,7 @@ function drawEverything(vextabInput, showNotes) {
   drawTabstaves(vextabInput, showNotes, true);
   drawVexTabChordsCheatSheet(vextabInput);
   unhideMusicInfoSections();
-  updateWithChordsSoundClipContainer();
+  updateWithChordsSoundClipContainer(vextabInput.preview_file);
 }
 
 function clearCache() {
@@ -66,13 +66,16 @@ function drawTabstaves(text, showNotes, showTablature) {
 }
 
 function unhideMusicInfoSections() {
-  document.getElementById('choose_section').style.display = "initial";
-  document.getElementById('music_section').style.display = "initial";
-  document.getElementById('chords_section').style.display = "initial";
+  document.getElementById('choose_section').style.height = chooseSectionHeight;
+  document.getElementById('choose_section').style.overflowY = "auto";
+  document.getElementById('music_section').style.display = "block";
+  document.getElementById('chords_section').style.display = "block";
 }
 
 function hideMusicInfoSections() {
-  document.getElementById('choose_section').style.display = "none";
+  chooseSectionHeight = document.getElementById('choose_section').style.height;
+  document.getElementById('choose_section').style.height = "0px";
+  document.getElementById('choose_section').style.overflowY = "hidden"; 
   document.getElementById('music_section').style.display = "none";
   document.getElementById('chords_section').style.display = "none";
 }
@@ -81,7 +84,7 @@ function drawVexTabChordsCheatSheet(text) {
   draw_chords(text.chord_types);
 }
 
-function updateWithChordsSoundClipContainer() {
+function updateWithChordsSoundClipContainer(audioURL) {
   if (withChordsSoundClipContainer.lastChild) {
     withChordsSoundClipContainer.removeChild(withChordsSoundClipContainer.lastChild);
   }
@@ -91,8 +94,8 @@ function updateWithChordsSoundClipContainer() {
   audio.setAttribute('controls', '');
   clipContainer.appendChild(audio);
   withChordsSoundClipContainer.appendChild(clipContainer);
-  const audioURL = "../../data/temp/output.ogg";
   audio.src = audioURL;
+  audio.load();
 }
 
 hideMusicInfoSections();

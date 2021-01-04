@@ -70,6 +70,7 @@ function unhideMusicInfoSections() {
   document.getElementById('choose_section').style.overflowY = "auto";
   document.getElementById('music_section').style.display = "block";
   document.getElementById('chords_section').style.display = "block";
+  document.getElementById('arrow_button').style.display = "block";
 }
 
 function hideMusicInfoSections() {
@@ -78,6 +79,8 @@ function hideMusicInfoSections() {
   document.getElementById('choose_section').style.overflowY = "hidden"; 
   document.getElementById('music_section').style.display = "none";
   document.getElementById('chords_section').style.display = "none";
+  document.getElementById('arrow_button').style.display = "none";
+  document.getElementById('check').style.display = "none";
 }
 
 function drawVexTabChordsCheatSheet(text) {

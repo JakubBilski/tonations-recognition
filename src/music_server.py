@@ -221,7 +221,8 @@ def process_file(filename, is_simplified: bool, force_key=None):
     duration_ms_of_32 = meter / 4
 
     if is_simplified:
-        sounds, chords, key = chords_simplification.simplify(sounds, chords, key)
+        sounds, chords, key =\
+            chords_simplification.simplify(sounds, chords, key)
 
     for x in app.config['TEMP_FOLDER'].iterdir():
         if x.is_file():
@@ -242,7 +243,7 @@ def process_file(filename, is_simplified: bool, force_key=None):
             app.config['TEMP_FOLDER'] / "output.midi",
             app.config['TEMP_FOLDER'] / "output.wav")
     else:
-        result_file = music_synthesis.save_midifile_as_wav_linux(
+        temp_file = music_synthesis.save_midifile_as_wav_linux(
             app.config['TEMP_FOLDER'] / "output.midi",
             app.config['TEMP_FOLDER'] / "output.wav")
 

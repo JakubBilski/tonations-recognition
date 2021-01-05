@@ -46,14 +46,11 @@ def simplify(notes, chords, key):
     notes (list[Sound])
     chords (list[Chord])
     key (Key)
-    preview_file (os.path-like)
 
     Returns:
     (list[Sound]) : Notes after transposition
     (list[Chord]) : Chords after transposition
     (Key) : Chosen easier key
-    (os.path-like) : Melody with chords generated
-        using transposed sounds and chords
     """
     min_score = 1000000
     min_trans = 0

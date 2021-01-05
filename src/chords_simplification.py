@@ -57,7 +57,14 @@ def simplify(notes, chords, key):
     """
     min_score = 1000000
     min_trans = 0
-    for i in range(-11, 12):
+    lowest_note = min([x.note+x.octave*12 for x in notes if x.note])
+    highest_note = min([x.note+x.octave*12 for x in notes if x.note])
+    # lowest note that can be played on a guitar is E2, which is _note=16
+    lowest_trans = max([-11, 16-lowest_note])
+    # highest note that can be played on a guitar is E4, which is _note=40
+    highest_trans = min([12, 40-highest_note])
+
+    for i in range(lowest_trans, highest_trans+1):
         score = 0
         for c in chords:
             if 'major' in c.kind:

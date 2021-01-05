@@ -37,7 +37,7 @@ CHORDS_SCORING_MAJOR = {
 }
 
 
-def simplify(notes, chords, key, preview_file):
+def simplify(notes, chords, key):
     """Transpose all piece information to a key
     in which the chords would be easier to play
     on a guitar
@@ -67,10 +67,10 @@ def simplify(notes, chords, key, preview_file):
         if score < min_score:
             min_score = score
             min_trans = i
-    key.note += min_trans
+    key.note = (key.note + min_trans) % 12
     for i in range(len(notes)):
         if notes[i].note is not None:
-            notes[i].note += min_trans
+            notes[i].note = notes[i].note + notes[i].octave * 12 + min_trans
     for i in range(len(chords)):
-        chords[i].note += min_trans
-    return notes, chords, key, preview_file
+        chords[i].note = chords[i].note + chords[i].octave * 12 + min_trans
+    return notes, chords, key

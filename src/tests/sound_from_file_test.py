@@ -78,11 +78,11 @@ def visualize_d(d, sounds, test_sounds):
         if r[0] is None:
             r0 = ""
         else:
-            r0 = f"{str(r[0].symbol).ljust(5)} {r[0].duration.ljust(3)}"
+            r0 = f"{str(r[0].symbol).ljust(5)} {str(r[0].duration).ljust(3)}"
         if r[1] is None:
             r1 = ""
         else:
-            r1 = f"{str(r[1].symbol).ljust(5)} {r[1].duration.ljust(3)}"
+            r1 = f"{str(r[1].symbol).ljust(5)} {str(r[1].duration).ljust(3)}"
 
         if (r[2] != 0) or substitution(r[0], r[1]) != 0:
             color = bcolors.FAIL

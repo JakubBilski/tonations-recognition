@@ -8,7 +8,7 @@ from midi2audio import FluidSynth
 def add_sound(track, sound, start_time, duration_ms_of_32):
     duration = sound.duration * duration_ms_of_32
     if sound.note is not None:
-        pitch = sound.note + 60
+        pitch = sound.note + 12*sound.octave + 24
         track.addNote(0, 0, pitch, start_time, duration, 100)
     return duration
 

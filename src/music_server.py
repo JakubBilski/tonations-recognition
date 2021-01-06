@@ -153,8 +153,7 @@ def frontend_communication_simple():
         return jsonify({
             "error": f"File {filename} does not exist."
         })
-    notes, chords, key, preview_file = \
-        chords_simplification.simplify(*process_file(filename, True))
+    notes, chords, key, preview_file = process_file(filename, True)
     return jsonify(render_result(notes, chords, key, preview_file, 4, 8))
 
 
@@ -221,6 +220,10 @@ def process_file(filename, is_simplified: bool, force_key=None):
 
     duration_ms_of_32 = meter / 4
 
+    if is_simplified:
+        sounds, chords, key =\
+            chords_simplification.simplify(sounds, chords, key)
+
     for x in app.config['TEMP_FOLDER'].iterdir():
         if x.is_file():
             file_str = str(x.name)
@@ -230,17 +233,17 @@ def process_file(filename, is_simplified: bool, force_key=None):
                 elif not is_simplified and file_str[0:7] == "outsimp":
                     x.unlink()
 
-    result_file = music_synthesis.create_midi(
+    temp_file = music_synthesis.create_midi(
         app.config['TEMP_FOLDER'] / "output.midi",
         sounds,
         chords,
         duration_ms_of_32)
     if os.name == 'nt':
-        result_file = music_synthesis.save_midifile_as_wav_windows(
+        temp_file = music_synthesis.save_midifile_as_wav_windows(
             app.config['TEMP_FOLDER'] / "output.midi",
             app.config['TEMP_FOLDER'] / "output.wav")
     else:
-        result_file = music_synthesis.save_midifile_as_wav_linux(
+        temp_file = music_synthesis.save_midifile_as_wav_linux(
             app.config['TEMP_FOLDER'] / "output.midi",
             app.config['TEMP_FOLDER'] / "output.wav")
 
@@ -251,7 +254,7 @@ def process_file(filename, is_simplified: bool, force_key=None):
         unique_preview_file = f"outsimp{timestamp}.ogg"
     prev_file = app.config['TEMP_FOLDER'] / unique_preview_file
     convert_wav_to_ogg(
-        result_file,
+        temp_file,
         prev_file,
     )
     logger.debug(f"Meter:\t\t{meter}")

@@ -37,7 +37,7 @@ CHORDS_SCORING_MAJOR = {
 }
 
 
-def simplify(notes, chords, key, preview_file):
+def simplify(notes, chords, key):
     """Transpose all piece information to a key
     in which the chords would be easier to play
     on a guitar
@@ -46,18 +46,22 @@ def simplify(notes, chords, key, preview_file):
     notes (list[Sound])
     chords (list[Chord])
     key (Key)
-    preview_file (os.path-like)
 
     Returns:
     (list[Sound]) : Notes after transposition
     (list[Chord]) : Chords after transposition
     (Key) : Chosen easier key
-    (os.path-like) : Melody with chords generated
-        using transposed sounds and chords
     """
     min_score = 1000000
     min_trans = 0
-    for i in range(-11, 12):
+    min_note = min([x.note+x.octave*12 for x in notes if x.note])
+    max_note = max([x.note+x.octave*12 for x in notes if x.note])
+    # lowest note that can be played on a guitar is E2, which is _note=16
+    min_trans = max([-6, 16-min_note])
+    # highest note that can be played on a guitar is E4, which is _note=40
+    max_trans = min([6, 40-max_note])
+
+    for i in range(min_trans, max_trans+1):
         score = 0
         for c in chords:
             if 'major' in c.kind:
@@ -67,10 +71,10 @@ def simplify(notes, chords, key, preview_file):
         if score < min_score:
             min_score = score
             min_trans = i
-    key.note += min_trans
+    key.note = (key.note + min_trans) % 12
     for i in range(len(notes)):
         if notes[i].note is not None:
-            notes[i].note += min_trans
+            notes[i].note = notes[i].note + notes[i].octave * 12 + min_trans
     for i in range(len(chords)):
-        chords[i].note += min_trans
-    return notes, chords, key, preview_file
+        chords[i].note = chords[i].note + min_trans
+    return notes, chords, key

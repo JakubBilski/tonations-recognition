@@ -816,8 +816,8 @@ banner
 }
 
 .img-fill-record img {
-  min-height: 60%;
-  height: 25em;
+  min-height: 100%;
+  max-height: 30em;
   min-width: 100%;
   position: relative;
   display: inline-block;
@@ -1049,7 +1049,7 @@ ul.slick-dots {
 /*music_section
 */
 #music_section{  
-  padding: 120px 0px 0px 0px;
+  padding: 50px 0px 0px 0px;
   position: relative;
   z-index: 9;
 }
@@ -1062,10 +1062,22 @@ ul.slick-dots {
 {
   margin: 0 auto;
 }
+/*file_cestion*/
+#file_section{  
+  padding: 50px 0px 0px 0px;
+  position: relative;
+  z-index: 9;
+}
+/*choose_cestion*/
+#choose_section{  
+  margin: 50px 0px 0px 0px;
+  position: relative;
+  z-index: 9;
+}
 /* chords_section
 */
 #chords_section{  
-  padding: 120px 0px 0px 0px;
+  padding: 50px 0px 0px 0px;
   position: relative;
   z-index: 9;
 }
@@ -1080,7 +1092,7 @@ about
 */
 
 #about_section {
-  padding: 120px 0px 0px 0px;
+  padding: 80px 0px 0px 0px;
   position: relative;
   z-index: 9;
 }

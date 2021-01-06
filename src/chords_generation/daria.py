@@ -18,7 +18,7 @@ def key_chords(key: Key):
         chords = [
             Chord(note=n, kind="major"),
             Chord(note=n+2, kind="minor"),
-            Chord(note=n+4, kind="major"),
+            Chord(note=n+4, kind="minor"),
             Chord(note=n+5, kind="major"),
             Chord(note=n+7, kind="major7"),
             Chord(note=n+9, kind="minor"),
@@ -27,10 +27,10 @@ def key_chords(key: Key):
         chords = [
             Chord(note=n, kind="minor"),
             Chord(note=n+2, kind="diminished"),
-            Chord(note=n+4, kind="major"),
+            Chord(note=n+3, kind="major"),
             Chord(note=n+5, kind="minor"),
             Chord(note=n+7, kind="major7"),
-            Chord(note=n+9, kind="major"),
+            Chord(note=n+8, kind="major"),
             Chord(note=n+11, kind="diminished")]
     for i in range(len(chords)):
         chords[i].level = i+1

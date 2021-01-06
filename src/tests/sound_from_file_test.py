@@ -103,7 +103,7 @@ def try_to_move_sounds(sounds, coef):
 
 
 def main(args, rec_meth):
-    tests = test_data.get_all_test_models()
+    tests = test_data.get_perfect_test_models()
 
     print("-----------SOUNDS TEST-----------------")
     print(f"Testing beat recognition {rec_meth}")

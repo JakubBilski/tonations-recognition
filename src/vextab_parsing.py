@@ -140,8 +140,6 @@ def generate_vextab_notes(sounds, metrum_upper, metrum_lower):
                     result.append(notes_vextab)
                     notes_vextab = ""
                     no_bars_from_start = 0
-
-    result.append(notes_vextab)
     if len(notes_vextab) > 0:
         result.append(notes_vextab)
     return result

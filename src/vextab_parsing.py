@@ -73,11 +73,11 @@ def divide_chords_with_bars(chords, bar_duration):
             first_part = bar_duration - duration_sum
             second_part = chord.duration - first_part
             result.append(Chord(chord.note,
-                duration=first_part,
-                kind=chord.kind))
+                                duration=first_part,
+                                kind=chord.kind))
             result.append(Chord(chord.note,
-                duration=second_part,
-                kind=chord.kind))
+                                duration=second_part,
+                                kind=chord.kind))
             duration_sum = second_part
         else:
             result.append(chord)
@@ -159,7 +159,8 @@ def generate_vextab_chords(chords, metrum_upper, metrum_lower):
     duration_from_start = 0
     no_bars_from_start = 0
     divided_chords = divide_chords_with_bars(chords, bar_duration)
-    cleared_chords = [dc for chord in divided_chords for dc in decompose_chord(chord)]
+    cleared_chords = [dc for chord in divided_chords
+                      for dc in decompose_chord(chord)]
     prev_chord = None
     chords_vextab += ".1"
 

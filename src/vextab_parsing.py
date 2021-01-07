@@ -65,6 +65,28 @@ def decompose_chord(chord):
     return result
 
 
+def divide_chords_with_bars(chords, bar_duration):
+    result = []
+    duration_sum = 0
+    for chord in chords:
+        if duration_sum + chord.duration > bar_duration:
+            first_part = bar_duration - duration_sum
+            second_part = chord.duration - first_part
+            result.append(Chord(chord.note,
+                duration=first_part,
+                kind=chord.kind))
+            result.append(Chord(chord.note,
+                duration=second_part,
+                kind=chord.kind))
+            duration_sum = second_part
+        else:
+            result.append(chord)
+            duration_sum += chord.duration
+            if duration_sum == bar_duration:
+                duration_sum = 0
+    return result
+
+
 def generate_vextab_notes(sounds, metrum_upper, metrum_lower):
     """Use information about the piece
     to create notes in an input format
@@ -136,7 +158,8 @@ def generate_vextab_chords(chords, metrum_upper, metrum_lower):
     bar_duration = metrum_upper*metrum_lower
     duration_from_start = 0
     no_bars_from_start = 0
-    cleared_chords = [dc for chord in chords for dc in decompose_chord(chord)]
+    divided_chords = divide_chords_with_bars(chords, bar_duration)
+    cleared_chords = [dc for chord in divided_chords for dc in decompose_chord(chord)]
     prev_chord = None
     chords_vextab += ".1"
 

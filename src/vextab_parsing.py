@@ -30,13 +30,15 @@ STRINGS = {
 
 def sound_to_string(sound):
     # return f"{sound.symbol}/4"
+    if sound.symbol == 'r':
+        return "## "
     i = 6
     while i > 1 and (STRINGS[i-1][1] < sound.octave or
                      (STRINGS[i-1][1] == sound.octave and
                       STRINGS[i-1][0] < sound.note)):
         i -= 1
     fret = (STRINGS[i][1] - sound.octave)*12 + STRINGS[i][0] - sound.note
-    return f"{fret}/{i}"
+    return f"{-fret}/{i}"
 
 
 def chord_to_string(chord):
@@ -79,24 +81,45 @@ def generate_vextab_notes(sounds, metrum_upper, metrum_lower):
     duration_from_start = 0
     no_bars_from_start = 0
     for sound in sounds:
-        if sound.symbol == "r":
-            notes_vextab += "## "
+        if duration_from_start + sound.duration > bar_duration:
+            first_part = bar_duration - duration_from_start
+            notes_vextab += ":"
+            notes_vextab += DURATION_TO_VEXTAB_DURATION[first_part]
+            notes_vextab += " "
+            notes_vextab += sound_to_string(sound)
+            notes_vextab += " "
+            notes_vextab += "| "
+            second_part = sound.duration - first_part
+            duration_from_start = second_part
+            no_bars_from_start += 1
+            if no_bars_from_start >= NO_BARS_IN_ROW:
+                result.append(notes_vextab)
+                notes_vextab = ""
+                no_bars_from_start = 0
+            notes_vextab += ":"
+            notes_vextab += DURATION_TO_VEXTAB_DURATION[first_part]
+            notes_vextab += " b"
+            notes_vextab += sound_to_string(sound)
+            notes_vextab += " "
         else:
             notes_vextab += ":"
             notes_vextab += DURATION_TO_VEXTAB_DURATION[sound.duration]
             notes_vextab += " "
             notes_vextab += sound_to_string(sound)
             notes_vextab += " "
-        duration_from_start += sound.duration
-        if duration_from_start >= bar_duration:
-            notes_vextab += "| "
-            duration_from_start -= bar_duration
-            no_bars_from_start += 1
-            if no_bars_from_start >= NO_BARS_IN_ROW:
-                result.append(notes_vextab)
-                notes_vextab = ""
-                no_bars_from_start = 0
+            duration_from_start += sound.duration
+            if duration_from_start == bar_duration:
+                notes_vextab += "| "
+                duration_from_start = 0
+                no_bars_from_start += 1
+                if no_bars_from_start >= NO_BARS_IN_ROW:
+                    result.append(notes_vextab)
+                    notes_vextab = ""
+                    no_bars_from_start = 0
+        
     result.append(notes_vextab)
+    for ehh in result:
+        print(ehh)
     return result
 
 

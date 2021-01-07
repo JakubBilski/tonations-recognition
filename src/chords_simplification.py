@@ -60,6 +60,8 @@ def simplify(notes, chords, key):
     min_trans = max([-6, 16-min_note])
     # highest note that can be played on a guitar is E4, which is _note=40
     max_trans = min([6, 40-max_note])
+    if max_trans <= min_trans:
+        return notes, chords, key
 
     for i in range(min_trans, max_trans+1):
         score = 0

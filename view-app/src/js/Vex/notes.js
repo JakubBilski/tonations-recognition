@@ -80,7 +80,6 @@ function hideMusicInfoSections() {
   document.getElementById('music_section').style.display = "none";
   document.getElementById('chords_section').style.display = "none";
   document.getElementById('arrow_button').style.display = "none";
-  document.getElementById('check').style.display = "none";
 }
 
 function drawVexTabChordsCheatSheet(text) {

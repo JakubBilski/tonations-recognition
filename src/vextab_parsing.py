@@ -38,7 +38,7 @@ def sound_to_string(sound):
                       STRINGS[i-1][0] < sound.note)):
         i -= 1
     fret = sound.note - (STRINGS[i][1] - sound.octave)*12 - STRINGS[i][0]
-    return f"{-fret}/{i}"
+    return f"{fret}/{i}"
 
 
 def chord_to_string(chord):

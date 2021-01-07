@@ -37,7 +37,7 @@ def sound_to_string(sound):
                      (STRINGS[i-1][1] == sound.octave and
                       STRINGS[i-1][0] < sound.note)):
         i -= 1
-    fret = (STRINGS[i][1] - sound.octave)*12 + STRINGS[i][0] - sound.note
+    fret = sound.note - (STRINGS[i][1] - sound.octave)*12 - STRINGS[i][0]
     return f"{-fret}/{i}"
 
 
@@ -116,10 +116,8 @@ def generate_vextab_notes(sounds, metrum_upper, metrum_lower):
                     result.append(notes_vextab)
                     notes_vextab = ""
                     no_bars_from_start = 0
-        
+
     result.append(notes_vextab)
-    for ehh in result:
-        print(ehh)
     return result
 
 

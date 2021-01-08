@@ -1,0 +1,1187 @@
+data/perfect_guitar/ach_spij_C.wav
+
+c 4 4
+g 4 2. 
+e 4 4 
+d 4 4     
+g 3 2    
+e 4 8
+f 4 8 
+g 4 8
+a 4 8 
+g 4 8
+a 4 8
+g 4 4
+e 4 4
+d 4 4     
+g 3 2   
+c 4 8
+d 4 8 
+e 4 8  
+e 4 8 
+e 4 8 
+e 4 8 
+e 4 4     
+c 4 8
+d 4 8 
+e 4 8  
+e 4 8 
+e 4 8 
+e 4 8 
+e 4 4     
+c 4 8
+d 4 8 
+e 4 2
+c 4 4
+g 3 4    
+d 4 4 
+c 4 2
+
+t C
+
+data/perfect_guitar/jedzie_pociag_z_daleka_F.wav 
+
+c 4 8 
+f 4 8 
+a 4 8 
+g 4 8 
+f 4 8 
+e 4 8 
+f 4 4 
+c 4 8
+f 4 8
+a 4 8
+g 4 8
+f 4 8
+e 4 8
+f 4 4
+f 4 8
+f 4 8
+a 4 8
+c 5 8
+ais 4 8
+a 4 8
+ais 4 4 
+c 4 8 
+c 4 8 
+g 4 8 
+ais 4 8 
+a 4 8 
+g 4 8 
+f 4 4
+
+t F 
+
+
+data/perfect_guitar/lato_lato_C.wav 
+
+g 4 4
+g 4 4 
+e 4 8 
+g 4 4. 
+a 4 4 
+g 4 4 
+f 4 8 
+d 4 4. 
+f 4 4 
+f 4 4 
+d 4 8 
+f 4 4. 
+g 4 4 
+f 4 4 
+e 4 8 
+c 4 4. 
+g 4 4  
+g 4 4 
+e 4 8 
+g 4 4. 
+c 5 4 
+a 4 4 
+g 4 2 
+f 4 8 
+g 4 8 
+a 4 8 
+f 4 8 
+e 4 4 
+c 4 4 
+d 4 2 
+
+t C  
+
+
+data/perfect_guitar/opadly_mgly_C.wav 
+
+r 4.
+c 4 8
+c 4 4
+d 4 4
+e 4 4
+e 4 8
+e 4 4
+e 4 4.
+f 4 4
+f 4 8
+f 4 4 
+f 4 4.
+e 4 4 
+e 4 4
+e 4 8
+d 4 8 
+c 4 8
+d 4 4.
+c 4 8
+c 4 4
+d 4 4
+e 4 4
+e 4 8
+e 4 4
+e 4 4.
+f 4 4
+f 4 8
+f 4 4 
+f 4 4.
+e 4 4 
+e 4 4
+e 4 8
+d 4 8 
+c 4 8
+d 4 4.
+r 4
+d 4 4
+d 4 4
+c 4 4 
+b 3 4
+c 4 8
+c 4 8
+
+t C
+
+
+data/perfect_guitar/opadly_mgly_D.wav 
+
+r 4.
+d 4 8
+d 4 4
+e 4 4
+fis 4 4
+fis 4 8
+fis 4 4
+fis 4 4.
+g 4 4
+g 4 8
+g 4 4 
+g 4 4.
+fis 4 4 
+fis 4 4
+fis 4 8
+e 4 8 
+d 4 8
+e 4 4.
+d 4 8
+d 4 4
+e 4 4
+fis 4 4
+fis 4 8
+fis 4 4
+fis 4 4.
+g 4 4
+g 4 8
+g 4 4 
+g 4 4.
+fis 4 4 
+fis 4 4
+fis 4 8
+e 4 8 
+d 4 8
+e 4 4.
+r 4
+e 4 4
+e 4 4
+d 4 4 
+c 4 4
+d 4 8
+d 4 8
+
+t D
+
+
+data/perfect_guitar/o_moj_rozmarunie_c.wav 
+c 4 8
+c 4 8
+c 4 8
+c 4 8
+f 4 4
+dis 4 4
+d 4 4
+dis 4 8
+d 4 8
+c 4 2
+g 4 8
+g 4 8
+g 4 8
+g 4 8
+c 5 4
+b 4 4
+gis 4 4
+b 4 8
+gis 4 8
+g 4 2
+g 4 8
+g 4 8
+g 4 8
+g 4 8
+gis 4 4
+g 4 4
+f 4 8
+dis 4 8
+d 4 8
+dis 4 8
+f 4 4
+dis 4 4
+d 4 4
+dis 4 8
+f 4 8
+g 4 2
+g 4 8
+g 4 8
+g 4 8
+g 4 8
+gis 5 4
+g 4 4
+f 4 8
+dis 4 8
+d 4 8
+dis 4 8
+f 4 4
+dis 4 4
+d 4 4
+dis 4 8
+d 4 8
+c 4 2
+t c
+
+
+data/perfect_guitar/o_moj_rozmarunie_e.wav 
+
+e 4 8
+e 4 8
+e 4 8
+e 4 8
+a 4 4
+g 4 4
+fis 4 4
+g 4 8
+fis 4 8
+e 4 2
+b 4 8
+b 4 8
+b 4 8
+b 4 8
+e 5 4
+d 5 4
+c 5 4
+d 5 8
+c 5 8
+b 4 2
+b 4 8
+b 4 8
+b 4 8
+b 4 8
+c 5 4
+b 4 4
+a 4 8
+g 4 8
+fis 4 8
+g 4 8
+a 4 4
+g 4 4
+fis 4 4
+g 4 8
+a 4 8
+b 4 2
+b 4 8
+b 4 8
+b 4 8
+b 4 8
+c 5 4
+b 4 4
+a 4 8
+g 4 8
+fis 4 8
+g 4 8
+a 4 4
+g 4 4
+fis 4 4
+g 4 8
+fis 4 8
+e 4 2
+
+t e
+
+
+data/perfect_guitar/panie_JanieC.wav 
+
+c 4 4 
+d 4 4 
+e 4 4 
+c 4 4 
+c 4 4 
+d 4 4 
+e 4 4 
+c 4 4 
+e 4 4 
+f 4 4 
+g 4 2 
+e 4 4 
+f 4 4 
+g 4 2 
+g 4 8 
+a 4 8 
+g 4 8 
+f 4 8 
+e 4 4 
+c 4 4 
+g 4 8 
+a 4 8 
+g 4 8 
+f 4 8 
+e 4 4 
+c 4 4 
+c 4 4 
+g 3 4 
+c 4 2 
+c 4 4 
+g 3 4 
+c 4 2 
+
+t C
+
+
+data/perfect_guitar/przybiezeli.wav 
+
+c 4 8
+b 3 8 
+c 4 8
+d 4 8 
+e 4 8 
+d 4 8
+e 4 8 
+f 4 8 
+g 4 4 
+a 4 4 
+g 4 2 
+c 4 8 
+b 3 8 
+c 4 8 
+d 4 8 
+e 4 8 
+d 4 8 
+e 4 8 
+f 4 8 
+g 4 4 
+a 4 4 
+g 4 2
+c 5 4 
+g 4 8 
+g 4 8 
+a 4 8 
+g 4 8 
+f 4 8 
+e 4 8 
+f 4 4 
+f 4 8 
+a 4 8 
+g 4 8 
+f 4 8 
+e 4 8 
+d 4 8 
+e 4 4 
+f 4 4 
+g 4 2
+e 4 4 
+d 4 4 
+c 4 2 
+
+t C 
+
+
+data/perfect_guitar/plonie_ognisko_c.wav 
+
+
+c 4 8 
+d 4 8
+dis 4 4 
+f 4 8 
+dis 4 8 
+d 4 4
+dis 4 8
+d 4 8
+c 4 4
+g 3 2
+c 4 8
+c 4 8 
+d 4 4
+g 4 4
+dis 4 4 
+d 4 4
+c 4 2
+c 4 8
+c 4 8 
+d 4 8
+dis 4 4 
+f 4 8 
+dis 4 8 
+d 4 4
+dis 4 8
+d 4 8
+c 4 4
+g 3 2
+c 4 8
+c 4 8
+d 4 4
+gis 4 4
+g 4 4
+b 4 4
+c 4 2
+
+
+t c
+
+
+data/perfect_guitar/sto_lat_C.wav 
+
+
+g 4 4 
+e 4 4
+g 4 4 
+e 4 4 
+g 4 4 
+a 4 8 
+g 4 8 
+f 4 8 
+e 4 8 
+f 4 4 
+f 4 4 
+d 4 4 
+f 4 4
+d 4 4 
+f 4 4 
+g 4 8 
+f 4 8 
+e 4 8 
+d 4 8 
+e 4 4 
+g 4 8 
+g 4 8 
+e 4 4 
+g 4 8 
+e 4 8 
+g 4 4 
+c 5 8 
+b 4 8 
+a 4 8 
+g 4 8 
+a 4 4 
+b 4 4 
+b 4 8 
+b 4 8 
+c 5 2 
+
+
+t C
+
+data/perfect_guitar/mizerna_d.wav
+
+a 4 4
+a 4 4
+a 4 4
+g 4 2
+g 4 4
+f 4 4
+f 4 4
+f 4 4
+e 4 2
+a 3 4
+d 4 4 
+d 4 4  
+e 4 4 
+f 4 4
+e 4 4 
+d 4 4
+a 4 2. 
+a 4 2.
+a 4 4
+a 4 4
+a 4 4
+g 4 2
+g 4 4
+f 4 4
+f 4 4
+f 4 4
+e 4 2
+a 3 4
+d 4 4 
+d 4 4  
+e 4 4 
+f 4 2
+e 4 4
+d 4 2.
+d 4 2.
+
+t d
+
+data/perfect_guitar/gdy_sliczna_panna_F.wav 
+
+c 4 2 
+d 4 4 
+e 4 4 
+f 4 2 
+f 4 2 
+g 4 4
+ais 4 4 
+a 4 4 
+g 4 4 
+g 4 2 
+f 4 2 
+c 4 2 
+d 4 4 
+e 4 4
+f 4 2
+f 4 2
+g 4 4
+ais 4 4 
+a 4 4 
+g 4 4 
+g 4 2 
+f 4 2 
+a 4 4 
+g 4 4 
+a 4 4 
+f 4 4 
+g 4 1 
+e 4 4 
+g 4 4 
+f 4 4 
+e 4 4 
+d 4 2 
+c 4 2 
+a 4 4 
+g 4 4 
+a 4 4 
+f 4 4 
+ais 4 1 
+a 4 4 
+c 5 4 
+ais 4 8 
+a 4 8 
+g 4 8 
+f 4 8 
+g 4 2 
+f 4 2 
+
+t F
+
+data/perfect_guitar/o_gwiazdo_betlejemska_F.wav
+
+c 4 8
+f 4 8
+e 4 8
+f 4 8
+g 4 8
+f 4 8
+g 4 8
+a 4 4.
+c 5 4.
+ais 4 8
+a 4 8 
+g 4 8  
+f 4 4 
+e 4 8
+f 4 4.
+r 4 
+c 4 8
+f 4 8
+e 4 8
+f 4 8
+g 4 8
+f 4 8
+g 4 8
+a 4 4.
+c 5 4.
+ais 4 8
+a 4 8 
+g 4 8  
+f 4 4 
+e 4 8
+f 4 4.
+r 4
+a 4 8
+d 4 4 
+e 4 8
+f 4 8
+e 4 8
+d 4 8
+e 4 4.
+a 4 4.
+a 4 8
+g 4 8
+f 4 8
+f 4 8
+e 4 8
+d 4 8 
+a 4 4.
+r 4  
+a 4 4 
+g 4 8
+g 4 8
+f 4 8
+g 4 8
+a 4 4.
+c 5 4.
+ais 4 8
+a 4 8
+g 4 8
+f 4 4
+e 4 8
+f 4 4.
+
+t F
+
+data/perfect_guitar/my_tez_paszuszkowie_F.wav
+
+f 4 8
+a 4 8
+c 5 8
+c 5 8
+c 5 8
+c 5 8
+f 5 8
+d 5 8
+c 5 8
+c 5 8
+c 5 8 
+c 5 8  
+c 5 8 
+ais 4 16
+a 4 16 
+ais 4 2
+ais 4 8 
+a 4 16
+g 4 16
+a 4 2
+f 4 8
+a 4 8
+c 5 8
+c 5 8
+c 5 8
+c 5 8
+f 5 8
+d 5 8
+c 5 8
+c 5 8
+c 5 8 
+c 5 8  
+c 5 8 
+ais 4 16
+a 4 16 
+ais 4 2
+ais 4 8 
+a 4 16
+g 4 16
+a 4 2
+a 4 4
+a 4 4
+a 4 4
+a 4 8
+c 5 8
+c 5 8
+ais 4 8
+ais 4 8
+a 4 8 
+g 4 4  
+g 4 4 
+g 4 4
+g 4 8
+ais 4 8
+ais 4 8
+a 4 8
+a 4 8
+g 4 8
+f 5 8
+e 5 16
+f 5 16
+d 5 2
+ais 4 8
+g 4 16
+e 4 16
+f 4 2
+
+t F
+
+data/perfect_guitar/gdy_sie_chrystus_C.wav
+
+g 4 4
+e 4 4
+c 5 4
+a 4 4
+a 4 2
+g 4 2
+e 4 4
+e 4 4
+f 4 4
+d 4 4
+d 4 2 
+c 4 2
+g 4 4
+e 4 4
+c 5 4
+a 4 4
+a 4 2
+g 4 2
+e 4 4
+e 4 4
+f 4 4
+d 4 4
+d 4 2 
+c 4 2 
+d 4 4 
+d 4 8
+e 4 8 
+f 4 4
+d 4 4 
+e 4 4
+e 4 8
+f 4 8
+g 4 4
+e 4 4
+d 4 4 
+d 4 8
+e 4 8 
+f 4 4
+d 4 4 
+e 4 4
+e 4 8
+f 4 8
+g 4 4
+e 4 4
+g 4 2
+g 4 4
+g 4 4
+a 4 2
+a 4 4
+a 4 4
+b 4 2
+b 4 4
+b 4 4
+c 5 4
+g 4 4
+a 4 4 
+f 4 4  
+e 4 2
+d 4 2
+c 4 1
+
+t C
+
+data/perfect_guitar/w_zlobie_lezy_F.wav
+
+c 4 8
+c 4 8
+f 4 8
+g 4 8
+a 4 4
+g 4 8
+f 4 8
+g 4 8
+a 4 8
+ais 4 4 
+a 4 8  
+ais 4 8 
+c 5 4
+ais 4 4
+a 4 8
+g 4 8
+f 4 2
+c 4 8
+c 4 8
+f 4 8
+g 4 8
+a 4 4
+g 4 8
+f 4 8
+g 4 8
+a 4 8
+ais 4 4 
+a 4 8  
+ais 4 8 
+c 5 4
+ais 4 4
+a 4 8
+g 4 8
+f 4 2
+c 5 4.
+ais 4 8
+a 4 8
+a 4 8
+d 5 8
+c 5 8
+ais 4 8
+a 4 8
+ais 4 4
+ais 4 4.
+a 4 8 
+g 4 8  
+g 4 8 
+c 5 8
+ais 4 8
+a 4 8
+g 4 8 
+a 4 4
+f 4 8
+e 4 8
+d 4 4
+ais 4 4
+a 4 8
+g 4 8
+f 4 2
+
+t F
+
+
+data/perfect_guitar/Bog_sie_rodzi_D.wav
+
+d 4 8.
+d 5 16
+d 5 4
+cis 5 8
+b 4 8
+b 4 8.
+b 4 16
+b 4 4
+a 4 8
+g 4 8 
+fis 4 8
+a 4 8
+d 5 8 
+a 4 8
+g 4 8
+fis 4 8
+fis 4 4
+e 4 2
+d 4 8.
+d 5 16
+d 5 4
+cis 5 8
+b 4 8
+b 4 8.
+b 4 16
+b 4 4
+a 4 8
+g 4 8 
+fis 4 8
+a 4 8
+d 5 8 
+a 4 8
+g 4 8
+fis 4 8
+fis 4 4
+e 4 2
+g 4 4.
+e 4 8
+fis 4 8
+g 4 8
+a 4 8
+a 4 8
+fis 4 4 
+a 4 4
+g 4 4.
+e 4 8
+fis 4 8
+g 4 8
+a 4 8
+a 4 8
+fis 4 4 
+a 4 4
+g 4 4.
+e 4 8
+fis 4 8
+g 4 8
+a 4 8
+a 4 8
+fis 4 4 
+a 4 4
+g 4 4.
+e 4 8
+fis 4 8
+g 4 8
+a 4 8.
+cis 4 16
+e 4 4 
+d 4 4
+
+t D
+
+data/perfect_guitar/do_szopy_D.wav
+
+a 3 4
+d 4 4
+d 4 4
+e 4 8
+d 4 8
+cis 4 4
+cis 4 4
+a 3 4
+e 4 4
+e 4 4
+fis 4 8
+e 4 8
+d 4 2
+a 3 4
+d 4 4
+d 4 4
+e 4 8
+d 4 8
+cis 4 4
+cis 4 4
+a 3 4
+e 4 4
+e 4 4
+fis 4 8
+e 4 8
+d 4 2
+a 3 4
+fis 4 4
+fis 4 4 
+g 4 8
+fis 4 8
+e 4 4
+e 4 4
+e 4 4
+g 4 4
+b 4 4
+a 4 8
+gis 4 8
+a 4 2
+a 3 4
+fis 4 4
+fis 4 4 
+g 4 8
+fis 4 8
+e 4 4
+e 4 4
+a 3 4
+e 4 4
+e 4 4
+fis 4 8 
+e 4 8  
+d 4 2
+
+t D
+
+data/perfect_guitar/bracia_patrzcie_G.wav
+
+g 4 4.
+d 4 8
+b 3 8
+d 4 8
+g 4 4
+g 3 4
+r 4
+b 4 4.
+a 4 8
+g 4 8
+a 4 8
+b 4 4
+g 4 4
+r 4
+g 4 4.
+d 4 8
+b 3 8
+d 4 8
+g 4 4
+g 3 4
+r 4
+b 4 4.
+a 4 8
+g 4 8
+a 4 8
+b 4 4
+g 4 4
+r 4
+a 4 4.
+b 4 16
+a 4 16
+g 4 8
+e 4 8
+fis 4 4.
+e 4 16
+fis 4 16
+g 4 8
+e 4 8
+a 4 4.
+b 4 16
+a 4 16
+g 4 8
+e 4 8
+fis 4 4.
+g 4 16
+fis 4 16
+e 4 8
+d 4 8
+d 4 4.
+e 4 8
+d 4 8
+c 4 8
+d 4 4.
+e 4 8
+d 4 8
+c 4 8
+g 4 4.
+b 4 8
+a 4 8
+g 4 8
+d 5 2.
+b 4 2
+r 4
+b 4 2
+a 4 8.
+b 4 16
+g 4 2
+
+t D
+
+data/perfect_guitar/cicha_noc_C.wav
+
+g 4 4.
+a 4 8
+g 4 4
+e 4 2.
+g 4 4.
+a 4 8
+g 4 4
+e 4 2.
+d 5 2
+d 5 4
+b 4 2
+b 4 4
+c 5 2
+c 5 4
+g 4 2.
+a 4 2
+a 4 4
+c 5 4.
+b 4 8
+a 4 4
+g 4 4.
+a 4 8
+g 4 4
+e 4 2
+c 4 4
+a 4 2
+a 4 4
+c 5 4.
+b 4 8
+a 4 4
+g 4 4.
+a 4 8
+g 4 4
+e 4 2
+c 4 4
+d 5 2
+d 5 4
+f 5 4.
+d 5 8
+b 4 4
+c 4 2.
+e 5 4
+r 2
+c 5 4.
+g 4 8
+e 4 4
+g 4 4.
+f 4 8
+d 4 4
+c 4 1
+
+t C
+
+data/perfect_guitar/medrcy_swiata_C.wav
+
+e 4 4.
+f 4 8
+g 4 4
+g 4 4 
+a 4 4
+a 4 4 
+g 4 4
+g 4 4
+f 4 4.
+e 4 8
+f 4 4
+a 4 4
+g 4 4.
+f 4 8
+e 4 2
+e 4 4.
+f 4 8
+g 4 4
+g 4 4 
+a 4 4
+c 5 4
+b 4 4
+a 4 4
+g 4 4.
+e 4 8
+f 4 4
+d 4 4
+d 4 2
+c 4 2
+
+t C
+
+data/perfect_guitar/jezus_malusienki_Ais.wav
+
+ais 4 8
+a 4 8
+g 4 4
+fis 4 8
+g 4 8
+a 4 4
+d 4 2
+ais 4 8
+a 4 8
+g 4 4
+fis 4 8
+g 4 8
+a 4 4
+d 4 2
+c 4 8 
+d 4 8
+dis 4 4
+dis 4 4
+d 4 8
+dis 4 8
+f 4 4
+f 4 4
+g 4 8
+f 4 8
+dis 4 4
+c 4 4
+dis 4 4
+d 4 2
+c 4 8 
+d 4 8
+dis 4 4
+dis 4 4
+d 4 8
+dis 4 8
+f 4 4
+f 4 4
+g 4 8
+f 4 8
+dis 4 4
+c 4 4
+c 4 4
+ais 4 2
+
+t A#

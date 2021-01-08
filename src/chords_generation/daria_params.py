@@ -75,7 +75,7 @@ NEXT_CHORD = {
 for i in range(1, 8):
     if i not in NEXT_CHORD:
         NEXT_CHORD[i] = {}
-    NEXT_CHORD[i][i] = 1.2
+    NEXT_CHORD[i][i] = 1
 for i in range(0, 8):
     for j in range(1, 8):
         if j not in NEXT_CHORD[i]:

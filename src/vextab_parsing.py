@@ -120,7 +120,9 @@ def generate_vextab_notes(sounds, metrum_upper, metrum_lower):
                 no_bars_from_start = 0
             notes_vextab += ":"
             notes_vextab += DURATION_TO_VEXTAB_DURATION[first_part]
-            notes_vextab += " b"
+            notes_vextab += " "
+            if sound.symbol != 'r':
+                notes_vextab += 'b'
             notes_vextab += sound_to_string(sound)
             notes_vextab += " "
         else:
@@ -138,8 +140,6 @@ def generate_vextab_notes(sounds, metrum_upper, metrum_lower):
                     result.append(notes_vextab)
                     notes_vextab = ""
                     no_bars_from_start = 0
-
-    result.append(notes_vextab)
     if len(notes_vextab) > 0:
         result.append(notes_vextab)
     return result

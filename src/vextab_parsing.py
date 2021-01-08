@@ -115,6 +115,7 @@ def generate_vextab_notes(sounds, metrum_upper, metrum_lower):
     for sound in sounds:
         if duration_from_start + sound.duration > bar_duration:
             first_part = bar_duration - duration_from_start
+            first_part = closest_legal_duration(first_part)
             notes_vextab += ":"
             notes_vextab += DURATION_TO_VEXTAB_DURATION[first_part]
             notes_vextab += " "
@@ -122,7 +123,6 @@ def generate_vextab_notes(sounds, metrum_upper, metrum_lower):
             notes_vextab += " "
             notes_vextab += "| "
             second_part = sound.duration - first_part
-            # second part can become not legal (ei. 32 - 12 = 20)
             second_part = closest_legal_duration(second_part)
             duration_from_start = second_part
             no_bars_from_start += 1

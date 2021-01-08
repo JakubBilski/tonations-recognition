@@ -25,7 +25,7 @@ STRINGS = {
     2: (constants.REVERSE_SYMBOLS["B"], 3),
     1: (constants.REVERSE_SYMBOLS["E"], 4)
 }
-# print(STRINGS)
+
 
 def closest_legal_duration(duration):
     min_diff = duration

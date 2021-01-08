@@ -164,7 +164,7 @@ def generate_vextab_chords(chords, metrum_upper, metrum_lower):
     cleared_chords = [dc for chord in divided_chords
                       for dc in decompose_chord(chord)]
     prev_chord = None
-    chords_vextab += ".1"
+    chords_vextab += ".0"
 
     for chord in cleared_chords:
         chords_vextab += ",:"
@@ -182,7 +182,7 @@ def generate_vextab_chords(chords, metrum_upper, metrum_lower):
             no_bars_from_start += 1
             if no_bars_from_start >= NO_BARS_IN_ROW:
                 result.append(chords_vextab)
-                chords_vextab = ".1"
+                chords_vextab = ".0"
                 no_bars_from_start = 0
     while (len(chords_vextab) > 2 and
             chords_vextab[-1] == ' ' and

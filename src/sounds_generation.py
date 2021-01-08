@@ -39,14 +39,14 @@ def get_sounds_from_file(file):
     return get_sounds_from_list(xs, strength_changes, notes)
 
 
-def get_sounds_from_list(timestamps, amplitude_changes, notes):
+def get_sounds_from_list(timestamps, stength_changes, notes):
     # for each timeframe recognise note and
     # merge same more notes together
     sounds = []
     last_note = None
     last_note_timestamp = 0.0
     for note, timestamp, a_changes \
-            in zip(notes, timestamps, amplitude_changes):
+            in zip(notes, timestamps, stength_changes):
         if (last_note != note) or a_changes:
             sounds.append(music.Sound(last_note, last_note_timestamp,
                                       timestamp-last_note_timestamp))

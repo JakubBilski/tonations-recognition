@@ -29,9 +29,11 @@ def get_sounds_from_file(file):
     snd = parselmouth.Sound(str(file))
     pitch = snd.to_pitch()
     frequencies = pitch.selected_array['frequency']
-    strengths = pitch.selected_array['strength']
+    stgt = pitch.selected_array['strength']
     xs = pitch.xs()
-    strength_changes = [(strengths[i]-strengths[i-1]>(xs[i]-xs[i-1])*STRENGTH_CHANGE_TO_SEPARATE) for i in range(1,len(strengths))]
+    strength_changes = \
+        [(stgt[i]-stgt[i-1] > (xs[i]-xs[i-1])*STRENGTH_CHANGE_TO_SEPARATE)
+         for i in range(1, len(stgt))]
     strength_changes.insert(0, False)
     notes = [frequency_to_note(freq) for freq in frequencies]
     return get_sounds_from_list(xs, strength_changes, notes)
@@ -43,7 +45,8 @@ def get_sounds_from_list(timestamps, amplitude_changes, notes):
     sounds = []
     last_note = None
     last_note_timestamp = 0.0
-    for note, timestamp, a_changes in zip(notes, timestamps, amplitude_changes):
+    for note, timestamp, a_changes \
+            in zip(notes, timestamps, amplitude_changes):
         if (last_note != note) or a_changes:
             sounds.append(music.Sound(last_note, last_note_timestamp,
                                       timestamp-last_note_timestamp))

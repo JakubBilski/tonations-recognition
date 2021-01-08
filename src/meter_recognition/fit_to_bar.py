@@ -15,7 +15,7 @@ def beat_id_closest_to_timestamp(beats, timestamp):
 def simple_sound_beat_dur(beats, sound):
     id = sound.beat_id
 
-    if id==len(beats)-1:
+    if id == len(beats)-1:
         b2 = beats[id]
         b1 = beats[id-1]
     else:

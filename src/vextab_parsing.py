@@ -25,7 +25,17 @@ STRINGS = {
     2: (constants.REVERSE_SYMBOLS["B"], 3),
     1: (constants.REVERSE_SYMBOLS["E"], 4)
 }
-# print(STRINGS)
+
+
+def closest_legal_duration(duration):
+    min_diff = duration
+    best_key = None
+    for key in DURATION_TO_VEXTAB_DURATION.keys():
+        diff = abs(duration - key)
+        if diff < min_diff:
+            min_diff = diff
+            best_key = key
+    return best_key
 
 
 def sound_to_string(sound):
@@ -105,6 +115,7 @@ def generate_vextab_notes(sounds, metrum_upper, metrum_lower):
     for sound in sounds:
         if duration_from_start + sound.duration > bar_duration:
             first_part = bar_duration - duration_from_start
+            first_part = closest_legal_duration(first_part)
             notes_vextab += ":"
             notes_vextab += DURATION_TO_VEXTAB_DURATION[first_part]
             notes_vextab += " "
@@ -112,6 +123,7 @@ def generate_vextab_notes(sounds, metrum_upper, metrum_lower):
             notes_vextab += " "
             notes_vextab += "| "
             second_part = sound.duration - first_part
+            second_part = closest_legal_duration(second_part)
             duration_from_start = second_part
             no_bars_from_start += 1
             if no_bars_from_start >= NO_BARS_IN_ROW:
@@ -119,7 +131,7 @@ def generate_vextab_notes(sounds, metrum_upper, metrum_lower):
                 notes_vextab = ""
                 no_bars_from_start = 0
             notes_vextab += ":"
-            notes_vextab += DURATION_TO_VEXTAB_DURATION[first_part]
+            notes_vextab += DURATION_TO_VEXTAB_DURATION[second_part]
             notes_vextab += " "
             if sound.symbol != 'r':
                 notes_vextab += 'b'

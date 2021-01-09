@@ -40,6 +40,12 @@ def get_perfect_test_models():
     return _get_test_models(test_data_file)
 
 
+def get_perfect_guitar_test_models():
+    test_data_file = pathlib.Path(
+        os.path.realpath(__file__)).parent / "test_perfect_guitar.txt"
+    return _get_test_models(test_data_file)
+
+
 def _get_test_models(test_data_file):
     result = []
     current_testcase = None

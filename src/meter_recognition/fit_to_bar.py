@@ -14,8 +14,13 @@ def beat_id_closest_to_timestamp(beats, timestamp):
 
 def simple_sound_beat_dur(beats, sound):
     id = sound.beat_id
-    b1 = beats[id]
-    b2 = beats[id+1]
+
+    if id == len(beats)-1:
+        b2 = beats[id]
+        b1 = beats[id-1]
+    else:
+        b1 = beats[id]
+        b2 = beats[id+1]
     local_duration_of_16s = (b2-b1)/4
     no_16s_in_sound = round(sound.duration_ms/local_duration_of_16s)
 

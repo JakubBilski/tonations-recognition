@@ -25,17 +25,29 @@ STRINGS = {
     2: (constants.REVERSE_SYMBOLS["B"], 3),
     1: (constants.REVERSE_SYMBOLS["E"], 4)
 }
-# print(STRINGS)
+
+
+def closest_legal_duration(duration):
+    min_diff = duration
+    best_key = None
+    for key in DURATION_TO_VEXTAB_DURATION.keys():
+        diff = abs(duration - key)
+        if diff < min_diff:
+            min_diff = diff
+            best_key = key
+    return best_key
 
 
 def sound_to_string(sound):
     # return f"{sound.symbol}/4"
+    if sound.symbol == 'r':
+        return "## "
     i = 6
     while i > 1 and (STRINGS[i-1][1] < sound.octave or
                      (STRINGS[i-1][1] == sound.octave and
                       STRINGS[i-1][0] < sound.note)):
         i -= 1
-    fret = (STRINGS[i][1] - sound.octave)*12 + STRINGS[i][0] - sound.note
+    fret = sound.note - (STRINGS[i][1] - sound.octave)*12 - STRINGS[i][0]
     return f"{fret}/{i}"
 
 
@@ -63,6 +75,28 @@ def decompose_chord(chord):
     return result
 
 
+def divide_chords_with_bars(chords, bar_duration):
+    result = []
+    duration_sum = 0
+    for chord in chords:
+        if duration_sum + chord.duration > bar_duration:
+            first_part = bar_duration - duration_sum
+            second_part = chord.duration - first_part
+            result.append(Chord(chord.note,
+                                duration=first_part,
+                                kind=chord.kind))
+            result.append(Chord(chord.note,
+                                duration=second_part,
+                                kind=chord.kind))
+            duration_sum = second_part
+        else:
+            result.append(chord)
+            duration_sum += chord.duration
+            if duration_sum == bar_duration:
+                duration_sum = 0
+    return result
+
+
 def generate_vextab_notes(sounds, metrum_upper, metrum_lower):
     """Use information about the piece
     to create notes in an input format
@@ -79,24 +113,47 @@ def generate_vextab_notes(sounds, metrum_upper, metrum_lower):
     duration_from_start = 0
     no_bars_from_start = 0
     for sound in sounds:
-        if sound.symbol == "r":
-            notes_vextab += "## "
+        if duration_from_start + sound.duration > bar_duration:
+            first_part = bar_duration - duration_from_start
+            first_part = closest_legal_duration(first_part)
+            notes_vextab += ":"
+            notes_vextab += DURATION_TO_VEXTAB_DURATION[first_part]
+            notes_vextab += " "
+            notes_vextab += sound_to_string(sound)
+            notes_vextab += " "
+            notes_vextab += "| "
+            second_part = sound.duration - first_part
+            second_part = closest_legal_duration(second_part)
+            duration_from_start = second_part
+            no_bars_from_start += 1
+            if no_bars_from_start >= NO_BARS_IN_ROW:
+                result.append(notes_vextab)
+                notes_vextab = ""
+                no_bars_from_start = 0
+            notes_vextab += ":"
+            notes_vextab += DURATION_TO_VEXTAB_DURATION[second_part]
+            notes_vextab += " "
+            if sound.symbol != 'r':
+                notes_vextab += 'b'
+            notes_vextab += sound_to_string(sound)
+            notes_vextab += " "
         else:
             notes_vextab += ":"
             notes_vextab += DURATION_TO_VEXTAB_DURATION[sound.duration]
             notes_vextab += " "
             notes_vextab += sound_to_string(sound)
             notes_vextab += " "
-        duration_from_start += sound.duration
-        if duration_from_start >= bar_duration:
-            notes_vextab += "| "
-            duration_from_start -= bar_duration
-            no_bars_from_start += 1
-            if no_bars_from_start >= NO_BARS_IN_ROW:
-                result.append(notes_vextab)
-                notes_vextab = ""
-                no_bars_from_start = 0
-    result.append(notes_vextab)
+            duration_from_start += sound.duration
+            if duration_from_start == bar_duration:
+                notes_vextab += "| "
+                duration_from_start = 0
+                no_bars_from_start += 1
+                if no_bars_from_start >= NO_BARS_IN_ROW:
+                    result.append(notes_vextab)
+                    notes_vextab = ""
+                    no_bars_from_start = 0
+    if len(notes_vextab) > 0:
+        result.append(notes_vextab)
     return result
 
 
@@ -115,9 +172,11 @@ def generate_vextab_chords(chords, metrum_upper, metrum_lower):
     bar_duration = metrum_upper*metrum_lower
     duration_from_start = 0
     no_bars_from_start = 0
-    cleared_chords = [dc for chord in chords for dc in decompose_chord(chord)]
+    divided_chords = divide_chords_with_bars(chords, bar_duration)
+    cleared_chords = [dc for chord in divided_chords
+                      for dc in decompose_chord(chord)]
     prev_chord = None
-    chords_vextab += ".1"
+    chords_vextab += ".0"
 
     for chord in cleared_chords:
         chords_vextab += ",:"
@@ -135,7 +194,7 @@ def generate_vextab_chords(chords, metrum_upper, metrum_lower):
             no_bars_from_start += 1
             if no_bars_from_start >= NO_BARS_IN_ROW:
                 result.append(chords_vextab)
-                chords_vextab = ".1"
+                chords_vextab = ".0"
                 no_bars_from_start = 0
     while (len(chords_vextab) > 2 and
             chords_vextab[-1] == ' ' and

@@ -18,6 +18,7 @@ class TestModel:
 def get_all_test_models():
     models = get_other_rec_test_models()
     models.extend(get_carol_test_models())
+    models.extend(get_perfect_test_models())
     return models
 
 
@@ -30,6 +31,12 @@ def get_other_rec_test_models():
 def get_carol_test_models():
     test_data_file = pathlib.Path(
         os.path.realpath(__file__)).parent / "test_carol.txt"
+    return _get_test_models(test_data_file)
+
+
+def get_perfect_test_models():
+    test_data_file = pathlib.Path(
+        os.path.realpath(__file__)).parent / "test_perfect.txt"
     return _get_test_models(test_data_file)
 
 

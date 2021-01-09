@@ -69,9 +69,11 @@ def get_chords_daria(sounds: List[Sound],
 
     # create timeline of sounds
     t_s = []
+    endings = [0]
     for s in sounds:
         for _ in range(s.duration):
             t_s.append(s)
+        endings.append(endings[-1]+s.duration)
 
     # generate chords
     t_c = []
@@ -103,7 +105,7 @@ def get_chords_daria(sounds: List[Sound],
         last_chord_level = max_chord.level
         i += half_bar_len
         # prevent adding new chord between notes
-        while i < len(t_s) and t_s[i] == t_s[i-1]:
+        while i < len(t_s) and (i not in endings):
             i += 1
             t_c[-1].duration += 1
 

@@ -241,7 +241,7 @@ function createShapeChart(keys, container, shapes, shape,chordNames) {
     }
   }
 }
-var keys_EG = ['G'];
+var keys_EG = ['G','C'];
 var shapes_EG = [
   'm E',
   'dim E',

@@ -24,20 +24,31 @@ jobs:
         .\\env\Scripts\activate
         pip install -r src/requirements.txt
         pip install pyinstaller
-    - name: Create exe
+    - name: Create exe from python
       run: |
         .\env\Scripts\pyinstaller -F  main.spec
-    - name: Test exe
+    - name: Test exe from python
       run: |
         .\dist\main.exe
+    - name: Setup nodejs
+      uses: actions/setup-node@v2
+      with:
+        node-version: '12'
+    - name: Create exe from electron
+      run: |
+        cd view-app
+        npm install
+        npm install -g electron-packager --save-dev
+        electron-packager . tonation --platform=win32 --arch=x64 --overwrite
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        name: Release ${{ github.ref }}
         draft: true
         files: |
           .\dist\main.exe
+          .\view-app\tonation-win32-x64\*
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # You don't need to add this in secrets it's by default.
 

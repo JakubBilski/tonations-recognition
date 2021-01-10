@@ -30,8 +30,14 @@ jobs:
     - name: Test exe
       run: |
         .\dist\main.exe
-    - name: Upload exe
-      uses: actions/upload-artifact@v2-preview            # This action will upload a build apk you can then test.
-      with:
-        name: app
-        path: .\dist\main.exe   # Path to the build app.
+    - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: true
+          files: |
+            .\dist\main.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # You don't need to add this in secrets it's by default.
+

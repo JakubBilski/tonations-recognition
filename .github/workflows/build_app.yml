@@ -40,6 +40,11 @@ jobs:
         npm install
         npm install -g electron-packager --save-dev
         electron-packager . tonation --platform=win32 --arch=x64 --overwrite
+        cd ..
+    - name: Prepare release
+      run: |
+        cp main.exe view-app\tonation-win32-x64\main.exe
+        mkdir view-app\tonation-win32-x64\data\temp
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
@@ -47,8 +52,7 @@ jobs:
         name: Release ${{ github.ref }}
         draft: true
         files: |
-          .\dist\main.exe
-          .\view-app\tonation-win32-x64\*
+          .\view-app\tonation-win32-x64
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # You don't need to add this in secrets it's by default.
 

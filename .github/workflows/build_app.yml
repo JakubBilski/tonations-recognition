@@ -45,6 +45,7 @@ jobs:
       run: |
         cp main.exe view-app\tonation-win32-x64\main.exe
         mkdir view-app\tonation-win32-x64\data\temp
+        powershell Compress-Archive -Path view-app\tonation-win32-x64 -DestinationPath app.zip
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
@@ -52,7 +53,7 @@ jobs:
         name: Release ${{ github.ref }}
         draft: true
         files: |
-          .\view-app\tonation-win32-x64
+          app.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # You don't need to add this in secrets it's by default.
 

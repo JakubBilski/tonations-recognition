@@ -47,11 +47,11 @@ jobs:
         mkdir view-app\tonation-win32-x64\data\temp
         powershell Compress-Archive -Path view-app\tonation-win32-x64 -DestinationPath app.zip
     - name: Release
-      uses: softprops/action-gh-release@v1
+      uses: actions/create-release@v1
       with:
-        tag_name: ${{ github.ref }}
-        name: Release ${{ github.ref }}
-        draft: true
+        tag_name: release-${{ github.sha }} 
+        release_name: Release
+        draft: false
         files: |
           app.zip
       env:

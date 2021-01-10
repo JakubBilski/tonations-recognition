@@ -1,0 +1,31 @@
+name: Backend tests
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        # Semantic version range syntax or exact version of a Python version
+        python-version: '3.8'
+        # Optional - x64 or x86 architecture, defaults to x64
+        architecture: 'x64'
+    - name: Install dependencies
+      run: |
+        sudo apt-get install libsndfile1-dev
+        python -m pip install --upgrade pip
+        pip install virtualenv
+        virtualenv env
+        .\\env\Scripts\activate
+        pip install -r src/requirements.txt
+        pip install pyinstaller
+        .\env\Scripts\pyinstaller -F  main.spec
+    - name: Run tests
+      run: |
+        .\dist\main.exe

@@ -1,32 +1,32 @@
-name: Backend tests
+# name: Backend tests
 
-on: [push]
+# on: [push]
 
-jobs:
-  build:
+# jobs:
+#   build:
 
-    runs-on: ubuntu-latest
+#     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v2
-      with:
-        # Semantic version range syntax or exact version of a Python version
-        python-version: '3.8'
-        # Optional - x64 or x86 architecture, defaults to x64
-        architecture: 'x64'
-    - name: Install dependencies
-      run: |
-        sudo apt-get install libsndfile1-dev
-        python -m pip install --upgrade pip
-        pip install flake8
-        if [ -f src/requirements.txt ]; then pip install -r src/requirements.txt; fi
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are linter errors
-        flake8 src --count --select=E9,F63,F7,F82 --show-source --statistics
-        flake8 src --count --statistics
-    - name: Run tests
-      run: |
-        python main_tests.py
+#     steps:
+#     - uses: actions/checkout@v2
+#     - name: Set up Python 3.8
+#       uses: actions/setup-python@v2
+#       with:
+#         # Semantic version range syntax or exact version of a Python version
+#         python-version: '3.8'
+#         # Optional - x64 or x86 architecture, defaults to x64
+#         architecture: 'x64'
+#     - name: Install dependencies
+#       run: |
+#         sudo apt-get install libsndfile1-dev
+#         python -m pip install --upgrade pip
+#         pip install flake8
+#         if [ -f src/requirements.txt ]; then pip install -r src/requirements.txt; fi
+#     - name: Lint with flake8
+#       run: |
+#         # stop the build if there are linter errors
+#         flake8 src --count --select=E9,F63,F7,F82 --show-source --statistics
+#         flake8 src --count --statistics
+#     - name: Run tests
+#       run: |
+#         python main_tests.py

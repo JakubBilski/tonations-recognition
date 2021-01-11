@@ -6,7 +6,7 @@ async function postJsonData(url = '', data = {}) {
     },
     body: JSON.stringify(data)
   });
-  return response.json();
+  return response;
 }
 
 async function postFormData(url = '', data = {}) {

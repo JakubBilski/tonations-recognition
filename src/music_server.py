@@ -46,7 +46,7 @@ def frontend_communication_upload_recorded():
         logger.error(f"Bad request: {request}\n Exception: {e}")
         return jsonify({
             "error": "Expected file named recordingTemp"
-        })
+        }), 400
     filename_ogg = app.config['TEMP_FOLDER'] / "recordingTemp.ogg"
     file.save(filename_ogg)
     filename = app.config['TEMP_FOLDER'] / "recordingTemp.wav"
@@ -67,7 +67,7 @@ def frontend_communication_save_with_chords():
         logger.error(f"Bad request: {request}\n Exception: {e}")
         return jsonify({
             "error": "Expected json with output_file key"
-        })
+        }), 400
     filename_src = app.config['TEMP_FOLDER'] / "output.wav"
     shutil.copyfile(filename_src, filename_dest)
     return jsonify({})
@@ -86,7 +86,7 @@ def frontend_communication_save_recorded():
         logger.error(f"Bad request: {request}\n Exception: {e}")
         return jsonify({
             "error": "Expected json with output_file key"
-        })
+        }), 400
     print(filename_dest)
     filename_src = app.config['TEMP_FOLDER'] / "recordingTemp.wav"
     print(filename_src)
@@ -125,14 +125,20 @@ def frontend_communication():
         logger.error(f"Bad request: {request}\n Exception: {e}")
         return jsonify({
             "error": "Expected json with input_file key"
-        })
+        }), 400
     filename = pathlib.Path(filename)
     if not filename.is_file():
         logger.error(f"File {filename} does not exist.")
         return jsonify({
             "error": f"File {filename} does not exist."
-        })
-    notes, chords, key, preview_file = process_file(filename, False)
+        }), 400
+    try:
+        notes, chords, key, preview_file = process_file(filename, False)
+    except Exception as e:
+        logger.error(f"Bad request: {request}\n Exception: {e}")
+        return jsonify({
+            "error": "File did not contain a valid melody"
+        }), 400
     return jsonify(render_result(notes, chords, key, preview_file, 4, 8))
 
 
@@ -146,14 +152,21 @@ def frontend_communication_simple():
         logger.error(f"Bad request: {request}\n Exception: {e}")
         return jsonify({
             "error": "Expected json with input_file key"
-        })
+        }), 400
     filename = pathlib.Path(filename)
     if not filename.is_file():
         logger.error(f"File {filename} does not exist.")
         return jsonify({
             "error": f"File {filename} does not exist."
-        })
-    notes, chords, key, preview_file = process_file(filename, True)
+        }), 400
+
+    try:
+        notes, chords, key, preview_file = process_file(filename, True)
+    except Exception as e:
+        logger.error(f"Bad request: {request}\n Exception: {e}")
+        return jsonify({
+            "error": "File did not contain a valid melody"
+        }), 400
     return jsonify(render_result(notes, chords, key, preview_file, 4, 8))
 
 

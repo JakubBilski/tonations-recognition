@@ -12,6 +12,9 @@ document.querySelector('#openDialog').addEventListener('click', function (event)
           if(recordedSoundClipContainer.lastChild) {
             recordedSoundClipContainer.removeChild(recordedSoundClipContainer.lastChild);
           }
+          isShowingTransposed = false;
+          transposeButton.textContent = "Transpose to easier key";
+          transposeButton.className = "main-stroked-button";
           clearCache();
           fetchAndDisplayGuitar(isShowingTransposed, isShowingNotes);
         }

@@ -3,27 +3,61 @@ let simplifiedResponseCached = "";
 
 function fetchAndDisplayGuitar(simplified, showNotes){
   if(simplified) {
+    hideMusicInfoSections();
+    unhideLoadingSection();
     if(simplifiedResponseCached === "") {
       var postPath = `http://127.0.0.1:5000/music_simple`;
-      postJsonData(postPath, {input_file: filePath}).then((text) => {
+      postJsonData(postPath, {input_file: filePath}).then((response) => {
+        if (!response.ok) {
+          throw new Error('Error in post simplified');
+        }
+        else {
+          return response.json();
+        }
+      }).then((text) => {
         simplifiedResponseCached = text;
         drawEverything(simplifiedResponseCached, showNotes);
+        hideLoadingSection();
+        unhideMusicInfoSections();
+      }).catch(error => {
+        hideLoadingSection();
+        //display some error message (transposition failed or sth)
       });
     }
     else {
       drawEverything(simplifiedResponseCached, showNotes);
+      hideLoadingSection();
+      unhideMusicInfoSections();
     }
   }
   else {
+    hideMusicInfoSections();
+    unhideLoadingSection();
     if(responseCached === "") {
+      hideChoosePanel();
       var postPath = `http://127.0.0.1:5000/music`;
-      postJsonData(postPath, {input_file: filePath}).then((text) => {
+      postJsonData(postPath, {input_file: filePath}).then((response) => {
+        if (!response.ok) {
+          throw new Error('Error in post');
+        }
+        else {
+          return response.json();
+        }
+      }).then((text) => {
         responseCached = text;
         drawEverything(responseCached, showNotes);
-      });
+        unhideChoosePanel();
+        unhideMusicInfoSections();
+        hideLoadingSection();
+      }).catch(error => {
+        hideLoadingSection();
+        //display some error message
+    });
     }
     else {
       drawEverything(responseCached, showNotes);
+      unhideMusicInfoSections();
+      hideLoadingSection();
     }
   }
 }
@@ -31,7 +65,6 @@ function fetchAndDisplayGuitar(simplified, showNotes){
 function drawEverything(vextabInput, showNotes) {
   drawTabstaves(vextabInput, showNotes, true);
   drawVexTabChordsCheatSheet(vextabInput);
-  unhideMusicInfoSections();
   updateWithChordsSoundClipContainer(vextabInput.preview_file);
 }
 
@@ -65,17 +98,25 @@ function drawTabstaves(text, showNotes, showTablature) {
     artist.render(renderer);
 }
 
-function unhideMusicInfoSections() {
+function unhideChoosePanel() {
   document.getElementById('choose_section').style.height = chooseSectionHeight;
   document.getElementById('choose_section').style.overflowY = "auto";
+}
+
+function hideChoosePanel() {
+  if(document.getElementById('choose_section').style.height != "0px") {
+    chooseSectionHeight = document.getElementById('choose_section').style.height;
+    document.getElementById('choose_section').style.height = "0px";
+  }
+}
+
+function unhideMusicInfoSections() {
   document.getElementById('music_section').style.display = "block";
   document.getElementById('chords_section').style.display = "block";
   document.getElementById('arrow_button').style.display = "block";
 }
 
 function hideMusicInfoSections() {
-  chooseSectionHeight = document.getElementById('choose_section').style.height;
-  document.getElementById('choose_section').style.height = "0px";
   document.getElementById('choose_section').style.overflowY = "hidden"; 
   document.getElementById('music_section').style.display = "none";
   document.getElementById('chords_section').style.display = "none";
@@ -100,6 +141,7 @@ function updateWithChordsSoundClipContainer(audioURL) {
   audio.load();
 }
 
+hideChoosePanel();
 hideMusicInfoSections();
 
 const VF = vextab.Vex.Flow

@@ -12,6 +12,14 @@ isShowingTransposed = false
 isShowingNotes = true
 isRecording = false
 
+function unhideLoadingSection() {
+  document.getElementById('loading_section').style.display = "block";
+}
+
+function hideLoadingSection() {
+  document.getElementById('loading_section').style.display = "none";
+}
+
 function onclickTransposeButton(){
   if(isShowingTransposed) {
     transposeButton.textContent = "Transpose to easier key";
@@ -75,3 +83,4 @@ saveRecordedButton.addEventListener('click', () => {
   onclickSavRecordedButton();
 });
 
+hideLoadingSection();

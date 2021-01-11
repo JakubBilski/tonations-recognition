@@ -13,6 +13,9 @@
 dist/
 build/
 view-app/tonation-win32-x64
+data/temp/*.ogg
+data/temp/*.midi
+data/temp/*.wav
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

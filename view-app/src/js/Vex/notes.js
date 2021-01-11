@@ -96,8 +96,10 @@ function unhideMusicInfoSections() {
 }
 
 function hideMusicInfoSections() {
-  chooseSectionHeight = document.getElementById('choose_section').style.height;
-  document.getElementById('choose_section').style.height = "0px";
+  if(document.getElementById('choose_section').style.height != "0px") {
+    chooseSectionHeight = document.getElementById('choose_section').style.height;
+    document.getElementById('choose_section').style.height = "0px";
+  }
   document.getElementById('choose_section').style.overflowY = "hidden"; 
   document.getElementById('music_section').style.display = "none";
   document.getElementById('chords_section').style.display = "none";

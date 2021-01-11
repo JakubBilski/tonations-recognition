@@ -1,6 +1,9 @@
 name: Backend tests
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build:

@@ -15,6 +15,7 @@ document.querySelector('#openDialog').addEventListener('click', function (event)
           isShowingTransposed = false;
           transposeButton.textContent = "Transpose to easier key";
           transposeButton.className = "main-stroked-button";
+          hideInvalidFileSection();
           clearCache();
           fetchAndDisplayGuitar(isShowingTransposed, isShowingNotes);
         }

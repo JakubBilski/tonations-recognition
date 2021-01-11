@@ -21,7 +21,7 @@ function fetchAndDisplayGuitar(simplified, showNotes){
         unhideMusicInfoSections();
       }).catch(error => {
         hideLoadingSection();
-        //display some error message (transposition failed or sth)
+        unhideInvalidFileSection();
       });
     }
     else {
@@ -51,7 +51,7 @@ function fetchAndDisplayGuitar(simplified, showNotes){
         hideLoadingSection();
       }).catch(error => {
         hideLoadingSection();
-        //display some error message
+        unhideInvalidFileSection();
     });
     }
     else {

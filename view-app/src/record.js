@@ -34,6 +34,7 @@ function onstopMediaRecorder() {
     return data;
     }).then((text)=>{
       filePath = text.filename;
+      hideInvalidFileSection();
       clearCache();
       isShowingTransposed = false;
       transposeButton.textContent = "Transpose to easier key";

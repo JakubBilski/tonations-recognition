@@ -20,6 +20,14 @@ function hideLoadingSection() {
   document.getElementById('loading_section').style.display = "none";
 }
 
+function unhideInvalidFileSection() {
+  document.getElementById('invalid_file_section').style.display = "block";
+}
+
+function hideInvalidFileSection() {
+  document.getElementById('invalid_file_section').style.display = "none";
+}
+
 function onclickTransposeButton(){
   if(isShowingTransposed) {
     transposeButton.textContent = "Transpose to easier key";
@@ -84,3 +92,4 @@ saveRecordedButton.addEventListener('click', () => {
 });
 
 hideLoadingSection();
+hideInvalidFileSection();

@@ -4,6 +4,7 @@ let simplifiedResponseCached = "";
 function fetchAndDisplayGuitar(simplified, showNotes){
   if(simplified) {
     hideMusicInfoSections();
+    unhideLoadingSection();
     if(simplifiedResponseCached === "") {
       var postPath = `http://127.0.0.1:5000/music_simple`;
       postJsonData(postPath, {input_file: filePath}).then((response) => {
@@ -16,18 +17,22 @@ function fetchAndDisplayGuitar(simplified, showNotes){
       }).then((text) => {
         simplifiedResponseCached = text;
         drawEverything(simplifiedResponseCached, showNotes);
+        hideLoadingSection();
         unhideMusicInfoSections();
       }).catch(error => {
+        hideLoadingSection();
         //display some error message (transposition failed or sth)
       });
     }
     else {
       drawEverything(simplifiedResponseCached, showNotes);
+      hideLoadingSection();
       unhideMusicInfoSections();
     }
   }
   else {
     hideMusicInfoSections();
+    unhideLoadingSection();
     if(responseCached === "") {
       hideChoosePanel();
       var postPath = `http://127.0.0.1:5000/music`;
@@ -43,13 +48,16 @@ function fetchAndDisplayGuitar(simplified, showNotes){
         drawEverything(responseCached, showNotes);
         unhideChoosePanel();
         unhideMusicInfoSections();
+        hideLoadingSection();
       }).catch(error => {
+        hideLoadingSection();
         //display some error message
     });
     }
     else {
       drawEverything(responseCached, showNotes);
       unhideMusicInfoSections();
+      hideLoadingSection();
     }
   }
 }

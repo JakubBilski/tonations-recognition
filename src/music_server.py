@@ -159,7 +159,7 @@ def frontend_communication_simple():
         return jsonify({
             "error": f"File {filename} does not exist."
         }), 400
-    
+
     try:
         notes, chords, key, preview_file = process_file(filename, True)
     except Exception as e:

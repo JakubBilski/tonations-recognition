@@ -74,7 +74,8 @@ def simplify(notes, chords, key):
                 score += CHORDS_SCORING_MAJOR[(c.note + i) % 12]
             elif 'minor' in c.kind:
                 score += CHORDS_SCORING_MINOR[(c.note + i) % 12]
-        if score < min_score or (score == min_score and abs(i)<abs(min_trans)):
+        if score < min_score or \
+                (score == min_score and abs(i) < abs(min_trans)):
             min_score = score
             min_trans = i
     key.note = (key.note + min_trans) % 12

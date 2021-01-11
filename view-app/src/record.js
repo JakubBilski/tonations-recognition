@@ -35,6 +35,9 @@ function onstopMediaRecorder() {
     }).then((text)=>{
       filePath = text.filename;
       clearCache();
+      isShowingTransposed = false;
+      transposeButton.textContent = "Transpose to easier key";
+      transposeButton.className = "main-stroked-button";
       fetchAndDisplayGuitar(isShowingTransposed, isShowingNotes);
   });
 }

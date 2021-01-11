@@ -3,8 +3,8 @@ let simplifiedResponseCached = "";
 
 function fetchAndDisplayGuitar(simplified, showNotes){
   if(simplified) {
+    hideMusicInfoSections();
     if(simplifiedResponseCached === "") {
-      hideMusicInfoSections();
       var postPath = `http://127.0.0.1:5000/music_simple`;
       postJsonData(postPath, {input_file: filePath}).then((response) => {
         if (!response.ok) {
@@ -14,20 +14,22 @@ function fetchAndDisplayGuitar(simplified, showNotes){
           return response.json();
         }
       }).then((text) => {
-        unhideMusicInfoSections();
         simplifiedResponseCached = text;
         drawEverything(simplifiedResponseCached, showNotes);
+        unhideMusicInfoSections();
       }).catch(error => {
-        //display some error message
+        //display some error message (transposition failed or sth)
       });
     }
     else {
       drawEverything(simplifiedResponseCached, showNotes);
+      unhideMusicInfoSections();
     }
   }
   else {
+    hideMusicInfoSections();
     if(responseCached === "") {
-      hideMusicInfoSections();
+      hideChoosePanel();
       var postPath = `http://127.0.0.1:5000/music`;
       postJsonData(postPath, {input_file: filePath}).then((response) => {
         if (!response.ok) {
@@ -37,15 +39,17 @@ function fetchAndDisplayGuitar(simplified, showNotes){
           return response.json();
         }
       }).then((text) => {
-          unhideMusicInfoSections();
-          responseCached = text;
-          drawEverything(responseCached, showNotes);
-        }).catch(error => {
-          //display some error message
-      });
+        responseCached = text;
+        drawEverything(responseCached, showNotes);
+        unhideChoosePanel();
+        unhideMusicInfoSections();
+      }).catch(error => {
+        //display some error message
+    });
     }
     else {
       drawEverything(responseCached, showNotes);
+      unhideMusicInfoSections();
     }
   }
 }
@@ -53,7 +57,6 @@ function fetchAndDisplayGuitar(simplified, showNotes){
 function drawEverything(vextabInput, showNotes) {
   drawTabstaves(vextabInput, showNotes, true);
   drawVexTabChordsCheatSheet(vextabInput);
-  unhideMusicInfoSections();
   updateWithChordsSoundClipContainer(vextabInput.preview_file);
 }
 
@@ -87,19 +90,25 @@ function drawTabstaves(text, showNotes, showTablature) {
     artist.render(renderer);
 }
 
-function unhideMusicInfoSections() {
+function unhideChoosePanel() {
   document.getElementById('choose_section').style.height = chooseSectionHeight;
   document.getElementById('choose_section').style.overflowY = "auto";
+}
+
+function hideChoosePanel() {
+  if(document.getElementById('choose_section').style.height != "0px") {
+    chooseSectionHeight = document.getElementById('choose_section').style.height;
+    document.getElementById('choose_section').style.height = "0px";
+  }
+}
+
+function unhideMusicInfoSections() {
   document.getElementById('music_section').style.display = "block";
   document.getElementById('chords_section').style.display = "block";
   document.getElementById('arrow_button').style.display = "block";
 }
 
 function hideMusicInfoSections() {
-  if(document.getElementById('choose_section').style.height != "0px") {
-    chooseSectionHeight = document.getElementById('choose_section').style.height;
-    document.getElementById('choose_section').style.height = "0px";
-  }
   document.getElementById('choose_section').style.overflowY = "hidden"; 
   document.getElementById('music_section').style.display = "none";
   document.getElementById('chords_section').style.display = "none";
@@ -124,6 +133,7 @@ function updateWithChordsSoundClipContainer(audioURL) {
   audio.load();
 }
 
+hideChoosePanel();
 hideMusicInfoSections();
 
 const VF = vextab.Vex.Flow

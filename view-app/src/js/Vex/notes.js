@@ -4,10 +4,21 @@ let simplifiedResponseCached = "";
 function fetchAndDisplayGuitar(simplified, showNotes){
   if(simplified) {
     if(simplifiedResponseCached === "") {
+      hideMusicInfoSections();
       var postPath = `http://127.0.0.1:5000/music_simple`;
-      postJsonData(postPath, {input_file: filePath}).then((text) => {
+      postJsonData(postPath, {input_file: filePath}).then((response) => {
+        if (!response.ok) {
+          throw new Error('Error in post simplified');
+        }
+        else {
+          return response.json();
+        }
+      }).then((text) => {
+        unhideMusicInfoSections();
         simplifiedResponseCached = text;
         drawEverything(simplifiedResponseCached, showNotes);
+      }).catch(error => {
+        //display some error message
       });
     }
     else {
@@ -16,10 +27,21 @@ function fetchAndDisplayGuitar(simplified, showNotes){
   }
   else {
     if(responseCached === "") {
+      hideMusicInfoSections();
       var postPath = `http://127.0.0.1:5000/music`;
-      postJsonData(postPath, {input_file: filePath}).then((text) => {
-        responseCached = text;
-        drawEverything(responseCached, showNotes);
+      postJsonData(postPath, {input_file: filePath}).then((response) => {
+        if (!response.ok) {
+          throw new Error('Error in post');
+        }
+        else {
+          return response.json();
+        }
+      }).then((text) => {
+          unhideMusicInfoSections();
+          responseCached = text;
+          drawEverything(responseCached, showNotes);
+        }).catch(error => {
+          //display some error message
       });
     }
     else {

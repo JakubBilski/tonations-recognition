@@ -1087,6 +1087,21 @@ ul.slick-dots {
 {
   text-align:center;
 }
+/*file_section*/
+#invalid_file_section{  
+  padding: 50px 0px 0px 0px;
+  position: relative;
+  z-index: 9;
+}
+#invalid_file_section .container
+{
+  text-align:center;
+  
+}
+#invalid_file_section .container .features-item h4
+{
+  color: rgb(160, 0, 0);
+}
 /*choose_cestion*/
 #choose_section{  
   margin: 50px 0px 0px 0px;

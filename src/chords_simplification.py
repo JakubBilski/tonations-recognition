@@ -63,14 +63,19 @@ def simplify(notes, chords, key):
     if max_trans <= min_trans:
         return notes, chords, key
 
-    for i in range(min_trans, max_trans+1):
+    trans_range = list(range(min_trans, max_trans+1))
+    if 0 in trans_range:
+        trans_range.remove(0)
+
+    for i in trans_range:
         score = 0
         for c in chords:
             if 'major' in c.kind:
                 score += CHORDS_SCORING_MAJOR[(c.note + i) % 12]
             elif 'minor' in c.kind:
                 score += CHORDS_SCORING_MINOR[(c.note + i) % 12]
-        if score < min_score:
+        if score < min_score or \
+                (score == min_score and abs(i) < abs(min_trans)):
             min_score = score
             min_trans = i
     key.note = (key.note + min_trans) % 12

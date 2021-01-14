@@ -8,29 +8,6 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
   app.quit();
 }
 
-const process = require('child_process');
-var executablePath = ".\\main.exe";
-var parameters = ["--http"];
-
-var child = process.spawn(executablePath, parameters); 
-child.on('error', function(err) {
-  console.log('stderr: <'+err+'>' );
-});
-
-child.stdout.on('data', function (data) {
-  console.log(data);
-});
-
-child.stderr.on('data', function (data) {
-  console.log('stderr: <'+data+'>' );
-});
-
-child.on('close', function (code) {
-    if (code == 0)
-      console.log('child process complete.');
-    else
-      console.log('child process exited with code ' + code);
-});
 
 const createWindow = () => {
   // Create the browser window.
@@ -60,7 +37,6 @@ app.on('ready', createWindow);
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
-  child.kill()
   if (process.platform !== 'darwin') {
     app.quit();
   }

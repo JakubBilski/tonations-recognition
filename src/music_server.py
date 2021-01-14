@@ -15,6 +15,7 @@ from . import meter_recognition
 from . import music_synthesis
 from . import vextab_parsing
 from . import music
+from . import electron_meneger
 
 pydub.AudioSegment.converter = \
     str(pathlib.Path(__file__).parent.parent / "ffmpeg" / "ffmpeg.exe")
@@ -289,7 +290,8 @@ def convert_wav_to_ogg(source_file, destination_file):
 
 
 def start_server(args):
-    if args.http:
+    if not args.input:
+        electron_meneger.create_electron()
         app.run()
     else:
         process_file(args.input, False, args.key)

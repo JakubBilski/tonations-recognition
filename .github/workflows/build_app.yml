@@ -30,9 +30,6 @@ jobs:
     - name: Create exe from python
       run: |
         .\env\Scripts\pyinstaller -F  main.spec
-    - name: Test exe from python
-      run: |
-        .\dist\ToneApp.exe
     - name: Setup nodejs
       uses: actions/setup-node@v2
       with:

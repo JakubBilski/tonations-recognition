@@ -50,7 +50,6 @@ jobs:
         cp .\data\perfect\jedzie_pociag_z_daleka_F.wav records\jedzie_pociag_z_daleka.wav
         cp .\data\perfect\lato_lato_C.wav records\lato_lato.wav
         cp .\data\perfect\medrcy_swiata_C.wav records\medrcy_swiata.wav
-        cp .\data\perfect\mizerna_d.wav records\mizerna.wav
         powershell Compress-Archive -Path records -DestinationPath records.zip
         cp .\dist\ToneApp.exe view-app\tonation-win32-x64\ToneApp.exe
         mkdir view-app\tonation-win32-x64\data\temp

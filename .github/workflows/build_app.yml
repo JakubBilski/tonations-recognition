@@ -43,6 +43,14 @@ jobs:
         cd ..
     - name: Prepare release
       run: |
+        mkdir records
+        cp .\data\perfect\Bog_sie_rodzi_D.wav records\bog_sie_rodzi.wav
+        cp .\data\perfect\do_szopy_D.wav records\do_szopy.wav
+        cp .\data\perfect\gdy_sliczna_panna_F.wav records\gdy_sliczna_panna.wav
+        cp .\data\perfect\jedzie_pociag_z_daleka_F.wav records\jedzie_pociag_z_daleka.wav
+        cp .\data\perfect\lato_lato_C.wav records\lato_lato.wav
+        cp .\data\perfect\medrcy_swiata_C.wav records\medrcy_swiata.wav
+        powershell Compress-Archive -Path records -DestinationPath records.zip
         cp .\dist\ToneApp.exe view-app\tonation-win32-x64\ToneApp.exe
         mkdir view-app\tonation-win32-x64\data\temp
         powershell Compress-Archive -Path view-app\tonation-win32-x64 -DestinationPath app.zip
@@ -54,6 +62,7 @@ jobs:
         draft: false
         files: |
           app.zip
+          records.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # You don't need to add this in secrets it's by default.
 

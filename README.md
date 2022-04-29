@@ -1,52 +1,16 @@
-﻿"Rozwiązanie będzie napisane z wykorzystaniem języka Python i biblioteki simpleaudio"
-https://simpleaudio.readthedocs.io/en/latest/index.html
+Desktop application for key signature recognition created as a part of our bachelor's thesis.
+Frontend: Electron. Backend: Python.
 
+# Highlights
+## Uploading/recording the file
+![Record](https://user-images.githubusercontent.com/47048420/165956916-21132442-e7b1-426c-91f7-d7ffc3c49a93.png)
+![Recorded_file](https://user-images.githubusercontent.com/47048420/165956940-6f4b5218-3c18-4163-99f5-eb897d6b80df.PNG)
 
-Ciekawy projekt:
-https://github.com/YannickJadoul/Parselmouth
-pip3 install praat-parselmouth
+## Detected melody, key signature and proposed guitar chords:
+![note](https://user-images.githubusercontent.com/47048420/165957153-6f6f5b22-ab1c-4005-aff5-2be5d31ecd14.PNG)
 
-Projekt w matlabie, nwm czy działa
-https://se.mathworks.com/matlabcentral/fileexchange/73594-piano-guitar-notes-recognition
+## Possibility of transposing the piece into key signature with easier chords:
+![mus1](https://user-images.githubusercontent.com/47048420/165957365-95be28fc-093d-483f-9a2d-23d9f2aa35be.PNG)
 
-Stronka do nagrywania
-https://online-voice-recorder.com/
-
-Częstotliwości nut
-https://pages.mtu.edu/~suits/notefreqs.html
-
-Praca o wykrywaniu akordów:
-http://www.eecs.qmul.ac.uk/~markp/2009/StarkPlumbley09-icmc.pdf
-
-Zmiana autora commita:
- git -c user.name="New Author Name" -c user.email=email@address.com commit --amend --reset-author
-
-
-Testowanie serwera:
-``` bash
-python3 src/main.py --http
-```
-i w innym terminalu
-```bash
-curl --header "Content-Type: application/json" \
-  --request POST \
-  --data '{"input_file":"data/other_rec/ach_spij_C.wav"}' \
-  http://localhost:5000/music
-```
-
-Automatyczne generowanie dokumentacji:
-``` bash
-pip install pdoc3
-pdoc --html .\path_to_file_or_module
-```
-
-
-Wymagania:
-Wersja pythona >=3.8 ( dla 3.7 są problemy z dll numpy :-/ ) (możliwe że problemem było to że miałem tego pythona ścągniętego ze sklepu, a 3.8 ściągałem ze strony)
-
-Instalacja:
-instalacja pythona (https://www.python.org/downloads/)
-pip install -r src/requirements.txt
-
-instalacja node.js (https://nodejs.org/en/)
-usuń folder c:/python39 (node.js nadpisuje poprzednią instalację pythona bo tak)
+## Listening to the mix of melody and proposed accompaniment:
+![mus2](https://user-images.githubusercontent.com/47048420/165957707-b381e4d6-905e-4a43-9dbe-a7744e40b4a0.PNG)
